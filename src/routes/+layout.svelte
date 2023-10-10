@@ -2,7 +2,14 @@
 	import '../app.postcss';
 	// Importing necessary components
 	import { AppShell, AppBar, AppRail, AppRailAnchor, storePopup } from '@skeletonlabs/skeleton';
-	import { IconLayout, IconHome, IconSettings, IconMenu2 } from '@tabler/icons-svelte';
+	import {
+		IconLayout,
+		IconHome,
+		IconSettings,
+		IconMenu2,
+		IconTerminal2,
+		IconCheckupList
+	} from '@tabler/icons-svelte';
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	// Necessary importations for navbar transition
@@ -56,9 +63,19 @@
 								<IconHome />
 							</svelte:fragment>
 						</AppRailAnchor>
-						<AppRailAnchor href="/dashboard" title="Account">
+						<AppRailAnchor href="/dashboard">
 							<svelte:fragment slot="lead">
 								<IconLayout />
+							</svelte:fragment>
+						</AppRailAnchor>
+						<AppRailAnchor href="/telemetry">
+							<svelte:fragment slot="lead">
+								<IconTerminal2 />
+							</svelte:fragment>
+						</AppRailAnchor>
+						<AppRailAnchor href="/test">
+							<svelte:fragment slot="lead">
+								<IconCheckupList />
 							</svelte:fragment>
 						</AppRailAnchor>
 					</svelte:fragment>
@@ -66,7 +83,7 @@
 
 					<!-- --- -->
 					<svelte:fragment slot="trail">
-						<AppRailAnchor href="/settings" title="Account">
+						<AppRailAnchor href="/settings">
 							<svelte:fragment slot="lead">
 								<IconSettings />
 							</svelte:fragment></AppRailAnchor
