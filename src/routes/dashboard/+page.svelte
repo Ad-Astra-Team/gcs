@@ -1,5 +1,6 @@
 <script>
 	let message = 'hello';
+	import Gauge from '$lib/Gauges/gauge.svelte';
 </script>
 
 <div class="container min-w-full min-h-full overflow-hidden bg-red-500">
@@ -15,6 +16,7 @@
 			<h1 class="content-center self-center justify-center text-center justify-items-center">
 				side 2
 			</h1>
+			<Gauge />
 		</div>
 
 		<div class="col-span-1">side 3</div>
