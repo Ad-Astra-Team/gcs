@@ -5,6 +5,7 @@
 
 <div class="container min-w-full min-h-full overflow-hidden bg-red-500">
 	<!-- Page Header -->
+
 	<div class="bg-blue-600">
 		<h1>Dashboard</h1>
 	</div>
