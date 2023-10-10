@@ -1,3 +1,3 @@
 <body>
-	<div class="bg-color: to-black">telemetry</div>
+	<div>Telemetry Page</div>
 </body>

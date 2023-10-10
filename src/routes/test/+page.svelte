@@ -1,3 +1,3 @@
 <body>
-	<div class="bg-color: bg-rose-200" />
+	<div>Test Page</div>
 </body>
