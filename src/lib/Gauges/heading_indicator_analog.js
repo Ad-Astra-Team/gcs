@@ -22,8 +22,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 400;
-const H = 400;
+const W = 300;
+const H = 300;
 // size of airplane pointer
 const AW = 180;
 const AH = 180;
@@ -310,9 +310,8 @@ export default class HeadingIndicatorAnalog extends Instrument {
   setHeadingBug() {
     const h = this.airplane.heading + this.magneticOffset;
     this.headingBugGroup.attr({
-      transform: `r  ${-1 * (h + this.headingBugHeading)} ${CENTER.x} ${
-        CENTER.y
-      }`
+      transform: `r  ${-1 * (h + this.headingBugHeading)} ${CENTER.x} ${CENTER.y
+        }`
     });
   }
 

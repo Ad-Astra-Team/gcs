@@ -11,6 +11,9 @@ dependencies:
   '@tabler/icons-svelte':
     specifier: ^2.38.0
     version: 2.38.0(svelte@4.2.1)
+  '@tauri-apps/api':
+    specifier: ^1.5.0
+    version: 1.5.0
   DOMArray:
     specifier: ^1.0.0
     version: 1.0.0
@@ -557,6 +560,11 @@ packages:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.3.3
     dev: true
+
+  /@tauri-apps/api@1.5.0:
+    resolution: {integrity: sha512-yQY9wpVNuiYhLLuyDlu1nBpqJELT1fGp7OctN4rW9I2W1T2p7A3tqPxsEzQprEwneQRBAlPM9vC8NsnMbct+pg==}
+    engines: {node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
+    dev: false
 
   /@types/cookie@0.5.2:
     resolution: {integrity: sha512-DBpRoJGKJZn7RY92dPrgoMew8xCWc2P71beqsjyhEI/Ds9mOyVmBwtekyfhpwFIVt1WrxTonFifiOZ62V8CnNA==}

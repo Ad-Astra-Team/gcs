@@ -21,8 +21,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 400;
-const H = 400;
+const W = 300;
+const H = 300;
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
 // center
@@ -267,8 +267,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       0,
       "transparent",
       this.snap.gradient(
-        `R(${INC_CENTER.x}, ${INC_CENTER.y}, ${outer})black:0-#aaa:${
-          (inner / outer) * 100
+        `R(${INC_CENTER.x}, ${INC_CENTER.y}, ${outer})black:0-#aaa:${(inner / outer) * 100
         }-#fff:${(middle / outer) * 100}-#aaa:100`
       ),
       90 - INC_ANGLE,

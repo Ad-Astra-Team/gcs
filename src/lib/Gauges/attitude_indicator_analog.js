@@ -25,8 +25,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 400;
-const H = 400;
+const W = 300;
+const H = 300;
 
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
@@ -442,8 +442,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
     const normalized = pixelOffset / INNER_RADIUS / 2;
     const y = 50 + normalized * 100;
     return this.snap.gradient(
-      `l(0, 0, 0, 1)${COLOR_SKY}:0-${COLOR_SKY}:${
-        y - 1
+      `l(0, 0, 0, 1)${COLOR_SKY}:0-${COLOR_SKY}:${y - 1
       }-white:${y}-${COLOR_EARTH}:${y + 1}-${COLOR_EARTH}:100`
     );
   }
@@ -570,9 +569,8 @@ export default class AttitudeIndicatorAnalog extends Instrument {
       transform: `r${-1 * displayRoll} ${CX} ${CY}`
     });
     this.innerBezelFace.attr({
-      transform: `r${-1 * displayRoll} ${CX} ${CY} t ${0} ${
-        displayPitch * PITCH_TO_PIXELS
-      }`
+      transform: `r${-1 * displayRoll} ${CX} ${CY} t ${0} ${displayPitch * PITCH_TO_PIXELS
+        }`
     });
     this.pitchCircle.attr({
       transform: `r${-1 * displayRoll} ${CX} ${CY}`,
