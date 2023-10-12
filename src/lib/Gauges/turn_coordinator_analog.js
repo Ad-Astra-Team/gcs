@@ -21,8 +21,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 300;
-const H = 300;
+const W = 230;
+const H = 230;
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
 // center

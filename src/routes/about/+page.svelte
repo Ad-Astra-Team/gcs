@@ -1,3 +1,1 @@
-<body>
-	<div>About Page</div>
-</body>
+<div>About Page</div>

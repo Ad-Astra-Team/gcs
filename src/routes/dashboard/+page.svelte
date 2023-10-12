@@ -3,4 +3,6 @@
 	import Gauge from '$lib/Gauges/gauge.svelte';
 </script>
 
-<Gauge />
+<div class="container">
+	<Gauge />
+</div>

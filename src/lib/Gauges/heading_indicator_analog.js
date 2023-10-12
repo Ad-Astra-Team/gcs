@@ -22,8 +22,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 300;
-const H = 300;
+const W = 230;
+const H = 230;
 // size of airplane pointer
 const AW = 180;
 const AH = 180;

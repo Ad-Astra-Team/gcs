@@ -25,8 +25,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 300;
-const H = 300;
+const W = 230;
+const H = 230;
 
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
@@ -36,35 +36,35 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // color of sky and earth
 const COLOR_SKY = colors.sky;
 const COLOR_EARTH = colors.earth;
 
 // radius/thickness of outer bezel
-const OUTER_THICKNESS = 40;
+const OUTER_THICKNESS = 20;
 const OUTER_RADIUS = R - (CASE1 + CASE2 + CASE3 + OUTER_THICKNESS / 2);
 // radius of inner bezel
 const INNER_RADIUS = R - (CASE1 + CASE2 + CASE3 + OUTER_THICKNESS);
 // determines length of pitch tick marks
-const TICK_M = 4;
+const TICK_M = 2;
 // width of small ( 5 increment ) tick marks
 const SMALL_TICK_WIDTH = 25;
 // on the pitch axis this is the ratio between degrees of pitch and pixels the face will move up or down
-const PITCH_TO_PIXELS = 3.2;
+const PITCH_TO_PIXELS = 2.2;
 // pointer base metrics
 const POINTER_BASE_THICKNESS = W / 4;
 const POINTER_BASE_ARC = 40;
 // pointer arm THICKNESS
-const PA_T = 8;
+const PA_T = 4;
 const PA_BH = W / 2 - 40;
 const PA_BI = CASE1;
 const PA_ARM = W / 6;
-const PA_TRI_W = 30;
-const PA_TRI_H = 32;
+const PA_TRI_W = 16;
+const PA_TRI_H = 16;
 const PA_TRI_R = R - (CASE1 + CASE2 + CASE3 + OUTER_THICKNESS);
 
 // vertical adjustment button
@@ -156,8 +156,8 @@ export default class AttitudeIndicatorAnalog extends Instrument {
     // v adjust button
     this.verticalAdjustButton = new Rotatable({
       snap: this.snap,
-      text: "↕",
-      fontSize: "32px",
+      text: "⬍",
+      fontSize: "22px",
       textColor: colors.silver,
       gear: 0.05,
       randomize: false,
@@ -169,6 +169,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
     this.cageButton = new Rotatable({
       snap: this.snap,
       text: "CAGE",
+      fontSize: "10px",
       textColor: colors.silver,
       gear: 1,
       clickCallback: this.onCageToggle.bind(this),
@@ -351,8 +352,8 @@ export default class AttitudeIndicatorAnalog extends Instrument {
       1,
       "#111",
       "#333",
-      90 - POINTER_BASE_ARC / 2,
-      90 + POINTER_BASE_ARC / 2,
+      95 - POINTER_BASE_ARC / 2,
+      85 + POINTER_BASE_ARC / 2,
       true
     );
     // draw triangle pointer at 12 o'clock
@@ -501,7 +502,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           270 + a,
           OUTER_RADIUS - OUTER_THICKNESS / 2,
           OUTER_RADIUS + OUTER_THICKNESS / 2,
-          6,
+          4,
           "white"
         )
       );
@@ -512,7 +513,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           270 - a,
           OUTER_RADIUS - OUTER_THICKNESS / 2,
           OUTER_RADIUS + OUTER_THICKNESS / 2,
-          6,
+          4,
           "white"
         )
       );

@@ -73,9 +73,9 @@
 
 			setTimeout(get_axes, 10);
 		}
-		get_axes();
+		// get_axes();
 
-		// instruments.forEach((i) => i.demoStart());
+		instruments.forEach((i) => i.demoStart());
 	});
 
 	import './styles.css';

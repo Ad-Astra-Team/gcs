@@ -1,3 +1,1 @@
-<body>
-	<div>Test Page</div>
-</body>
+<div>Test Page</div>

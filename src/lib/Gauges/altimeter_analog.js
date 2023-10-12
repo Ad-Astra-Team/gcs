@@ -27,8 +27,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 300;
-const H = 300;
+const W = 230;
+const H = 230;
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
 // center
@@ -37,9 +37,9 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // outer radius of all tick marks
 const TICK1 = R - (CASE1 + CASE2 + CASE3);
@@ -49,13 +49,13 @@ const TICK2 = TICK1 - 15;
 const TICK3 = TICK1 - 20;
 
 // radius of  large digits marking hundreds of feet
-const LABEL_RADIUS = TICK3 - 20;
+const LABEL_RADIUS = TICK3 - 12;
 
 // hundreds needle, other needles are derived from these
 const POINTER_SMALL_RADIUS = 40;
-const POINTER_WIDTH = 10;
-const POINTER_ARROW = 6;
-const POINTER_RADIUS = TICK2 - POINTER_ARROW;
+const POINTER_WIDTH = 5;
+const POINTER_ARROW = 8;
+const POINTER_RADIUS = TICK2 - POINTER_ARROW + 10;
 
 // thousands needle radius ratio to hundreds
 const POINTER_1K_R = 0.5;
@@ -65,14 +65,14 @@ const POINTER_1K_W = 2.5;
 // ten thousands needle radius ratio to hundreds
 const POINTER_10K_R = 0.6;
 // ten thousands needle width ratio to hundreds needs
-const POINTER_10K_W = 2.5;
+const POINTER_10K_W = 2;
 
 // degrees offset for 2 and 3 text
 const KOLLSMAN_ADJUST_23 = 7;
 // angle at center of window
 const KOLLSMAN_ANGLE = 0;
 // angle sweep
-const KOLLSMAN_SWEEP = 270;
+const KOLLSMAN_SWEEP = 600;
 // min/max pressure settings
 const MIN_BARO = 28.0;
 const MAX_BARO = 31.0;
@@ -99,9 +99,9 @@ const BARBER_SWEEP = 60;
 const BARBER_STRIPE_WIDTH = 8;
 
 // center of BARO button
-const BARO_CENTER = POC(CENTER, R, 135);
+const BARO_CENTER = POC(CENTER, R, 400);
 // radius of OBS
-const BARO_R = 32;
+const BARO_R = 20;
 
 export default class AltimeterAnalog extends Instrument {
   constructor(options) {
@@ -186,6 +186,7 @@ export default class AltimeterAnalog extends Instrument {
     this.baroButton = new Rotatable({
       snap: this.snap,
       radius: BARO_R,
+      fontSize: 10,
       text: "BARO",
       textColor: colors.silver,
       gear: 0.0025,
@@ -265,7 +266,7 @@ export default class AltimeterAnalog extends Instrument {
           tp,
           strDisplay,
           "white",
-          "14px",
+          "7px",
           "Verdana"
         );
         text.attr({ transform: `r${angle} ${tp.x} ${tp.y}` });
@@ -302,7 +303,7 @@ export default class AltimeterAnalog extends Instrument {
       CENTER,
       AR,
       KW,
-      1,
+      3,
       "#555",
       "none",
       this.altitudeInfo(KOLLSMAN_LOWER_SPEED).hundreds,
@@ -446,7 +447,7 @@ export default class AltimeterAnalog extends Instrument {
           this.textPosition(v0_9),
           v0_9,
           "white",
-          "20px",
+          "16px",
           "Verdana"
         );
       } else {

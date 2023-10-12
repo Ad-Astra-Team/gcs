@@ -34,7 +34,7 @@ export default class Rotatable extends Animated {
     Object.assign(
       this,
       {
-        radius: 30,
+        radius: 20,
         text: "",
         textColor: colors.white,
         rotation: 0,
@@ -100,9 +100,8 @@ export default class Rotatable extends Animated {
 
     // set initial position which might be random
     this.text.attr({
-      transform: `r ${this.rotation + this.randomOffset} ${this.center.x} ${
-        this.center.y
-      }`
+      transform: `r ${this.rotation + this.randomOffset} ${this.center.x} ${this.center.y
+        }`
     });
 
     // this is a nearly invisible outer circle that enlarges the area which
@@ -189,9 +188,8 @@ export default class Rotatable extends Animated {
         this.rotationCallback(delta * this.gear);
         this.rotation = this.rotation + delta;
         this.text.attr({
-          transform: `r ${this.rotation + this.randomOffset} ${this.center.x} ${
-            this.center.y
-          }`
+          transform: `r ${this.rotation + this.randomOffset} ${this.center.x} ${this.center.y
+            }`
         });
       }
     }
@@ -219,9 +217,8 @@ export default class Rotatable extends Animated {
    */
   updateTransform() {
     this.group.attr({
-      transform: `t ${this.position.x - this.radius} ${
-        this.position.y - this.radius
-      } s${this.displayScale} ${this.radius} ${this.radius}`
+      transform: `t ${this.position.x - this.radius} ${this.position.y - this.radius
+        } s${this.displayScale} ${this.radius} ${this.radius}`
     });
   }
 }

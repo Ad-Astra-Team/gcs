@@ -16,8 +16,8 @@ import Snap from "snapsvg-cjs";
 // inset of edges of element
 const I = 0;
 // width and height
-const W = 300;
-const H = 300;
+const W = 230;
+const H = 230;
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
 // center
@@ -26,14 +26,14 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // outer radius of all tick marks
-const TICK1 = R - (CASE1 + CASE2 + CASE3);
+const TICK1 = R - (CASE1 + CASE2 + CASE3) - R / 20;
 // inner radius of small ticks
-const TICK2 = TICK1 - 15;
+const TICK2 = TICK1 - 10;
 // inner radius of large ticks
 const TICK3 = TICK1 - 20;
 // radius of center of airspeed labels
@@ -46,7 +46,7 @@ const ARC_WIDTH = 22;
 const FLAP_ARC_WIDTH = 18;
 
 // radius of white arc
-const WHITE_ARC_RADIUS = TICK3 + ARC_WIDTH * 2 - ARC_WIDTH / 2 - 1;
+const WHITE_ARC_RADIUS = TICK3 + ARC_WIDTH - ARC_WIDTH / 2 - 1;
 // green / yellow arcs
 const ARC_RADIUS = TICK3 + ARC_WIDTH / 2;
 
@@ -55,8 +55,8 @@ const MAX_SPEED_ANGLE = 320;
 // airspeed at 6 o'clock
 const MID_SPEED = 115;
 
-const POINTER_SMALL_RADIUS = 40;
-const POINTER_WIDTH = 14;
+const POINTER_SMALL_RADIUS = 15;
+const POINTER_WIDTH = 12;
 const POINTER_ARROW = 6;
 const POINTER_RADIUS = WHITE_ARC_RADIUS + FLAP_ARC_WIDTH / 2 - POINTER_ARROW;
 const POINTER_MID = POINTER_RADIUS * 0.65;
@@ -221,6 +221,19 @@ export default class AirspeedAnalog extends Instrument {
       this.airspeedToAngle(this.airplane.VNE),
       true
     );
+
+    arc(
+      this.snap,
+      CENTER,
+      ARC_RADIUS,
+      ARC_WIDTH,
+      0,
+      "transparent",
+      "#FF0000",
+      this.airspeedToAngle(this.airplane.VNE),
+      this.airspeedToAngle(this.airplane.VNE + 44),
+      true
+    );
   }
 
   /**
@@ -230,13 +243,12 @@ export default class AirspeedAnalog extends Instrument {
     // draw airspeeds and knots labels
     centeredText(
       this.snap,
-      new Vector2D(CX, CY + 50),
+      new Vector2D(CX, CY + 20),
       "KNOTS",
       "white",
-      "16px"
+      "14px"
     );
-    centeredText(this.snap, new Vector2D(CX, 70), "AIR", "white", "16px");
-    centeredText(this.snap, new Vector2D(CX, 90), "SPEED", "white", "16px");
+    centeredText(this.snap, new Vector2D(CX + 5, 50), "AIR SPEED", "white", "12px");
   }
 
   /**
@@ -299,8 +311,8 @@ export default class AirspeedAnalog extends Instrument {
       i <= this.airplane.MAX_DISPLAYED_SPEED;
       i += 20
     ) {
-      const position = POC(CENTER, LABEL_RADIUS, this.airspeedToAngle(i));
-      centeredText(this.snap, position, i, "white", "16px", "Verdana", "bold");
+      const position = POC(CENTER, LABEL_RADIUS + 5, this.airspeedToAngle(i));
+      centeredText(this.snap, position, i, "white", "12px", "Arial", "bold");
     }
   }
 

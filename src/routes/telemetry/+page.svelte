@@ -1,3 +1,1 @@
-<body>
-	<div>Telemetry Page</div>
-</body>
+<div>Telemetry Page</div>

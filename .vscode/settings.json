@@ -111,5 +111,8 @@
 		"width",
 		"zIndex"
 	],
-	"liveServer.settings.port": 5501
+	"liveServer.settings.port": 5501,
+	"rust-analyzer.linkedProjects": [
+		".\\src-tauri\\Cargo.toml"
+	]
 }
