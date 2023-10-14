@@ -1,9 +1,17 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod mavproxy;
+// -- Re-Exports
+pub use error::{Error, Result};
 
-use log::*;
+// -- Sub-modules
+mod ctx;
+mod error;
+mod event;
+mod ipc;
+mod mavproxy;
+mod prelude;
+
 use mavproxy::*;
 use serde_json::Value;
 
@@ -60,7 +68,7 @@ async fn mavlink_loop() {
                 _ => {}
             }
 
-            data::update((header, message));
+            update((header, message));
         }
 
         error!("Failed to receive message");
@@ -68,9 +76,9 @@ async fn mavlink_loop() {
 }
 
 #[tauri::command]
-fn get_axes() -> Value {
+async fn get_axes() -> Value {
     serde_json::from_str::<Value>(
-        data::messages()
+        messages()
             .pointer("vehicles/1/components/1/messages/AHRS2/message")
             .as_str(),
     )
