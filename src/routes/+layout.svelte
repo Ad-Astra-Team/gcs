@@ -2,6 +2,7 @@
 	import '../app.postcss';
 	// Importing necessary components
 	import { page } from '$app/stores';
+	import { listen, TauriEvent } from '@tauri-apps/api/event';
 
 	import { AppShell, AppBar, AppRail, AppRailAnchor, storePopup } from '@skeletonlabs/skeleton';
 	import {
@@ -12,7 +13,9 @@
 		IconTerminal2,
 		IconChecklist,
 		IconInfoOctagon,
-		IconAlignBoxRightMiddle
+		IconAlignBoxRightMiddle,
+		IconCircleCheck,
+		IconAlertCircle
 	} from '@tabler/icons-svelte';
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -20,10 +23,30 @@
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	// Navbar activating with function
-	import { navActive } from '$lib/Utils/stores';
-	import { dataActive } from '$lib/Utils/stores';
+	import { leftNavActive, rightleftNavActive, heartbeat, last_heartbeat } from '$lib/Utils/stores';
+	import { handleIsTauri } from '$lib/Utils/helper';
+	import { onMount } from 'svelte';
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	onMount(() => {
+		// listen backend-heartbeat event
+
+		listen('backend-heartbeat', function (evt) {
+			$heartbeat = true;
+			$last_heartbeat = evt.payload;
+			// if tauri loaded
+			if (handleIsTauri()) {
+				invoke('increase_packet_counter');
+			}
+		});
+
+		// if backend-heartbeat event is not received in 5 seconds, set heartbeat to false
+		setTimeout(() => {
+			if (Date.now() - $last_heartbeat > 4900) $heartbeat = false;
+		}, 5000);
+	});
 </script>
 
 <!-- App Shell -->
@@ -44,7 +67,7 @@
 				<div
 					class="relative flex cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-items-center place-content-center"
 					on:click={() => {
-						$navActive = !$navActive;
+						$leftNavActive = !$leftNavActive;
 					}}
 				>
 					<IconMenu2 class="w-7 h-7" />
@@ -53,22 +76,29 @@
 
 			<h1 class="cursor-pointer" style="font-family: Nevan RUS;">Ad Astra</h1>
 
-			<svelte:fragment slot="trail"
-				><div
+			<svelte:fragment slot="trail">
+				<div>
+					{#if $heartbeat}
+						<IconCircleCheck color="#00ff00" class="w-7 h-7" />
+					{:else}
+						<IconAlertCircle color="#ff0000" class="w-7 h-7" />
+					{/if}
+				</div>
+				<div
 					class="relative flex cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-items-center place-content-center"
 					on:click={() => {
-						$dataActive = !$dataActive;
+						$rightleftNavActive = !$rightleftNavActive;
 					}}
 				>
 					<IconAlignBoxRightMiddle class="w-7 h-7" />
-				</div></svelte:fragment
-			>
+				</div>
+			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 
 	<!-- App Bar -->
 	<svelte:fragment slot="sidebarLeft">
-		{#if $navActive}
+		{#if $leftNavActive}
 			<div
 				transition:slide={{ delay: 50, duration: 250, easing: quintOut, axis: 'x' }}
 				class="h-full"
@@ -141,7 +171,7 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="sidebarRight">
-		{#if $dataActive}
+		{#if $rightleftNavActive}
 			<div
 				transition:slide={{ delay: 50, duration: 250, easing: quintOut, axis: 'x' }}
 				class="h-full bg-[#1f2937] p-2"

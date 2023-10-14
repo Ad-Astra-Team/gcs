@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::time::Duration;
+
 // -- Re-Exports
 pub use error::{Error, Result};
 
@@ -14,6 +16,8 @@ mod prelude;
 
 use mavproxy::*;
 use serde_json::Value;
+use tauri::{Manager, State, StateManager};
+use tokio::time::sleep;
 
 const MAVLINK_VERSION: u8 = 2;
 const MAVLINK_SYSTEM_ID: u8 = 0;
@@ -85,6 +89,15 @@ async fn get_axes() -> Value {
     .unwrap()
 }
 
+#[derive(Default)]
+struct PacketCounter(Arc<Mutex<u32>>);
+
+#[tauri::command]
+fn increase_packet_counter(packet_counter: State<'_, PacketCounter>) {
+    let mut counter = packet_counter.0.lock().unwrap();
+    *counter += 1;
+}
+
 #[tokio::main]
 async fn main() {
     let log_filter = if IS_VERBOSE { "debug" } else { "warn" };
@@ -98,7 +111,21 @@ async fn main() {
 
     tauri::async_runtime::set(tokio::runtime::Handle::current());
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_axes])
+        .manage(PacketCounter::default())
+        .setup(|app| {
+            let app_handle = app.handle();
+            tauri::async_runtime::spawn(async move {
+                loop {
+                    sleep(Duration::from_millis(1000)).await;
+
+                    let timestamp = chrono::Utc::now().timestamp_millis();
+                    app_handle.emit_all("backend-heartbeat", timestamp).unwrap();
+                }
+            });
+
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![get_axes, increase_packet_counter])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
