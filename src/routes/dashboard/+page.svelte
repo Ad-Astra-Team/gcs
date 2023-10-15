@@ -4,5 +4,7 @@
 </script>
 
 <div class="container">
-	<Gauge />
+	<div class="grid items-center justify-center" id="gauges">
+		<Gauge />
+	</div>
 </div>

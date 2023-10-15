@@ -231,7 +231,7 @@ export default class AirspeedAnalog extends Instrument {
       "transparent",
       "#FF0000",
       this.airspeedToAngle(this.airplane.VNE),
-      this.airspeedToAngle(this.airplane.VNE + 44),
+      this.airspeedToAngle(this.airplane.VNE),
       true
     );
   }

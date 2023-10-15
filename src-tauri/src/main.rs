@@ -12,11 +12,14 @@ mod error;
 mod event;
 mod ipc;
 mod mavproxy;
+mod model;
 mod prelude;
 
 use mavproxy::*;
+use model::Vehicle;
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use tauri::{Manager, State, StateManager};
+use tauri::{AppHandle, Manager, State, StateManager};
 use tokio::time::sleep;
 
 const MAVLINK_VERSION: u8 = 2;
@@ -25,7 +28,20 @@ const MAVLINK_COMPONENT_ID: u8 = 0;
 const MAVLINK_CONNECTION_STRING: &str = "udpin:0.0.0.0:14550";
 const IS_VERBOSE: bool = false;
 
-async fn mavlink_loop() {
+#[derive(Default)]
+pub struct AppState(Arc<Mutex<Vehicle>>);
+
+impl AppState {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn get(&self) -> Arc<Mutex<Vehicle>> {
+        self.0.clone()
+    }
+}
+
+async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<AppState>>) {
     let mavlink_version = match MAVLINK_VERSION {
         1 => mavlink::MavlinkVersion::V1,
         2 => mavlink::MavlinkVersion::V2,
@@ -40,18 +56,20 @@ async fn mavlink_loop() {
         component_id,
     );
 
-    let inner_vehicle = vehicle.mavlink_vehicle.clone();
+    let _inner_vehicle = vehicle.mavlink_vehicle.clone();
 
+    type MsgArdupilot = mavlink::ardupilotmega::MavMessage;
+    type MsgCommon = mavlink::common::MavMessage;
     loop {
-        sleep(std::time::Duration::from_secs(10)).await;
+        let _ = sleep(std::time::Duration::from_secs(10));
 
         while let Ok((header, message)) = vehicle.thread_rx_channel.recv() {
             // debug!("Received: {:#?} {:#?}", header, message);
+            let mut state = app_state.lock().unwrap();
+            let mut state = state.0.lock().unwrap();
+
             match message {
-                mavlink::ardupilotmega::MavMessage::AHRS(_) => {
-                    // debug!("[AHRS1]{:#?} ", header, message);
-                }
-                mavlink::ardupilotmega::MavMessage::AHRS2(ref packet) => {
+                MsgArdupilot::AHRS2(ref packet) => {
                     debug!(
                         "[AHRS2]: lat:{} lon:{} alt:{} roll:{} pitch:{} yaw:{}",
                         packet.lat,
@@ -61,18 +79,50 @@ async fn mavlink_loop() {
                         packet.pitch,
                         packet.yaw
                     );
+                    state.gyro.pitch = packet.pitch;
+                    state.gyro.roll = packet.roll;
+                    state.gyro.yaw = packet.yaw;
                 }
-                mavlink::ardupilotmega::MavMessage::AHRS3(ref packet) => {
+                MsgArdupilot::AHRS3(ref packet) => {
                     debug!(
                         "[AHRS3]: pitch: {}, roll: {}, yaw: {}",
                         packet.pitch, packet.roll, packet.yaw
                     );
+                    state.gyro.pitch = packet.pitch;
+                    state.gyro.roll = packet.roll;
+                    state.gyro.yaw = packet.yaw;
                 }
+
+                MsgArdupilot::WIND(ref packet) => {
+                    println!(
+                        "[WIND]: direction: {}, speed: {}",
+                        packet.direction, packet.speed
+                    );
+                }
+
+                MsgArdupilot::AIRSPEED_AUTOCAL(ref packet) => {
+                    println!(
+                        "[AIRSPEED_AUTOCAL]: vx: {}, vy: {}, vz: {}",
+                        packet.vx, packet.vy, packet.vz
+                    );
+                }
+
+                MsgArdupilot::common(ref packet) => match packet {
+                    MsgCommon::VFR_HUD(ref packet) => {
+                        println!("[VFR_HUD]:  {:#?} ", packet);
+                        state.airspeeed = packet.airspeed;
+                        state.groundspeeed = packet.groundspeed;
+                    }
+                    _ => {}
+                },
 
                 _ => {}
             }
-
             update((header, message));
+            app_handle
+                .lock()
+                .unwrap()
+                .emit_all("backend-mavmsg", state.serialize());
         }
 
         error!("Failed to receive message");
@@ -89,13 +139,12 @@ async fn get_axes() -> Value {
     .unwrap()
 }
 
-#[derive(Default)]
-struct PacketCounter(Arc<Mutex<u32>>);
-
 #[tauri::command]
-fn increase_packet_counter(packet_counter: State<'_, PacketCounter>) {
-    let mut counter = packet_counter.0.lock().unwrap();
-    *counter += 1;
+fn increase_packet_counter(app_state: State<Arc<Mutex<AppState>>>) {
+    let state = app_state.lock().unwrap();
+    let mut vehicle = state.0.lock().unwrap();
+
+    vehicle.packet_tick += 1;
 }
 
 #[tokio::main]
@@ -103,23 +152,32 @@ async fn main() {
     let log_filter = if IS_VERBOSE { "debug" } else { "warn" };
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(log_filter)).init();
 
-    tokio::spawn(async move {
-        mavlink_loop().await;
-    });
-
     // inner_vehicle.lock().unwrap().send(header, message);
+
+    let app_state = Arc::new(Mutex::new(AppState::new()));
 
     tauri::async_runtime::set(tokio::runtime::Handle::current());
     tauri::Builder::default()
-        .manage(PacketCounter::default())
+        .manage(app_state.clone())
         .setup(|app| {
-            let app_handle = app.handle();
+            let app_handle = Arc::new(Mutex::new(app.app_handle()));
+            let app_handle_mav_loop = Arc::new(Mutex::new(app.app_handle()));
+
+            tauri::async_runtime::spawn(async move {
+                mavlink_loop(app_handle_mav_loop, app_state.clone()).await;
+            });
+
             tauri::async_runtime::spawn(async move {
                 loop {
                     sleep(Duration::from_millis(1000)).await;
 
                     let timestamp = chrono::Utc::now().timestamp_millis();
-                    app_handle.emit_all("backend-heartbeat", timestamp).unwrap();
+                    app_handle
+                        .clone()
+                        .lock()
+                        .unwrap()
+                        .emit_all("backend-heartbeat", timestamp)
+                        .unwrap();
                 }
             });
 
