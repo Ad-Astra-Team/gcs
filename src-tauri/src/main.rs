@@ -22,8 +22,8 @@ use tokio::time::sleep;
 const MAVLINK_VERSION: u8 = 2;
 const MAVLINK_SYSTEM_ID: u8 = 0;
 const MAVLINK_COMPONENT_ID: u8 = 0;
-const MAVLINK_CONNECTION_STRING: &str = "udpin:127.0.0.1:14550";
-const IS_VERBOSE: bool = true;
+const MAVLINK_CONNECTION_STRING: &str = "udpin:0.0.0.0:14550";
+const IS_VERBOSE: bool = false;
 
 async fn mavlink_loop() {
     let mavlink_version = match MAVLINK_VERSION {
@@ -43,7 +43,7 @@ async fn mavlink_loop() {
     let inner_vehicle = vehicle.mavlink_vehicle.clone();
 
     loop {
-        std::thread::sleep(std::time::Duration::from_secs(1));
+        sleep(std::time::Duration::from_secs(10)).await;
 
         while let Ok((header, message)) = vehicle.thread_rx_channel.recv() {
             // debug!("Received: {:#?} {:#?}", header, message);
