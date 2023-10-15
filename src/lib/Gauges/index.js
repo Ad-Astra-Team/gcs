@@ -75,10 +75,10 @@ export function initialize_gauges() {
     // listen('backend-mavmsg', function (evt) {
     //     let j = JSON.parse(evt.payload);
 
-    //     obj_attitude.setRollAndPitch(j.gyro.roll * 50, j.gyro.pitch * 50);
-    //     obj_turn_coordinator.setRollRate(j.gyro.yaw * 50);
-    //     obj_heading.setHeading(j.gyro.yaw * 50);
-    //     obj_airspeed.setNeedle(j.airspeed);
+    //     airplane.setAirspeed(j.airspeed);
+    //     airplane.setPitch(j.gyro.pitch * 20);
+    //     airplane.setRoll(j.gyro.roll * 20);
+    //     airplane.setYaw(j.gyro.yaw * 20);
     // });
 
     instruments.forEach((i) => i.demoStart());

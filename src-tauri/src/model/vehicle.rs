@@ -18,8 +18,8 @@ pub struct GPS {
 pub struct Vehicle {
     pub gyro: Gyro,
     pub gps: GPS,
-    pub airspeeed: f32,
-    pub groundspeeed: f32,
+    pub airspeed: f32,
+    pub groundspeed: f32,
     pub packet_tick: u32,
 }
 
@@ -28,8 +28,8 @@ impl Vehicle {
         Vehicle {
             gyro: Gyro::default(),
             gps: GPS::default(),
-            airspeeed: 0.0,
-            groundspeeed: 0.0,
+            airspeed: 0.0,
+            groundspeed: 0.0,
             packet_tick: 0,
         }
     }

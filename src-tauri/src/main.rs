@@ -62,7 +62,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
     type MsgCommon = mavlink::common::MavMessage;
     loop {
         let _ = sleep(std::time::Duration::from_secs(10));
-
+        let mut t1 = std::time::Instant::now();
         while let Ok((header, message)) = vehicle.thread_rx_channel.recv() {
             // debug!("Received: {:#?} {:#?}", header, message);
             let state = app_state.lock().unwrap();
@@ -110,8 +110,8 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                 MsgArdupilot::common(ref packet) => match packet {
                     MsgCommon::VFR_HUD(ref packet) => {
                         debug!("[VFR_HUD]:  {:#?} ", packet);
-                        state.airspeeed = packet.airspeed;
-                        state.groundspeeed = packet.groundspeed;
+                        state.airspeed = packet.airspeed;
+                        state.groundspeed = packet.groundspeed;
                     }
                     _ => {}
                 },
@@ -119,10 +119,14 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                 _ => {}
             }
             update((header, message));
-            let _ = app_handle
-                .lock()
-                .unwrap()
-                .emit_all("backend-mavmsg", state.serialize());
+            if (std::time::Instant::now() - t1).as_millis() > 100 {
+                let _ = app_handle
+                    .lock()
+                    .unwrap()
+                    .emit_all("backend-mavmsg", state.serialize());
+
+                t1 = std::time::Instant::now();
+            }
         }
 
         error!("Failed to receive message");
