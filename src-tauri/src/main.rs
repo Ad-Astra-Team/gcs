@@ -65,7 +65,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
 
         while let Ok((header, message)) = vehicle.thread_rx_channel.recv() {
             // debug!("Received: {:#?} {:#?}", header, message);
-            let mut state = app_state.lock().unwrap();
+            let state = app_state.lock().unwrap();
             let mut state = state.0.lock().unwrap();
 
             match message {
@@ -94,14 +94,14 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                 }
 
                 MsgArdupilot::WIND(ref packet) => {
-                    println!(
+                    debug!(
                         "[WIND]: direction: {}, speed: {}",
                         packet.direction, packet.speed
                     );
                 }
 
                 MsgArdupilot::AIRSPEED_AUTOCAL(ref packet) => {
-                    println!(
+                    debug!(
                         "[AIRSPEED_AUTOCAL]: vx: {}, vy: {}, vz: {}",
                         packet.vx, packet.vy, packet.vz
                     );
@@ -109,7 +109,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
 
                 MsgArdupilot::common(ref packet) => match packet {
                     MsgCommon::VFR_HUD(ref packet) => {
-                        println!("[VFR_HUD]:  {:#?} ", packet);
+                        debug!("[VFR_HUD]:  {:#?} ", packet);
                         state.airspeeed = packet.airspeed;
                         state.groundspeeed = packet.groundspeed;
                     }
@@ -119,7 +119,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                 _ => {}
             }
             update((header, message));
-            app_handle
+            let _ = app_handle
                 .lock()
                 .unwrap()
                 .emit_all("backend-mavmsg", state.serialize());
