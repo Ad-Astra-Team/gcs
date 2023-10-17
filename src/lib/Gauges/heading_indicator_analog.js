@@ -25,8 +25,8 @@ const I = 0;
 const W = 230;
 const H = 230;
 // size of airplane pointer
-const AW = 180;
-const AH = 180;
+const AW = 110;
+const AH = 110;
 // outer radius
 const R = (Math.min(W, H) - I) / 2;
 // center
@@ -35,9 +35,9 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // radius of heading text
 const TEXT_RADIUS = R - (CASE1 + CASE2 + CASE3 + 20);
@@ -140,20 +140,22 @@ export default class HeadingIndicatorAnalog extends Instrument {
   createButtons() {
     this.setButton = new Rotatable({
       snap: this.snap,
-      radius: SET_R,
+      radius: SET_R - 8,
       text: "SET",
+      fontSize: "12px",
       textColor: colors.silver,
-      gear: 0.25,
+      gear: 0.55,
       rotationCallback: this.onSetChanged.bind(this)
     });
     this.setButton.centerOn(new Vector2D(SET_CENTER.x, SET_CENTER.y));
 
     this.hdgButton = new Rotatable({
       snap: this.snap,
-      radius: HDG_R,
+      radius: HDG_R - 8,
       text: "HDG",
+      fontSize: "12px",
       textColor: colors.red,
-      gear: 0.25,
+      gear: 0.55,
       rotationCallback: this.onHdgChanged.bind(this)
     });
     this.hdgButton.centerOn(new Vector2D(HDG_CENTER.x, HDG_CENTER.y));
@@ -283,8 +285,8 @@ export default class HeadingIndicatorAnalog extends Instrument {
           textCenter,
           str,
           "white",
-          "32px",
-          "Verdana"
+          "24px",
+          "Time New Roman"
         );
         t.attr({ transform: `r${i} ${textCenter.x} ${textCenter.y}` });
         this.face.add(t);
@@ -317,14 +319,14 @@ export default class HeadingIndicatorAnalog extends Instrument {
 
   renderPointer() {
     this.snap.add(
-      airplaneSilhouette(CX, CY, AW, AH, 4, "orange", "transparent")
+      airplaneSilhouette(CX, CY, AW, AH, 15, "darkred", "solid")
     );
-    tick(this.snap, CENTER, 0, TICK, AH / 2, 3, "orange");
-    tick(this.snap, CENTER, 90, TICK, AH / 2, 3, "orange");
-    tick(this.snap, CENTER, 180, TICK, AH / 2, 3, "orange");
-    tick(this.snap, CENTER, 270, TICK, AH / 2, 3, "orange");
+    tick(this.snap, CENTER, 0, TICK, AH / 2 + 3, 3, "red");
+    tick(this.snap, CENTER, 90, TICK, AH / 2 + 3, 3, "red");
+    tick(this.snap, CENTER, 180, TICK, AH / 2 + 3, 3, "red");
+    tick(this.snap, CENTER, 270, TICK, AH / 2 - 15, 3 + 2, "darkred");
 
-    circle(this.snap, CENTER, 4, "#888", 1, colors.black);
+    circle(this.snap, CENTER, 3, "gray", 0.3, colors.black);
   }
 
   /**

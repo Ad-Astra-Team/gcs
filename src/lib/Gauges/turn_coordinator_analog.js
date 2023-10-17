@@ -31,20 +31,20 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // thickness of outer bezel
-const OUTER_BEZEL = 50;
+const OUTER_BEZEL = 30;
 
 // inner suface radius
 const INNER_RADIUS = R - (CASE1 + CASE2 + CASE3 + OUTER_BEZEL);
 
 // inclinomenter metrics
-const INC_THICKNESS = 55;
+const INC_THICKNESS = 30;
 const INC_RADIUS = R * 2;
-const INC_CENTER = new Vector2D(CX, CY - INC_RADIUS + INC_THICKNESS * 1.5);
+const INC_CENTER = new Vector2D(CX, CY - INC_RADIUS + INC_THICKNESS * 1.69);
 // number of degrees either side of 90 for the inclinometer arc
 const INC_ANGLE = 16;
 // angle offset for ticks on inclinometer
@@ -174,8 +174,8 @@ export default class TurnCoordinatorAnalog extends Instrument {
         CENTER,
         angle,
         BEZEL_R + OUTER_BEZEL / 8,
-        BEZEL_R - OUTER_BEZEL / 2,
-        10,
+        BEZEL_R - OUTER_BEZEL / 2 + 2,
+        5,
         "white"
       );
     });
@@ -184,16 +184,16 @@ export default class TurnCoordinatorAnalog extends Instrument {
       POC(CENTER, BEZEL_R + 10, 270),
       "D.C.",
       "white",
-      "16px",
-      "Verdana"
+      "15px",
+      "Times New Roman"
     );
     centeredText(
       this.snap,
       POC(CENTER, BEZEL_R - 8, 270),
       "ELECTRIC",
       "white",
-      "16px",
-      "Verdana"
+      "14px",
+      "Times New Roman"
     );
 
     centeredText(
@@ -202,7 +202,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "L",
       "white",
       "32px",
-      "Verdana"
+      "Times New Roman"
     );
     centeredText(
       this.snap,
@@ -210,32 +210,32 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "R",
       "white",
       "30px",
-      "Verdana"
+      "Arial"
     );
 
     centeredText(
       this.snap,
-      POC(CENTER, BEZEL_R - 14, 90),
+      POC(CENTER, BEZEL_R - 8, 90),
       "NO PITCH",
       "white",
-      "16px",
-      "Verdana"
+      "10px",
+      "Arial"
     );
     centeredText(
       this.snap,
-      POC(CENTER, BEZEL_R + 4, 90),
+      POC(CENTER, BEZEL_R + 3, 90),
       "INFORMATION",
       "white",
-      "16px",
+      "10px",
       "Verdana"
     );
 
     centeredText(
       this.snap,
-      POC(CENTER, 35, 90),
+      POC(CENTER, 28, 90),
       "2 MIN",
       "white",
-      "20px",
+      "11px",
       "Verdana"
     );
   }
@@ -346,7 +346,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
     this.ball = circle(
       this.snap,
       center,
-      INC_THICKNESS / 2 - 4,
+      INC_THICKNESS / 2 - 2,
       "transparent",
       0,
       this.snap.gradient(`r(0.35, 0.35, 0.5)#aaa:0-black:100`)

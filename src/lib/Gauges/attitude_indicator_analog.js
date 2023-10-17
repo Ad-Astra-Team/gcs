@@ -159,7 +159,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
       text: "⬍",
       fontSize: "22px",
       textColor: colors.silver,
-      gear: 0.05,
+      gear: 0.1,
       randomize: false,
       rotationCallback: this.onVerticalAdjustment.bind(this)
     });
@@ -406,7 +406,8 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           new Vector2D(start.x - 12, start.y),
           Math.abs(v),
           "white",
-          "12px"
+          "12px",
+          "Times New Roman"
         )
       );
       this.innerBezelFace.add(
@@ -415,7 +416,8 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           new Vector2D(end.x + 12, end.y),
           Math.abs(v),
           "white",
-          "12px"
+          "12px",
+          "Times New Roman"
         )
       );
     });
