@@ -46,6 +46,9 @@
 		setTimeout(() => {
 			if (Date.now() - $last_heartbeat > 4900) $heartbeat = false;
 		}, 5000);
+
+		let batteryLevel = 0.0;
+		let armMode = false;
 	});
 </script>
 
@@ -100,7 +103,7 @@
 	<svelte:fragment slot="sidebarLeft">
 		{#if $leftNavActive}
 			<div
-				transition:slide={{ delay: 50, duration: 250, easing: quintOut, axis: 'x' }}
+				transition:slide={{ delay: 50, duration: 1000, easing: quintOut, axis: 'x' }}
 				class="h-full"
 			>
 				<AppRail width="w-14" shadow=" shadow-inner">

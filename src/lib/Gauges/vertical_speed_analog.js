@@ -32,19 +32,19 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // outer radius of all tick marks
 const TICK1 = R - (CASE1 + CASE2 + CASE3);
 // inner radius of small ticks
-const TICK2 = TICK1 - 20;
+const TICK2 = TICK1 - 14;
 // inner radius of large ticks
-const TICK3 = TICK1 - 30;
+const TICK3 = TICK1 - 24;
 
 // radius of  large digits marking hundreds of feet
-const LABEL_RADIUS = TICK3 - 25;
+const LABEL_RADIUS = TICK3 - 10;
 
 // max positive and negative rates displayed
 const MIN_MAX_SPEED = 2000;
@@ -185,41 +185,41 @@ export default class VerticalSpeedAnalog extends Instrument {
   // render up/down vertical speed in 100
   renderText() {
     let position = POC(CENTER, UP_DOWN_RADIUS, ZERO + UP_DOWN_ANGLE);
-    centeredText(this.snap, position, "UP", "white", "16px", "Verdana");
+    centeredText(this.snap, position, "UP", "white", "9px", "Arial");
     position = POC(CENTER, UP_DOWN_RADIUS, ZERO - UP_DOWN_ANGLE);
-    centeredText(this.snap, position, "DN", "white", "16px", "Verdana");
+    centeredText(this.snap, position, "DN", "white", "9px", "Arial");
 
     leftText(
       this.snap,
-      new Vector2D(RATE_TEXT, CY - 50),
+      new Vector2D(RATE_TEXT, CY - 30),
       "VERTICAL",
       "white",
-      "16px",
-      "Verdana"
+      "9px",
+      "Arial"
     );
     leftText(
       this.snap,
-      new Vector2D(RATE_TEXT, CY - 30),
+      new Vector2D(RATE_TEXT, CY - 20),
       "SPEED",
       "white",
-      "16px",
-      "Verdana"
+      "9px",
+      "Arial"
+    );
+    leftText(
+      this.snap,
+      new Vector2D(RATE_TEXT, CY + 20),
+      "100 FEET",
+      "white",
+      "9px",
+      "Arial"
     );
     leftText(
       this.snap,
       new Vector2D(RATE_TEXT, CY + 30),
-      "100 FEET",
-      "white",
-      "16px",
-      "Verdana"
-    );
-    leftText(
-      this.snap,
-      new Vector2D(RATE_TEXT, CY + 50),
       "PER MINUTE",
       "white",
-      "16px",
-      "Verdana"
+      "9px",
+      "Arial"
     );
   }
 
@@ -255,7 +255,7 @@ export default class VerticalSpeedAnalog extends Instrument {
         if (i < MIN_MAX_SPEED) {
           if (i === 0) {
             position = POC(CENTER, LABEL_RADIUS, ZERO);
-            centeredText(this.snap, position, "0", "white", "30px", "Verdana");
+            centeredText(this.snap, position, "0", "white", "22px", "Times New Roman");
           } else {
             position = POC(CENTER, LABEL_RADIUS, this.verticalSpeedToAngle(i));
             centeredText(
@@ -263,8 +263,8 @@ export default class VerticalSpeedAnalog extends Instrument {
               position,
               i / 100,
               "white",
-              "30px",
-              "Verdana"
+              "22px",
+              "Times New Roman"
             );
             position = POC(CENTER, LABEL_RADIUS, this.verticalSpeedToAngle(-i));
             centeredText(
@@ -272,8 +272,8 @@ export default class VerticalSpeedAnalog extends Instrument {
               position,
               i / 100,
               "white",
-              "30px",
-              "Verdana"
+              "22px",
+              "Times New Roman"
             );
           }
         } else {
@@ -283,8 +283,8 @@ export default class VerticalSpeedAnalog extends Instrument {
             position,
             i / 100,
             "white",
-            "30px",
-            "Verdana"
+            "22px",
+            "Times New Roman"
           );
         }
       } else {

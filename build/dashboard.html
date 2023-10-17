@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="./favicon.png" />
+	<meta name="viewport" content="width=device-width" />
+	
+		<link rel="modulepreload" href="./_app/immutable/entry/start.2609439d.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.8da674eb.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.673af96a.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.b43ff74f.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.12812435.js">
+	<title>Ad Astra</title>
+</head>
+
+<body data-sveltekit-preload-data="hover" data-theme="wintry" class="select-none">
+	<div style="display: contents" class="h-full ">
+			<script>
+				{
+					__sveltekit_dtwsbd = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.2609439d.js"),
+						import("./_app/immutable/entry/app.b43ff74f.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+</body>
+
+</html>

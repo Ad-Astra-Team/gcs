@@ -32,35 +32,41 @@ const CY = H / 2;
 const CENTER = new Vector2D(CX, CY);
 
 // thickness of outer three rings of case
-const CASE1 = 8;
-const CASE2 = 10;
-const CASE3 = 14;
+const CASE1 = 3;
+const CASE2 = 6;
+const CASE3 = 9;
 
 // outer radius of all tick marks
 const TICK1 = R - (CASE1 + CASE2 + CASE3);
 // inner radius of small ticks
-const TICK2 = TICK1 - 25;
+const TICK2 = TICK1 - 10;
 // inner radius of large ticks
-const TICK3 = TICK1 - 40;
+const TICK3 = TICK1 - 15;
 
 // green arc radius and thickness
-const ARC_WIDTH = 20;
-const ARC_RADIUS = TICK2 + ARC_WIDTH / 2;
+const ARC_WIDTH = 16;
+const ARC_RADIUS = TICK2 + ARC_WIDTH / 10;
 
 // radius of  large digits marking hundreds of feet
 const LABEL_RADIUS = TICK3 - 25;
 
 // hundreds needle, other needles are derived from these
-const POINTER_SMALL_RADIUS = 40;
-const POINTER_WIDTH = 10;
-const POINTER_ARROW = 6;
+const POINTER_SMALL_RADIUS = 0;
+const POINTER_WIDTH = 5;
+const POINTER_ARROW = 5;
 const POINTER_RADIUS = TICK2 - POINTER_ARROW;
 
 // RPM limits and ranges
 const MIN_RPM = 0;
 const MAX_RPM = 3500;
-const MIN_GREEN = 2100;
-const MAX_GREEN = 2700;
+const MIN_WHITE = 0
+const MAX_WHITE = 500
+const MIN_GREEN = 500;
+const MAX_GREEN = 1500;
+const MIN_YELLOW = 1500
+const MAX_YELLOW = 2500
+const MIN_RED = 2500
+const MAX_RED = 3500
 const REDLINE = 2700;
 
 // angle at low stop of tacometer and angle sweep to the
@@ -69,10 +75,10 @@ const START_ANGLE = 145;
 const ANGLE_SWEEP = 250;
 
 // dimensions of individual hours window
-const HOUR_W = 24;
-const HOUR_H = 30;
-const HOUR_P = 8;
-const HOUR_Y = CY + 70;
+const HOUR_W = 15;
+const HOUR_H = 20;
+const HOUR_P = 6;
+const HOUR_Y = CY + 20;
 
 export default class TachometerAnalog extends Instrument {
   constructor(options) {
@@ -145,13 +151,13 @@ export default class TachometerAnalog extends Instrument {
    * fixed text
    */
   renderText() {
-    centeredText(this.snap, new Vector2D(CX, CY - 55), "RPM", "white", "24px");
+    centeredText(this.snap, new Vector2D(CX, CY - 35), "RPM", "white", "15px");
     centeredText(
       this.snap,
-      new Vector2D(CX, CY - 33),
+      new Vector2D(CX, CY - 22),
       "X 100",
       "white",
-      "14px"
+      "9px"
     );
   }
 
@@ -185,8 +191,8 @@ export default class TachometerAnalog extends Instrument {
         position,
         Math.floor(Math.random() * 10) % 10,
         i === n - 1 ? "black" : "white",
-        "20px",
-        "Verdana"
+        "18px",
+        "Times New Roman"
       );
     }
     centeredText(
@@ -194,8 +200,8 @@ export default class TachometerAnalog extends Instrument {
       new Vector2D(CX, HOUR_Y + HOUR_H + 12),
       "HOURS",
       "white",
-      "14px",
-      "Verdana"
+      "10px",
+      "Arial"
     );
   }
 
@@ -235,6 +241,7 @@ export default class TachometerAnalog extends Instrument {
    */
   renderDial() {
     // draw green arc under all ticks
+
     arc(
       this.snap,
       CENTER,
@@ -247,6 +254,46 @@ export default class TachometerAnalog extends Instrument {
       this.rpmToAngle(MAX_GREEN),
       true
     );
+
+    arc(
+      this.snap,
+      CENTER,
+      ARC_RADIUS,
+      ARC_WIDTH,
+      0,
+      "transparent",
+      "#FFDC00",
+      this.rpmToAngle(MIN_YELLOW),
+      this.rpmToAngle(MAX_YELLOW),
+      true
+    );
+
+    arc(
+      this.snap,
+      CENTER,
+      ARC_RADIUS,
+      ARC_WIDTH,
+      0,
+      "transparent",
+      "#FF0000",
+      this.rpmToAngle(MIN_RED),
+      this.rpmToAngle(MAX_RED),
+      true
+    );
+
+    arc(
+      this.snap,
+      CENTER,
+      ARC_RADIUS,
+      ARC_WIDTH,
+      0,
+      "transparent",
+      "white",
+      this.rpmToAngle(MIN_WHITE),
+      this.rpmToAngle(MAX_WHITE),
+      true
+    );
+
     // draw small/large ticks across entire RPM range
     for (let i = MIN_RPM; i <= MAX_RPM; i += 100) {
       // large or small
@@ -254,22 +301,22 @@ export default class TachometerAnalog extends Instrument {
         tick(this.snap, CENTER, this.rpmToAngle(i), TICK1, TICK3, 5, "white");
         // draw RPM text and 500 intervals except and upper and lower limit
         if (i > MIN_RPM && i < MAX_RPM) {
-          const position = POC(CENTER, LABEL_RADIUS, this.rpmToAngle(i));
+          const position = POC(CENTER, LABEL_RADIUS + 9, this.rpmToAngle(i));
           centeredText(
             this.snap,
             position,
             Math.floor(i / 100),
             "white",
-            "34px",
-            "Verdana"
+            "24px",
+            "Times New"
           );
         }
       } else {
-        tick(this.snap, CENTER, this.rpmToAngle(i), TICK1, TICK2, 3, "white");
+        tick(this.snap, CENTER, this.rpmToAngle(i), TICK1, TICK2, 4, "white");
       }
     }
     // draw redline
-    tick(this.snap, CENTER, this.rpmToAngle(REDLINE), TICK1, TICK3, 7, "red");
+    tick(this.snap, CENTER, this.rpmToAngle(REDLINE), TICK1, TICK3, 0, "red");
   }
 
   /**

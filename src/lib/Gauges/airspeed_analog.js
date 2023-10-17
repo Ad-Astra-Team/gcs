@@ -231,7 +231,7 @@ export default class AirspeedAnalog extends Instrument {
       "transparent",
       "#FF0000",
       this.airspeedToAngle(this.airplane.VNE),
-      this.airspeedToAngle(this.airplane.VNE),
+      this.airspeedToAngle(this.airplane.VNE + 44),
       true
     );
   }
@@ -312,7 +312,7 @@ export default class AirspeedAnalog extends Instrument {
       i += 20
     ) {
       const position = POC(CENTER, LABEL_RADIUS + 5, this.airspeedToAngle(i));
-      centeredText(this.snap, position, i, "white", "12px", "Arial", "bold");
+      centeredText(this.snap, position, i, "white", "12px", "Times New Roman", "bold");
     }
   }
 

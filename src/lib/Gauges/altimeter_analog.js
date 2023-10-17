@@ -267,7 +267,7 @@ export default class AltimeterAnalog extends Instrument {
           strDisplay,
           "white",
           "7px",
-          "Verdana"
+          "Arial"
         );
         text.attr({ transform: `r${angle} ${tp.x} ${tp.y}` });
         this.kGroup.add(text);
@@ -447,8 +447,8 @@ export default class AltimeterAnalog extends Instrument {
           this.textPosition(v0_9),
           v0_9,
           "white",
-          "16px",
-          "Verdana"
+          "20px",
+          "Times New Roman"
         );
       } else {
         // smaller ticks for 20ft intervals
