@@ -164,4 +164,6 @@ Cargo.lock
 .svelte-kit/
 package
 
+build/
+
 # End of https://www.toptal.com/developers/gitignore/api/rust,svelte,node
