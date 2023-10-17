@@ -77,7 +77,7 @@
 				</div>
 			</svelte:fragment>
 
-			<h1 class="cursor-pointer" style="font-family: Nevan RUS;">Ad Astra</h1>
+			<h1 class="cursor-pointer" style="font-family: Nevan;">Ad Astra</h1>
 
 			<svelte:fragment slot="trail">
 				<div>
