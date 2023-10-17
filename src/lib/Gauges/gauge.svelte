@@ -1,7 +1,5 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
-	import { invoke } from '@tauri-apps/api';
-	import { heartbeat, last_heartbeat } from '$lib/Utils/stores';
 	import { destroy_gauges, initialize_gauges } from '.';
 	import '$lib/Gauges/index';
 
