@@ -12,57 +12,73 @@ import VerticalSpeedAnalog from '$lib/Gauges/vertical_speed_analog';
 import Airplane from '$lib/Gauges/airplane';
 import './styles.css';
 
+let DOM_airspeed;
+let DOM_attitude;
+let DOM_altimeter;
+let DOM_turn_coordinator;
+let DOM_heading;
+let DOM_vertical_speed;
+let DOM_tachometer;
+let airplane;
+let obj_airspeed;
+let obj_attitude;
+let obj_altimeter;
+let obj_turn_coordinator;
+let obj_heading;
+let obj_vertical_speed;
+let obj_tachometer;
+let instruments;
 
 export function initialize_gauges() {
 
     console.log('dashboard mounted');
 
-    const DOM_airspeed = document.getElementById('airspeed');
-    const DOM_attitude = document.getElementById('attitude');
-    const DOM_altimeter = document.getElementById('altimeter');
-    const DOM_turn_coordinator = document.getElementById('turn_coordinator');
-    const DOM_heading = document.getElementById('heading');
-    const DOM_vertical_speed = document.getElementById('vertical_speed');
-    const DOM_tachometer = document.getElementById('tachometer');
+    DOM_airspeed = document.getElementById('airspeed');
+    DOM_attitude = document.getElementById('attitude');
+    DOM_altimeter = document.getElementById('altimeter');
+    DOM_turn_coordinator = document.getElementById('turn_coordinator');
+    DOM_heading = document.getElementById('heading');
+    DOM_vertical_speed = document.getElementById('vertical_speed');
+    DOM_tachometer = document.getElementById('tachometer');
 
-    const airplane = new Airplane();
+    airplane = new Airplane();
 
-    const obj_airspeed = new AirspeedAnalog({
+    obj_airspeed = new AirspeedAnalog({
         airplane: airplane,
         parentElement: DOM_airspeed,
     });
 
-    const obj_attitude = new AttitudeIndicatorAnalog({
+    obj_attitude = new AttitudeIndicatorAnalog({
         airplane,
         parentElement: DOM_attitude
     });
 
-    const obj_altimeter = new AltimeterAnalog({
+    obj_altimeter = new AltimeterAnalog({
         airplane,
         parentElement: DOM_altimeter
     });
 
-    const obj_turn_coordinator = new TurnCoordinatorAnalog({
+    obj_turn_coordinator = new TurnCoordinatorAnalog({
         airplane,
         parentElement: DOM_turn_coordinator
     });
 
-    const obj_heading = new HeadingIndicatorAnalog({
+    obj_heading = new HeadingIndicatorAnalog({
         airplane,
         parentElement: DOM_heading
     });
 
-    const obj_vertical_speed = new VerticalSpeedAnalog({
+    obj_vertical_speed = new VerticalSpeedAnalog({
         airplane,
         parentElement: DOM_vertical_speed
     });
 
-    const obj_tachometer = new TachometerAnalog({
+    obj_tachometer = new TachometerAnalog({
         airplane,
         parentElement: DOM_tachometer
     });
 
-    const instruments = [
+    instruments = [
         obj_airspeed,
         obj_attitude,
         obj_altimeter,
@@ -83,4 +99,29 @@ export function initialize_gauges() {
 
     instruments.forEach((i) => i.demoStart());
 
+}
+
+export function destroy_gauges() {
+    instruments.forEach((i) => i.demoStop());
+
+    obj_airspeed = null;
+    obj_attitude = null;
+    obj_altimeter = null;
+    obj_turn_coordinator = null;
+    obj_heading = null;
+    obj_vertical_speed = null;
+    obj_tachometer = null;
+    instruments = null;
+
+    airplane = null;
+
+    DOM_airspeed = null;
+    DOM_attitude = null;
+    DOM_altimeter = null;
+    DOM_turn_coordinator = null;
+    DOM_heading = null;
+    DOM_vertical_speed = null;
+    DOM_tachometer = null;
+
+    console.log('dashboard destroyed');
 }

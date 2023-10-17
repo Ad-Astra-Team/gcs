@@ -2,14 +2,16 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { invoke } from '@tauri-apps/api';
 	import { heartbeat, last_heartbeat } from '$lib/Utils/stores';
-	import { initialize_gauges } from '.';
+	import { destroy_gauges, initialize_gauges } from '.';
 	import '$lib/Gauges/index';
 
 	onMount(() => {
 		initialize_gauges();
 	});
 
-	onDestroy(() => {});
+	onDestroy(() => {
+		destroy_gauges();
+	});
 </script>
 
 <div class="container w-full">
