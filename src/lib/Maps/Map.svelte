@@ -4,7 +4,37 @@
 	import MapToolbar from './MapToolbar.svelte';
 	import MarkerPopup from './MarkerPopup.svelte';
 	import * as markerIcons from '$lib/Maps/marker';
+	import { modeCurrent } from '@skeletonlabs/skeleton';
+
+	// #region Globals
+	/**
+	 * @type {L.Map}
+	 */
 	let map;
+
+	var mapOptions = {
+		zoom: 10,
+		preferCanvas: true,
+		zoomControl: false
+	};
+
+	/**
+	 * @type {L.TileLayer}
+	 */
+	let layer;
+
+	var layerOptions = {
+		// attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
+		// &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
+		subdomains: 'abcd',
+		maxZoom: 20,
+		minZoom: 0
+	};
+
+	var zoomOptions = {
+		zoomInText: '1',
+		zoomOutText: '0'
+	};
 
 	const markerLocations = [
 		[29.8283, -96.5795],
@@ -17,24 +47,45 @@
 	];
 
 	const initialView = [39.8283, -98.5795];
-	function createMap(container) {
-		let m = L.map(container, { preferCanvas: true }).setView(initialView, 5);
-		L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-			// attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
-			// &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
-			subdomains: 'abcd',
-			maxZoom: 14
-		}).addTo(m);
 
-		m.on('click', addMarker);
-		return m;
-	}
+	let markerLayers;
+	let lineLayers;
+
+	let toolbar = L.control({ position: 'topright' });
+	let toolbarComponent;
 
 	let eye = true;
 	let lines = true;
 
-	let toolbar = L.control({ position: 'topright' });
-	let toolbarComponent;
+	let markers = new Map();
+	// #endregion
+
+	/**
+	 * @param {HTMLElement} container
+	 * @returns {L.Map}
+	 */
+	function createMap(container) {
+		var m = L.map(container, mapOptions).setView(initialView, 5);
+
+		if ($modeCurrent) {
+			layer = L.tileLayer(
+				'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+				layerOptions
+			);
+		} else {
+			layer = L.tileLayer(
+				'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+				layerOptions
+			);
+		}
+
+		m.addLayer(layer);
+
+		L.control.zoom(zoomOptions);
+
+		return m;
+	}
+
 	toolbar.onAdd = (map) => {
 		let div = L.DomUtil.create('div');
 		toolbarComponent = new MapToolbar({
@@ -80,8 +131,6 @@
 		});
 	}
 
-	let markers = new Map();
-
 	function markerIcon(count) {
 		let html = `<div class="map-marker"><div>${markerIcons.library}</div><div class="marker-text">${count}</div></div>`;
 		return L.divIcon({
@@ -93,6 +142,7 @@
 	function addMarker(e) {
 		// Add marker to map at click location; add popup window
 		var newMarker = new L.marker(e.latlng).addTo(map);
+		console.log(e);
 	}
 
 	function createMarker(loc) {
@@ -122,8 +172,6 @@
 		return L.polyline(markerLocations, { color: '#E4E', opacity: 0.5 });
 	}
 
-	let markerLayers;
-	let lineLayers;
 	function mapAction(container) {
 		map = createMap(container);
 		toolbar.addTo(map);
@@ -146,6 +194,14 @@
 				map = null;
 			}
 		};
+	}
+
+	function destroyMap() {
+		if (map) {
+			toolbar.remove();
+			map.remove();
+			map = null;
+		}
 	}
 
 	// We could do these in the toolbar's click handler but this is an example
@@ -171,6 +227,26 @@
 			map.invalidateSize();
 		}
 	}
+
+	// light/dark mode
+	modeCurrent.subscribe((mode) => {
+		var old_layer = layer;
+		if (mode) {
+			layer = L.tileLayer(
+				'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+				layerOptions
+			);
+		} else {
+			layer = L.tileLayer(
+				'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+				layerOptions
+			);
+		}
+		if (map) {
+			map.removeLayer(old_layer);
+			map.addLayer(layer);
+		}
+	});
 </script>
 
 <svelte:window on:resize={resizeMap} />
