@@ -4,7 +4,14 @@
 	import { page } from '$app/stores';
 	import { listen, TauriEvent } from '@tauri-apps/api/event';
 
-	import { AppShell, AppBar, AppRail, AppRailAnchor, storePopup } from '@skeletonlabs/skeleton';
+	import {
+		AppShell,
+		AppBar,
+		AppRail,
+		AppRailAnchor,
+		storePopup,
+		LightSwitch
+	} from '@skeletonlabs/skeleton';
 	import {
 		IconLayout,
 		IconHome,
@@ -63,7 +70,8 @@
 			padding="p-0"
 			spacing="space-y-0"
 			slotTrail="place-content-end"
-			shadow="shadow-xl"
+			shadow="shadow-2xl"
+			border="border-b border-[#f1efef] dark:border-[#202736]"
 		>
 			<svelte:fragment slot="lead">
 				<!-- Container for burger menu -->
@@ -103,15 +111,18 @@
 	<svelte:fragment slot="sidebarLeft">
 		{#if $leftNavActive}
 			<div
-				transition:slide={{ delay: 50, duration: 1000, easing: quintOut, axis: 'x' }}
+				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
 				class="h-full"
 			>
-				<AppRail width="w-14" shadow=" shadow-inner">
+				<AppRail
+					width="w-14"
+					border="border-r border-l border-b border-[#f1efef] dark:border-[#202736]"
+				>
 					<svelte:fragment slot="lead">
 						<AppRailAnchor
 							href="/home"
-							active="bg-[#22324a]"
 							selected={$page.url.pathname === '/home'}
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 						>
 							<svelte:fragment slot="lead">
 								<IconHome />
@@ -119,7 +130,7 @@
 						</AppRailAnchor>
 						<AppRailAnchor
 							href="/dashboard"
-							active="bg-[#22324a]"
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							selected={$page.url.pathname === '/dashboard'}
 						>
 							<svelte:fragment slot="lead">
@@ -128,7 +139,7 @@
 						</AppRailAnchor>
 						<AppRailAnchor
 							href="/telemetry"
-							active="bg-[#22324a]"
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							selected={$page.url.pathname === '/telemetry'}
 						>
 							<svelte:fragment slot="lead">
@@ -137,7 +148,7 @@
 						</AppRailAnchor>
 						<AppRailAnchor
 							href="/test"
-							active="bg-[#22324a]"
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							selected={$page.url.pathname === '/test'}
 						>
 							<svelte:fragment slot="lead">
@@ -151,7 +162,7 @@
 					<svelte:fragment slot="trail">
 						<AppRailAnchor
 							href="/about"
-							active="bg-[#22324a]"
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							selected={$page.url.pathname === '/about'}
 						>
 							<svelte:fragment slot="lead">
@@ -160,13 +171,19 @@
 						</AppRailAnchor>
 						<AppRailAnchor
 							href="/settings"
-							active="bg-[#22324a]"
+							active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							selected={$page.url.pathname === '/settings'}
 						>
 							<svelte:fragment slot="lead">
 								<IconSettings />
-							</svelte:fragment></AppRailAnchor
-						>
+							</svelte:fragment>
+						</AppRailAnchor>
+
+						<AppRailAnchor hover="none">
+							<svelte:fragment slot="lead">
+								<LightSwitch width="w-10" height="h-5" />
+							</svelte:fragment>
+						</AppRailAnchor>
 					</svelte:fragment>
 				</AppRail>
 			</div>
@@ -176,11 +193,11 @@
 	<svelte:fragment slot="sidebarRight">
 		{#if $rightleftNavActive}
 			<div
-				transition:slide={{ delay: 50, duration: 250, easing: quintOut, axis: 'x' }}
-				class="h-full bg-[#1f2937] p-2"
+				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
+				class="h-full p-2 pt-3 pb-3 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
 				<textarea
-					class="transition-colors shadow-2xl h-2/6 textarea"
+					class="h-2/6 textarea"
 					rows="4"
 					placeholder="Your data will be flow here. You can also expand this window as you wish."
 				/>
