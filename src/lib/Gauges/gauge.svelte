@@ -12,24 +12,12 @@
 	});
 </script>
 
-<div class="container w-full">
-	<div class="grid grid-rows-3">
-		<div class="grid grid-cols-3">
-			<div id="airspeed" />
-			<div id="attitude" />
-			<div id="altimeter" />
-		</div>
-
-		<div class="grid grid-cols-3">
-			<div id="turn_coordinator" />
-			<div id="heading" />
-			<div id="vertical_speed" />
-		</div>
-
-		<div class="grid grid-cols-3">
-			<div />
-			<div id="tachometer" />
-			<div />
-		</div>
-	</div>
+<div class="flex flex-row justify-between ml-4 overflow-scroll gap-x-3" id="gauges">
+	<div class="w-[230px] h-[230px]" id="airspeed" />
+	<div class="w-[230px] h-[230px]" id="attitude" />
+	<div class="w-[230px] h-[230px]" id="altimeter" />
+	<div class="w-[230px] h-[230px]" id="turn_coordinator" />
+	<div class="w-[230px] h-[230px]" id="heading" />
+	<div class="w-[230px] h-[230px]" id="vertical_speed" />
+	<div class="w-[230px] h-[230px]" id="tachometer" />
 </div>

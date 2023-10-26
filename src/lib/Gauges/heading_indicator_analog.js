@@ -286,7 +286,7 @@ export default class HeadingIndicatorAnalog extends Instrument {
           str,
           "white",
           "24px",
-          "Time New Roman"
+          "Nevan"
         );
         t.attr({ transform: `r${i} ${textCenter.x} ${textCenter.y}` });
         this.face.add(t);

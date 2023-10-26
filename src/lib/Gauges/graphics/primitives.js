@@ -78,7 +78,7 @@ export const centeredText = (
   string,
   fill,
   fontSize = "21px",
-  fontFamily = "Verdana",
+  fontFamily = "Nevan",
   fontWeight = "normal"
 ) => {
   return snap.text(center.x, center.y, string.toString()).attr({
@@ -107,7 +107,7 @@ export const leftText = (
   string,
   fill,
   fontSize = "21px",
-  fontFamily = "Verdana",
+  fontFamily = "Nevan",
   fontWeight = "normal"
 ) => {
   return snap.text(center.x, center.y, string).attr({

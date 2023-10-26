@@ -407,7 +407,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           Math.abs(v),
           "white",
           "12px",
-          "Times New Roman"
+          "Nevan"
         )
       );
       this.innerBezelFace.add(
@@ -417,7 +417,7 @@ export default class AttitudeIndicatorAnalog extends Instrument {
           Math.abs(v),
           "white",
           "12px",
-          "Times New Roman"
+          "Nevan"
         )
       );
     });

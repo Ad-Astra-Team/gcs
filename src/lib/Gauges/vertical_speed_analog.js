@@ -185,9 +185,9 @@ export default class VerticalSpeedAnalog extends Instrument {
   // render up/down vertical speed in 100
   renderText() {
     let position = POC(CENTER, UP_DOWN_RADIUS, ZERO + UP_DOWN_ANGLE);
-    centeredText(this.snap, position, "UP", "white", "9px", "Arial");
+    centeredText(this.snap, position, "UP", "white", "9px", "Nevan");
     position = POC(CENTER, UP_DOWN_RADIUS, ZERO - UP_DOWN_ANGLE);
-    centeredText(this.snap, position, "DN", "white", "9px", "Arial");
+    centeredText(this.snap, position, "DN", "white", "9px", "Nevan");
 
     leftText(
       this.snap,
@@ -195,7 +195,7 @@ export default class VerticalSpeedAnalog extends Instrument {
       "VERTICAL",
       "white",
       "9px",
-      "Arial"
+      "Nevan"
     );
     leftText(
       this.snap,
@@ -203,7 +203,7 @@ export default class VerticalSpeedAnalog extends Instrument {
       "SPEED",
       "white",
       "9px",
-      "Arial"
+      "Nevan"
     );
     leftText(
       this.snap,
@@ -211,7 +211,7 @@ export default class VerticalSpeedAnalog extends Instrument {
       "100 FEET",
       "white",
       "9px",
-      "Arial"
+      "Nevan"
     );
     leftText(
       this.snap,
@@ -219,7 +219,7 @@ export default class VerticalSpeedAnalog extends Instrument {
       "PER MINUTE",
       "white",
       "9px",
-      "Arial"
+      "Nevan"
     );
   }
 
@@ -255,7 +255,7 @@ export default class VerticalSpeedAnalog extends Instrument {
         if (i < MIN_MAX_SPEED) {
           if (i === 0) {
             position = POC(CENTER, LABEL_RADIUS, ZERO);
-            centeredText(this.snap, position, "0", "white", "22px", "Times New Roman");
+            centeredText(this.snap, position, "0", "white", "22px", "Nevan");
           } else {
             position = POC(CENTER, LABEL_RADIUS, this.verticalSpeedToAngle(i));
             centeredText(
@@ -264,7 +264,7 @@ export default class VerticalSpeedAnalog extends Instrument {
               i / 100,
               "white",
               "22px",
-              "Times New Roman"
+              "Nevan"
             );
             position = POC(CENTER, LABEL_RADIUS, this.verticalSpeedToAngle(-i));
             centeredText(
@@ -273,7 +273,7 @@ export default class VerticalSpeedAnalog extends Instrument {
               i / 100,
               "white",
               "22px",
-              "Times New Roman"
+              "Nevan"
             );
           }
         } else {
@@ -284,7 +284,7 @@ export default class VerticalSpeedAnalog extends Instrument {
             i / 100,
             "white",
             "22px",
-            "Times New Roman"
+            "Nevan"
           );
         }
       } else {

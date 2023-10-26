@@ -192,7 +192,7 @@ export default class TachometerAnalog extends Instrument {
         Math.floor(Math.random() * 10) % 10,
         i === n - 1 ? "black" : "white",
         "18px",
-        "Times New Roman"
+        "Nevan"
       );
     }
     centeredText(
@@ -201,7 +201,7 @@ export default class TachometerAnalog extends Instrument {
       "HOURS",
       "white",
       "10px",
-      "Arial"
+      "Nevan"
     );
   }
 
@@ -308,7 +308,7 @@ export default class TachometerAnalog extends Instrument {
             Math.floor(i / 100),
             "white",
             "24px",
-            "Times New"
+            "Nevan"
           );
         }
       } else {

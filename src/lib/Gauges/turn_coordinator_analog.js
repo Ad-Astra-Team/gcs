@@ -185,7 +185,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "D.C.",
       "white",
       "15px",
-      "Times New Roman"
+      "Nevan"
     );
     centeredText(
       this.snap,
@@ -193,7 +193,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "ELECTRIC",
       "white",
       "14px",
-      "Times New Roman"
+      "Nevan"
     );
 
     centeredText(
@@ -202,7 +202,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "L",
       "white",
       "32px",
-      "Times New Roman"
+      "Nevan"
     );
     centeredText(
       this.snap,
@@ -210,7 +210,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "R",
       "white",
       "30px",
-      "Arial"
+      "Nevan"
     );
 
     centeredText(
@@ -219,7 +219,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "NO PITCH",
       "white",
       "10px",
-      "Arial"
+      "Nevan"
     );
     centeredText(
       this.snap,
@@ -227,7 +227,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "INFORMATION",
       "white",
       "10px",
-      "Verdana"
+      "Nevan"
     );
 
     centeredText(
@@ -236,7 +236,7 @@ export default class TurnCoordinatorAnalog extends Instrument {
       "2 MIN",
       "white",
       "11px",
-      "Verdana"
+      "Nevan"
     );
   }
 

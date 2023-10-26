@@ -55,10 +55,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 950,
         "resizable": true,
         "title": "Ad Astra GCS",
-        "width": 800
+        "width": 1000
       }
     ]
   }

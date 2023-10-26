@@ -1,5 +1,4 @@
 <script>
-	let message = 'hello';
 </script>
 
 <!-- Page Header -->

@@ -169,7 +169,7 @@
 	}
 
 	function createLines() {
-		return L.polyline(markerLocations, { color: '#E4E', opacity: 0.5 });
+		return L.polyline(markerLocations, { color: '#24ffe5', opacity: 0.6 });
 	}
 
 	function mapAction(container) {
@@ -251,7 +251,7 @@
 
 <svelte:window on:resize={resizeMap} />
 
-<div class="map md:h-[400px] lg:h-[800px]" use:mapAction />
+<div class="map md:h-[420px] lg:h-[600px] rounded-r-2xl" use:mapAction />
 
 <style>
 	.map :global(.marker-text) {
@@ -259,8 +259,8 @@
 
 		text-align: center;
 		font-weight: 600;
-		background-color: #444;
-		color: #eee;
+		background-color: #eee;
+		color: #000;
 		border-radius: 0.5rem;
 	}
 
