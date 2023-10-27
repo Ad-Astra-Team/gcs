@@ -7,6 +7,7 @@ import HeadingIndicatorAnalog from '$lib/Gauges/heading_indicator_analog';
 import VerticalSpeedAnalog from '$lib/Gauges/vertical_speed_analog';
 import Airplane from '$lib/Gauges/airplane';
 import './styles.css';
+import { listen } from '@tauri-apps/api/event';
 
 /** @type {Airplane?} */
 export let airplane;
@@ -28,7 +29,6 @@ let obj_tachometer;
 export function initialize_gauges() {
 
     console.log('dashboard mounted');
-
     airplane = new Airplane();
 
     obj_airspeed = new AirspeedAnalog({
@@ -66,22 +66,28 @@ export function initialize_gauges() {
         parentElement: document.getElementById('tachometer')
     });
 
-    // listen('backend-mavmsg', function (evt) {
-    //     let j = JSON.parse(evt.payload);
+    listen('backend-mavmsg', function (evt) {
+        let j = JSON.parse(evt.payload);
 
-    //     airplane.setAirspeed(j.airspeed);
-    //     airplane.setPitch(j.gyro.pitch * 20);
-    //     airplane.setRoll(j.gyro.roll * 20);
-    //     airplane.setYaw(j.gyro.yaw * 20);
-    // });
+        airplane?.setAltitude(j.gps.alt);
+        airplane?.setHeading(j.heading);
+        airplane?.setRPM(3000);
+        airplane?.setBarometer(j.gps.alt);
+        airplane?.setAirspeed(j.airspeed);
+        airplane?.setPitch(j.gyro.pitch * 20);
+        airplane?.setRoll(j.gyro.roll * 20);
+        airplane?.setRollRate(j.gyro.roll);
+        airplane?.setAltitudeRate(1000);
+        airplane?.setYaw(j.gyro.yaw * 20);
+    });
 
-    obj_airspeed.demoStart();
-    obj_attitude.demoStart();
-    obj_altimeter.demoStart();
-    obj_turn_coordinator.demoStart();
-    obj_heading.demoStart();
+    // obj_airspeed.demoStart();
+    // obj_attitude.demoStart();
+    // obj_altimeter.demoStart();
+    // obj_turn_coordinator.demoStart();
+    // obj_heading.demoStart();
     obj_vertical_speed.demoStart();
-    obj_tachometer.demoStart();
+    // obj_tachometer.demoStart();
 }
 
 export function destroy_gauges() {

@@ -79,6 +79,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                         packet.pitch,
                         packet.yaw
                     );
+                    state.gps.alt = packet.altitude;
                     state.gyro.pitch = packet.pitch;
                     state.gyro.roll = packet.roll;
                     state.gyro.yaw = packet.yaw;
@@ -112,6 +113,7 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                         debug!("[VFR_HUD]:  {:#?} ", packet);
                         state.airspeed = packet.airspeed;
                         state.groundspeed = packet.groundspeed;
+                        state.heading = packet.heading;
                     }
                     _ => {}
                 },

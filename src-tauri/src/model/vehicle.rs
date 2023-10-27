@@ -20,6 +20,7 @@ pub struct Vehicle {
     pub gps: GPS,
     pub airspeed: f32,
     pub groundspeed: f32,
+    pub heading: i16,
     pub packet_tick: u32,
 }
 
@@ -30,6 +31,7 @@ impl Vehicle {
             gps: GPS::default(),
             airspeed: 0.0,
             groundspeed: 0.0,
+            heading: 0,
             packet_tick: 0,
         }
     }
