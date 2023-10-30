@@ -10,6 +10,33 @@
 			color: 'variant-soft-primary'
 		},
 		{
+			id: 0,
+			host: true,
+			avatar: 48,
+			name: 'Jane',
+			timestamp: 'Yesterday @ 2:30pm',
+			message: 'Some message text.',
+			color: 'variant-soft-primary'
+		},
+		{
+			id: 0,
+			host: true,
+			avatar: 48,
+			name: 'Jane',
+			timestamp: 'Yesterday @ 2:30pm',
+			message: 'Some message text.',
+			color: 'variant-soft-primary'
+		},
+		{
+			id: 0,
+			host: true,
+			avatar: 48,
+			name: 'Jane',
+			timestamp: 'Yesterday @ 2:30pm',
+			message: 'Some message text.',
+			color: 'variant-soft-primary'
+		},
+		{
 			id: 1,
 			host: false,
 			avatar: 14,

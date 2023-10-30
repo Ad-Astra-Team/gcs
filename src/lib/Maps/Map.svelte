@@ -251,7 +251,7 @@
 
 <svelte:window on:resize={resizeMap} />
 
-<div class="map md:h-[420px] lg:h-[600px] rounded-r-2xl" use:mapAction />
+<div class="h-full map rounded-xl" use:mapAction />
 
 <style>
 	.map :global(.marker-text) {
