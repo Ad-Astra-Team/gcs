@@ -28,7 +28,7 @@
 		// &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
 		subdomains: 'abcd',
 		maxZoom: 20,
-		minZoom: 0
+		minZoom: 3
 	};
 
 	var zoomOptions = {

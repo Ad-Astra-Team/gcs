@@ -86,7 +86,7 @@ export function initialize_gauges() {
     // obj_altimeter.demoStart();
     // obj_turn_coordinator.demoStart();
     // obj_heading.demoStart();
-    obj_vertical_speed.demoStart();
+    // obj_vertical_speed.demoStart();
     // obj_tachometer.demoStart();
 }
 
