@@ -48,15 +48,35 @@
 	];
 </script>
 
-<div class="container w-full h-full min-w-full min-h-full">
-	<div class="grid h-full grid-cols-3">
+<div class="container w-full h-full min-w-full min-h-full bg-white dark:bg-black">
+	<div class="flex flex-col w-full h-screen overflow-scroll hide-scrollbar">
 		<div
-			class="relative flex flex-col w-full h-full p-3 space-y-4 overflow-y-auto bg-black text-red"
+			class="z-20 grid grid-cols-3 shadow-xl rounded-b-3xl dark:border-none bg-slate-100 shadow-slate-300 dark:shadow-neutral-800 dark:bg-black top-50"
 		>
-			<div class="bg-black">
-				<h1 style="font-family: Nevan;" class="mt-2 text-center text-red-700">Ground Control</h1>
+			<div
+				style="font-family: Nevan;"
+				class="pt-3 pb-3 text-lg text-center text-red-700 border-none"
+			>
+				Ground Control
 			</div>
-			<div class="flex flex-col text-white">
+			<div
+				style="font-family: Nevan;"
+				class="text-lg text-center text-red-700 pt-3 pb-3 border-r-2 border-l-2 rounded-t-xl border-[#e0e8f6] dark:border-[#1f2937]"
+			>
+				AI Computer
+			</div>
+			<div
+				style="font-family: Nevan;"
+				class="pt-3 pb-3 text-lg text-center text-red-700 border-none"
+			>
+				Mission Computer
+			</div>
+		</div>
+
+		<div class="grid w-full h-full grid-cols-3 overflow-hidden">
+			<div
+				class="w-full h-full pt-4 pl-2 space-y-4 overflow-scroll bg-white border-none pb-14 hide-scrollbar dark:bg-black"
+			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
 						<!-- Host Message Bubble -->
@@ -67,14 +87,9 @@
 					{/if}
 				{/each}
 			</div>
-		</div>
-		<div
-			class="w-full h-full p-3 space-y-4 overflow-y-auto bg-black border-l-2 border-r-2 border-white dark:border-[#1f2937]"
-		>
-			<div class="bg-black">
-				<h1 style="font-family: Nevan;" class="mt-2 text-center text-red-700">AI Computer</h1>
-			</div>
-			<div class="flex flex-col text-white">
+			<div
+				class="w-full pt-4 pl-2 pb-14 overflow-scroll hide-scrollbar h-full border-r-2 select-text border-l-2 border-[#e0e8f6] dark:border-[#1f2937] space-y-4 bg-white dark:bg-black rounded-md"
+			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
 						<!-- Host Message Bubble -->
@@ -85,12 +100,9 @@
 					{/if}
 				{/each}
 			</div>
-		</div>
-		<div class="w-full h-full p-3 space-y-4 overflow-y-auto bg-black">
-			<div class="bg-black">
-				<h1 style="font-family: Nevan;" class="mt-2 text-center text-red-700">Mission Computer</h1>
-			</div>
-			<div class="flex flex-col text-white">
+			<div
+				class="w-full h-full pt-4 pr-2 space-y-4 overflow-scroll bg-white border-none select-text pb-14 hide-scrollbar dark:bg-black"
+			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
 						<!-- Host Message Bubble -->

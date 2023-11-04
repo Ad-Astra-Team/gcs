@@ -125,9 +125,41 @@
 			</div>
 		</div>
 		<!-- Videostream and Map Row -->
-		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-2 h-3/5">
+		<div class="grid w-full grid-cols-2 pl-2 pr-4 space-x-2 h-3/5">
 			<!-- Video Stream -->
-			<div class="grid w-full h-full grid-cols-1">
+			<div class="relative grid w-full h-full grid-cols-1">
+				<div
+					class="absolute left-0 right-0 z-20 flex flex-row flex-wrap justify-center space-x-2 lg:space-x-3 bottom-20"
+				>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>SFNT</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>LOCT</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>DTTQR</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>SNTFQR</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>EL</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>AT</button
+					>
+					<button
+						class="pt-1 pb-1 pl-2 pr-2 bg-[#159386] rounded-lg bg-opacity-70 hover:shadow-2xl hover:opacity-80"
+						>CTD</button
+					>
+				</div>
 				<video
 					preload="false"
 					controls
@@ -151,7 +183,7 @@
 
 		<!-- Gauge Row -->
 		<div
-			class="self-center justify-center w-full ml-6 overflow-scroll place-content-center scroll-auto"
+			class="self-center justify-center w-full overflow-scroll hide-scrollbar place-content-center scroll-auto"
 		>
 			<Gauge />
 		</div>

@@ -79,7 +79,7 @@
 
 <!-- App Shell -->
 
-<AppShell scrollbarGutter="stable">
+<AppShell scrollbarGutter="stable" regionPage="overflow-hidden hide-scrollbar">
 	<!-- Header -->
 	<svelte:fragment slot="header">
 		<AppBar
@@ -218,10 +218,7 @@
 				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
 				class="h-full"
 			>
-				<AppRail
-					width="w-14"
-					border="border-r border-l border-b border-[#f1efef] dark:border-[#202736]"
-				>
+				<AppRail width="w-14">
 					<svelte:fragment slot="lead">
 						<AppRailAnchor
 							href="/"
