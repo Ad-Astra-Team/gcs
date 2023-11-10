@@ -169,7 +169,7 @@
 	}
 
 	function createLines() {
-		return L.polyline(markerLocations, { color: '#24ffe5', opacity: 0.6 });
+		return L.polyline(markerLocations, { color: '#38bdf8', opacity: 0.6 });
 	}
 
 	function mapAction(container) {
@@ -251,7 +251,7 @@
 
 <svelte:window on:resize={resizeMap} />
 
-<div class="h-full map rounded-xl" use:mapAction />
+<div class="h-full rounded-md map" use:mapAction />
 
 <style>
 	.map :global(.marker-text) {

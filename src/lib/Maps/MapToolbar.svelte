@@ -35,7 +35,7 @@
 
 <style>
 	.selected {
-		background-color: rgb(21, 148, 135);
+		background-color: rgb(12, 148, 211);
 	}
 
 	button {
@@ -52,6 +52,6 @@
 	}
 
 	.single-click:active {
-		background-color: rgb(21, 148, 135);
+		background-color: rgb(12, 148, 211);
 	}
 </style>
