@@ -8,11 +8,15 @@
 		AppBar,
 		AppRail,
 		AppRailAnchor,
-		storePopup,
 		LightSwitch,
+		initializeStores,
+		FileButton,
+		Modal,
+		getModalStore,
 		popup,
-		initializeStores
+		storePopup
 	} from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import {
 		IconLayout,
 		IconHome,
@@ -36,8 +40,6 @@
 		IconRotate2,
 		IconRotateClockwise2
 	} from '@tabler/icons-svelte';
-	// Floating UI for Popups
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	// Necessary importations for navbar transition
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
@@ -57,10 +59,28 @@
 	import { handleIsTauri } from '$lib/Utils/helper';
 	import { onMount } from 'svelte';
 	import { invoke } from '@tauri-apps/api/tauri';
-	import { appWindow } from '@tauri-apps/api/window';
+
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const raspberryTooltip = {
+		event: 'hover',
+		target: 'raspberryTooltip',
+		placement: 'top'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const pixhawkTooltip = {
+		event: 'hover',
+		target: 'pixhawkTooltip',
+		placement: 'top'
+	};
 
 	initializeStores();
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	onMount(() => {
 		// listen backend-heartbeat event
@@ -80,19 +100,63 @@
 		}, 5000);
 	});
 
+	const modalStore = getModalStore();
+
 	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
-	const popupCloseQuery = {
-		event: 'click',
-		target: 'popupCloseQuery',
-		placement: 'left',
-		closeQuery: '#wont-close'
+	const exitModal = {
+		type: 'confirm',
+		// Data
+		title: 'Confirm Exit',
+		body: 'Are you sure you want to exit?',
+		// TRUE if confirm pressed, FALSE if cancel pressed
+		/**
+		 * @param {boolean} r
+		 */
+		response: (r) => console.log('response:', r)
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
+	 */
+	const raspberryModal = {
+		type: 'confirm',
+		// Data
+		title: 'Confirm Reboot',
+		body: 'Are you sure you want to reboot Raspberry Pi?',
+		// TRUE if confirm pressed, FALSE if cancel pressed
+		/**
+		 * @param {boolean} r
+		 */
+		response: (r) => console.log('response:', r)
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
+	 */
+	const pixhawkModal = {
+		type: 'confirm',
+		// Data
+		title: 'Confirm Reboot',
+		body: 'Are you sure you want to reboot Pixhawk?',
+		// TRUE if confirm pressed, FALSE if cancel pressed
+		/**
+		 * @param {boolean} r
+		 */
+		response: (r) => console.log('response:', r)
 	};
 </script>
 
-<!-- App Shell -->
+<Modal
+	padding="p-6"
+	rounded="rounded-2xl"
+	shadow="shadow-xl"
+	buttonPositive="bg-red-700 font-semibold text-white"
+	buttonNeutral="dark:border-white border-black border-2 font-semibold"
+/>
 
+<!-- App Shell -->
 <AppShell scrollbarGutter="stable" regionPage="overflow-hidden hide-scrollbar">
 	<!-- Header -->
 	<svelte:fragment slot="header">
@@ -102,7 +166,6 @@
 			padding="p-0"
 			spacing="space-y-0"
 			slotTrail="place-content-end"
-			border="border-b border-[#f1efef] dark:border-[#202736]"
 			shadow="shadow-2xl"
 		>
 			<svelte:fragment slot="lead">
@@ -167,28 +230,12 @@
 				</p>
 			</div>
 
-			<div class="z-50 max-w-xs p-2 card" data-popup="popupCloseQuery">
-				<div class="grid grid-cols-1 space-y-1">
-					<button id="wont-close" class="btn bg-sky-600">Cancel</button>
-					<button
-						on:click={() => {
-							const appw = import('@tauri-apps/api/window').then(() => {
-								appWindow.close();
-							});
-						}}
-						id="will-close"
-						class="bg-red-600 btn">Exit</button
-					>
-				</div>
-				<div class="arrow bg-surface-100-800-token" />
-			</div>
-
 			<svelte:fragment slot="trail">
 				{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
 					<!-- Right section -->
 					<div class="flex flex-row justify-between w-full place-content-center">
 						<div
-							class="flex flex-row w-full ml-20 space-x-4 place-content-start place-items-center"
+							class="flex w-full ml-20 space-x-4 fwlex-row place-content-start place-items-center"
 						>
 							<div class="flex flex-row">
 								<!-- Ping Status -->
@@ -234,12 +281,6 @@
 						</div>
 
 						<div class="flex flex-row">
-							<button
-								class="flex flex-row transition-colors cursor-pointer h-14 w-14 hover:bg-red-700 place-content-center place-items-center"
-								use:popup={popupCloseQuery}
-							>
-								<IconX class="w-8 h-8" />
-							</button>
 							<div
 								class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 								on:click={() => {
@@ -248,20 +289,34 @@
 							>
 								<IconAlignBoxRightMiddle class="w-8 h-8" />
 							</div>
+
+							<div
+								class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
+							>
+								<button
+									class="flex w-full h-full cursor-pointer hover:bg-red-800 place-content-center place-items-center"
+									on:click={() => {
+										modalStore.trigger(exitModal);
+									}}
+								>
+									<IconX class="w-8 h-8" />
+								</button>
+							</div>
 						</div>
 					</div>
 				{:else}
-					<button
-						class="flex flex-row cursor-pointer h-14 w-14 hover:bg-red-700 place-content-center place-items-center"
-						use:popup={popupCloseQuery}
-						on:click={() => {
-							const appw = import('@tauri-apps/api/window').then(() => {
-								// appWindow.close();
-							});
-						}}
+					<div
+						class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 					>
-						<IconX class="w-8 h-8" />
-					</button>
+						<button
+							class="flex w-full h-full cursor-pointer hover:bg-red-800 place-content-center place-items-center"
+							on:click={() => {
+								modalStore.trigger(exitModal);
+							}}
+						>
+							<IconX class="w-8 h-8" />
+						</button>
+					</div>
 				{/if}
 			</svelte:fragment>
 		</AppBar>
@@ -352,35 +407,90 @@
 		{#if $rightBarActive}
 			<div
 				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
-				class="h-full justify-between flex flex-col pl-2 pr-2 pt-3 pb-3 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
+				class="h-full justify-between flex flex-col pl-2 pr-2 pt-2.5 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
 				<textarea
-					class="h-2/6 textarea"
+					class="h-full overflow-hidden textarea"
 					rows="4"
 					placeholder="Your data will be flow here. You can also expand this window as you wish."
 				/>
 
-				<div class="flex mb-3 space-x-2 flex-nowrap place-content-center">
-					<button
-						on:click={() => {
-							$raspberryBoot = !$raspberryBoot;
-						}}
-						type="button"
-						class="bottom-0 px-8 text-sm font-medium text-white rounded-lg shadow-lg bg-gradient-to-r active:ring-4 from-gray-400 via-gray-500 to-gray-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 shadow-gray-500/50 dark:shadow-lg dark:shadow-gray-800/80"
-					>
-						<IconRotate2 />
-						<p style="font-family:Nevan;" class="p-0 m-0 text-white border-none">RPI</p>
-					</button>
-					<button
-						on:click={() => {
-							$pixhawkBoot = !$pixhawkBoot;
-						}}
-						type="button"
-						class="px-8 text-sm font-medium text-white rounded-lg shadow-lg bg-gradient-to-r active:ring-4 from-gray-400 via-gray-500 to-gray-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 shadow-gray-500/50 dark:shadow-lg dark:shadow-gray-800/80"
-					>
-						<IconRotateClockwise2 />
-						<p class="p-0 m-0 text-white border-none" style="font-family:Nevan;">PIX</p>
-					</button>
+				<div class="flex flex-row mt-2.5 mb-2.5 space-x-3 place-content-center">
+					{#if $raspberryBoot === false}
+						<button
+							title="Raspberry Boot"
+							on:click={() => {
+								$raspberryBoot = !$raspberryBoot;
+								modalStore.trigger(raspberryModal);
+							}}
+							use:popup={raspberryTooltip}
+							type="button"
+							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
+						>
+							<IconRotate2 />
+							<p
+								style="font-family:Nevan;"
+								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
+							>
+								R
+							</p>
+						</button>
+					{:else}
+						<button
+							on:click={() => {
+								$raspberryBoot = !$raspberryBoot;
+							}}
+							type="button"
+							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
+							use:popup={raspberryTooltip}
+						>
+							<IconRotate2 />
+							<p
+								style="font-family:Nevan;"
+								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
+							>
+								R
+							</p>
+						</button>
+					{/if}
+
+					{#if $pixhawkBoot === false}
+						<button
+							on:click={() => {
+								$pixhawkBoot = !$pixhawkBoot;
+								modalStore.trigger(pixhawkModal);
+							}}
+							type="button"
+							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
+							use:popup={pixhawkTooltip}
+						>
+							<IconRotateClockwise2 />
+
+							<p
+								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
+								style="font-family:Nevan;"
+							>
+								P
+							</p>
+						</button>
+					{:else}
+						<button
+							on:click={() => {
+								$pixhawkBoot = !$pixhawkBoot;
+							}}
+							type="button"
+							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
+							use:popup={pixhawkTooltip}
+						>
+							<IconRotateClockwise2 />
+							<p
+								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
+								style="font-family:Nevan;"
+							>
+								P
+							</p>
+						</button>
+					{/if}
 				</div>
 			</div>
 		{/if}

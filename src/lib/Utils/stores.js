@@ -1,8 +1,5 @@
 import { writable } from 'svelte/store';
 
-//design conditions
-export const exitStatus = writable(false);
-
 // communication 
 export const leftNavActive = writable(false);
 export const rightBarActive = writable(false);
@@ -11,9 +8,9 @@ export const last_heartbeat = writable(0);
 export const connectionStatus = writable(false);
 export const raspberryBoot = writable(false);
 export const pixhawkBoot = writable(false);
+export const ledStatus = writable(false);
 
 // vehicle properties
-
 export const uav_batteryVoltage = writable(0.0);
 export const uav_gpsStatus = writable(false);
 export const uav_networkStatus = writable(false);

@@ -51,7 +51,7 @@
 <div class="container w-full h-full min-w-full min-h-full bg-white dark:bg-black">
 	<div class="flex flex-col w-full h-screen overflow-scroll hide-scrollbar">
 		<div
-			class="z-20 grid grid-cols-3 shadow-xl rounded-b-3xl dark:border-none bg-slate-100 shadow-slate-300 dark:shadow-[#1f2937] dark:bg-[#050505] top-50"
+			class="z-0 grid grid-cols-3 shadow-xl rounded-b-3xl dark:border-none bg-slate-100 shadow-slate-300 dark:shadow-[#1f2937] dark:bg-[#050505] top-50"
 		>
 			<div
 				style="font-family: Nevan;"
@@ -75,7 +75,7 @@
 
 		<div class="grid w-full h-full grid-cols-3 overflow-hidden">
 			<div
-				class="w-full h-full pt-4 pl-2 space-y-4 overflow-scroll bg-white border-none pb-14 hide-scrollbar dark:bg-black"
+				class="w-full h-full pt-4 pl-2 space-y-4 overflow-scroll bg-white border-none lg:text-base md:text-sm pb-14 hide-scrollbar dark:bg-black"
 			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
@@ -88,7 +88,7 @@
 				{/each}
 			</div>
 			<div
-				class="w-full pt-4 pl-2 pb-14 overflow-scroll hide-scrollbar h-full border-r-4 select-text border-l-4 border-[#e0e8f6] dark:border-[#1f2937] space-y-4 bg-white dark:bg-black rounded-md"
+				class="lg:text-base md:text-sm w-full pt-4 pl-2 pb-14 overflow-scroll hide-scrollbar h-full border-r-4 select-text border-l-4 border-[#dce3e6] dark:border-[#172336] space-y-4 bg-white dark:bg-black rounded-md"
 			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
@@ -101,7 +101,7 @@
 				{/each}
 			</div>
 			<div
-				class="w-full h-full pt-4 pl-2 space-y-4 overflow-scroll bg-white border-none select-text pb-14 hide-scrollbar dark:bg-black"
+				class="w-full h-full pt-4 pl-2 space-y-4 overflow-scroll bg-white border-none select-text lg:text-base md:text-sm pb-14 hide-scrollbar dark:bg-black"
 			>
 				{#each messageFeed as bubble, i}
 					{#if bubble.host === true}
