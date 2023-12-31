@@ -7,7 +7,8 @@
 		IconPlaneTilt,
 		IconCpu,
 		IconWorldWww,
-		IconDrone
+		IconDrone,
+		IconSpy
 	} from '@tabler/icons-svelte';
 </script>
 
@@ -18,7 +19,7 @@
 		<div class="flex shadow-2xl shadow-red">
 			<img class="w-full rounded-t-xl" src="assets/a0.jpg" alt="Sunset in the mountains" />
 		</div>
-		<div class="flex shadow-lg rounded-b-xl bg-[#f3f4f6] dark:bg-[#1f2937]">
+		<div class="flex shadow-lg rounded-b-xl overflow-scroll bg-[#f3f4f6] dark:bg-[#1f2937]">
 			<Accordion autocollapse>
 				<AccordionItem>
 					<svelte:fragment slot="lead"><IconEyeglass2 /></svelte:fragment>
@@ -61,7 +62,7 @@
 									repellendus temporibus?.</svelte:fragment
 								>
 							</AccordionItem>
-							<AccordionItem>
+							<!-- <AccordionItem>
 								<svelte:fragment slot="lead"><IconPlaneTilt /></svelte:fragment>
 
 								<svelte:fragment slot="summary"
@@ -72,7 +73,7 @@
 									pariatur eius cum nulla, velit corporis expedita id similique iure reiciendis,
 									doloribus rerum deleniti quia dolorem error saepe consequuntur maxime.</svelte:fragment
 								>
-							</AccordionItem>
+							</AccordionItem> -->
 							<AccordionItem>
 								<svelte:fragment slot="lead"><IconWorldWww /></svelte:fragment>
 								<svelte:fragment slot="summary"
@@ -84,7 +85,7 @@
 									dolores esse, distinctio, nisi reiciendis officiis obcaecati alias eligendi vitae.</svelte:fragment
 								>
 							</AccordionItem>
-							<AccordionItem>
+							<!-- <AccordionItem>
 								<svelte:fragment slot="lead"><IconDrone /></svelte:fragment>
 								<svelte:fragment slot="summary"
 									><span class="font-medium">Alperen Çankaya</span></svelte:fragment
@@ -93,6 +94,18 @@
 									>&emsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga labore
 									necessitatibus in optio quod a recusandae tempora libero iste! Porro non
 									reiciendis pariatur nulla quia reprehenderit minus autem eius labore?</svelte:fragment
+								>
+							</AccordionItem> -->
+
+							<AccordionItem>
+								<svelte:fragment slot="lead"><IconSpy /></svelte:fragment>
+								<svelte:fragment slot="summary"
+									><span class="font-medium">Abdüsselam Bolat</span></svelte:fragment
+								>
+								<svelte:fragment slot="content"
+									>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi
+									officiis consequatur eaque at fuga voluptatem. Aliquam temporibus blanditiis porro
+									dolores esse, distinctio, nisi reiciendis officiis obcaecati alias eligendi vitae.</svelte:fragment
 								>
 							</AccordionItem>
 						</Accordion></svelte:fragment

@@ -1,8 +1,9 @@
 <script>
 	import '../app.postcss';
-	// Importing necessary components
 	import { page } from '$app/stores';
 	import { listen, TauriEvent } from '@tauri-apps/api/event';
+
+	//Importing Skeleton's components
 	import {
 		AppShell,
 		AppBar,
@@ -16,7 +17,11 @@
 		popup,
 		storePopup
 	} from '@skeletonlabs/skeleton';
+
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	//Importing Tabler's icon pack
 	import {
 		IconLayout,
 		IconHome,
@@ -40,10 +45,12 @@
 		IconRotate2,
 		IconRotateClockwise2
 	} from '@tabler/icons-svelte';
-	// Necessary importations for navbar transition
+
+	// Necessary importations for navbar's transition
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	// Navbar activating with function
+
+	// Importing variables from stores.js
 	import {
 		leftNavActive,
 		rightBarActive,
@@ -56,11 +63,15 @@
 		raspberryBoot,
 		pixhawkBoot
 	} from '$lib/Utils/stores';
+
 	import { handleIsTauri } from '$lib/Utils/helper';
 	import { onMount } from 'svelte';
 	import { invoke } from '@tauri-apps/api/tauri';
 
+	//Tooltip features
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	//Configurations for raspberry pi reboot button's tooltip
 
 	/**
 	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
@@ -71,6 +82,8 @@
 		placement: 'top'
 	};
 
+	//Configurations for pixhawk reboot button's tooltip
+
 	/**
 	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
 	 */
@@ -80,28 +93,84 @@
 		placement: 'top'
 	};
 
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const homePageTooltip = {
+		event: 'hover',
+		target: 'homePageTooltip',
+		placement: 'right'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const dashboardPageTooltip = {
+		event: 'hover',
+		target: 'dashboardPageTooltip',
+		placement: 'right'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const telemetryPageTooltip = {
+		event: 'hover',
+		target: 'telemetryPageTooltip',
+		placement: 'right'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const testPageTooltip = {
+		event: 'hover',
+		target: 'testPageTooltip',
+		placement: 'right'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const aboutPageTooltip = {
+		event: 'hover',
+		target: 'aboutPageTooltip',
+		placement: 'right'
+	};
+
+	/**
+	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
+	 */
+	const settingsPageTooltip = {
+		event: 'hover',
+		target: 'settingsPageTooltip',
+		placement: 'right'
+	};
+
 	initializeStores();
 
 	onMount(() => {
-		// listen backend-heartbeat event
+		// Listen backend-heartbeat event
 
 		listen('backend-heartbeat', function (evt) {
 			$heartbeat = true;
 			$last_heartbeat = evt.payload;
-			// if tauri loaded
+			// If tauri loaded
 			if (handleIsTauri()) {
 				invoke('increase_packet_counter');
 			}
 		});
 
-		// if backend-heartbeat event is not received in 5 seconds, set heartbeat to false
+		// If backend-heartbeat event is not received in 5 seconds, set heartbeat to false
 		setTimeout(() => {
 			if (Date.now() - $last_heartbeat > 4900) $heartbeat = false;
 		}, 5000);
 	});
 
+	//Assigning getModalStore function to modalStore variable
 	const modalStore = getModalStore();
 
+	//Configurations for Exit Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -117,6 +186,7 @@
 		response: (r) => console.log('response:', r)
 	};
 
+	//Configurations for Raspberry Pi Reboot Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -132,6 +202,7 @@
 		response: (r) => console.log('response:', r)
 	};
 
+	//Configurations for Pixhawk Reboot Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -148,6 +219,7 @@
 	};
 </script>
 
+<!-- Modal component's call -->
 <Modal
 	padding="p-6"
 	rounded="rounded-2xl"
@@ -155,6 +227,70 @@
 	buttonPositive="bg-red-700 font-semibold text-white"
 	buttonNeutral="dark:border-white border-black border-2 font-semibold"
 />
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="raspberryTooltip"
+>
+	Raspberry PI Reboot
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="pixhawkTooltip"
+>
+	Pixhawk Reboot
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="homePageTooltip"
+>
+	Home
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="dashboardPageTooltip"
+>
+	Dashboard
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="telemetryPageTooltip"
+>
+	Telemetry
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="testPageTooltip"
+>
+	Test
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="aboutPageTooltip"
+>
+	About
+	<div class="bg-[#1a2433] arrow" />
+</div>
+
+<div
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	data-popup="settingsPageTooltip"
+>
+	Settings
+	<div class="bg-[#1a2433] arrow" />
+</div>
 
 <!-- App Shell -->
 <AppShell scrollbarGutter="stable" regionPage="overflow-hidden hide-scrollbar">
@@ -168,10 +304,11 @@
 			slotTrail="place-content-end"
 			shadow="shadow-2xl"
 		>
+			<!-- Left Section of Header -->
 			<svelte:fragment slot="lead">
-				<!-- Left Section -->
-				<div class="flex flex-row justify-between w-full place-content-center">
-					<!-- Container for burger menu -->
+				<!-- Left Section's Outer Container -->
+				<div class="flex flex-row justify-between w-full place-content-center place-items-center">
+					<!-- (1) Container for Navbar Button -->
 					<div
 						class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 						on:click={() => {
@@ -181,27 +318,29 @@
 						<IconMenu2 class="w-8 h-8" />
 					</div>
 
-					<div class="flex flex-row mr-20 space-x-6 w-14 h-14 place-content-end place-items-center">
-						<!-- status icon's div -->
-						{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
-							<!-- gps check -->
+					<!-- Don't show the Status Section at Home or About Pages -->
+					{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
+						<!-- (2) Status Section's Container -->
+						<div
+							class="flex flex-row space-x-6 w-14 h-14 lg:mr-20 md:m-0 sm:m-0 place-content-end place-items-center"
+						>
+							<!-- GPS Status -->
 							<div class="flex flex-row">
-								{#if $uav_gpsStatus === true}
-									<IconSatellite class="w-7 h-7" />
-								{:else}
-									<IconSatellite color="red" class="w-7 h-7" />
-								{/if}
+								<IconSatellite class={`w-7 h-7 ${$uav_gpsStatus ? '' : 'text-[#ff0000]'}`} />
 							</div>
-							<!-- communication check -->
+
+							<!-- Communication Status -->
 							<div class="flex flex-row">
 								{#if $uav_networkStatus === true}
-									<IconAntenna class="w-7 h-7" />
+									<IconAntenna class="w-7 h-7 text-[#ff0000]" />
 								{:else}
-									<IconAntennaOff color="red" class="w-7 h-7" />
+									<IconAntennaOff class="w-7 h-7 text-[#ff0000]" />
 								{/if}
 							</div>
-							<!-- battery status -->
+
+							<!-- Battery Status -->
 							<div class="flex flex-row">
+								<!-- Adjusting the Battery view depending on the voltage of the battery -->
 								{#if $uav_batteryVoltage >= 15.93}
 									<IconBattery4 class="w-7 h-7" />
 								{:else if $uav_batteryVoltage >= 15.34}
@@ -211,76 +350,79 @@
 								{:else if $uav_batteryVoltage >= 13.09}
 									<IconBattery1 class="w-7 h-7" />
 								{:else if $uav_batteryVoltage < 13.09}
-									<IconBatteryOff class="w-7 h-7" />
+									<IconBatteryOff class="w-7 h-7 text-[#ff0000]" />
 								{/if}
 							</div>
-						{/if}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</svelte:fragment>
 
-			<!-- Middle section -->
+			<!-- Middle Section of Header -->
+			<!-- Middle Section's Outer Container -->
 			<div class="flex flex-row items-center p-0 m-0 place-content-center checked:">
+				<!-- Ad Astra Logo -->
 				<p
 					data-tauri-drag-region
-					class="p-0 m-0 text-2xl text-center text-black border-8 border-none cursor-default active:cursor-grab hover:cursor-grab focus dark:text-white"
+					class="pt-1 pb-0 pl-0 pr-0 m-0 text-2xl text-center text-black border-8 border-none cursor-default active:cursor-grab hover:cursor-grab focus dark:text-white"
 					style="font-family: Nevan;"
 				>
-					Ad Astra
+					S . A . F . İ . R
 				</p>
 			</div>
 
+			<!-- Right Section of Header -->
 			<svelte:fragment slot="trail">
-				{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
-					<!-- Right section -->
-					<div class="flex flex-row justify-between w-full place-content-center">
+				<!-- Right Section's Outer Container (Don't show the Status Section and Databar Button, show only Exit Button if you're in Home or About Page) -->
+				<div
+					class={`flex flex-row place-content-center place-items-center ${
+						$page.url.pathname !== '/' && $page.url.pathname !== '/about'
+							? 'justify-between w-full h-full'
+							: 'cursor-pointer w-14 h-14 hover:bg-primary-token'
+					}`}
+				>
+					{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
+						<!-- (1) Status Section -->
 						<div
-							class="flex w-full ml-20 space-x-4 fwlex-row place-content-start place-items-center"
+							class="flex flex-row w-full h-full space-x-6 lg:ml-20 md:m-0 sm:m-0 place-content-start place-items-center"
 						>
+							<!-- Latency Status -->
 							<div class="flex flex-row">
-								<!-- Ping Status -->
-								{#if $pingStatus >= 9999}
-									<p
-										style="font-family: Nevan;"
-										class="p-0 m-0 text-[#ff0000] border-none text-md place-items-center"
-									>
+								<!-- Adjusting the Latency view depending on the latency value with conditional rendering and styling -->
+								<p
+									style="font-family: Nevan;"
+									class={`p-0 m-0 border-none text-md place-items-center ${
+										$pingStatus >= 9999 || $pingStatus >= 900
+											? 'text-[#ff0000]'
+											: $pingStatus >= 100
+											? 'text-yellow-400'
+											: $pingStatus >= 0
+											? 'text-blue-500 dark:text-sky-500'
+											: ''
+									}`}
+								>
+									{#if $pingStatus >= 9999}
 										> 9999 <span class="font-sans text-xs font-bold text-w">ms</span>
-									</p>
-								{:else if $pingStatus >= 900}
-									<p
-										style="font-family: Nevan;"
-										class="p-0 m-0 text-[#ff0000] border-none text-md place-items-center"
-									>
-										* {$pingStatus} <span class="font-sans text-xs font-bold">ms</span>
-									</p>
-								{:else if $pingStatus >= 100}
-									<p
-										style="font-family: Nevan;"
-										class="p-0 m-0 text-yellow-400 border-none text-md place-items-center"
-									>
+									{:else}
 										{$pingStatus} <span class="font-sans text-xs font-bold">ms</span>
-									</p>
-								{:else if $pingStatus >= 0}
-									<p
-										style="font-family: Nevan;"
-										class="p-0 m-0 border-none text-sky-400 text-md place-items-center"
-									>
-										{$pingStatus} <span class="font-sans text-xs font-bold">ms</span>
-									</p>
-								{/if}
+									{/if}
+								</p>
 							</div>
 
-							<!-- Heartbeat -->
+							<!-- Heartbeat Status -->
 							<div class="flex flex-row">
+								<!-- Adjusting the Hearbeat view depending on the Heartbeat's boolean value -->
 								{#if $heartbeat}
-									<IconCircleCheck class="w-8 h-8 text-sky-400" />
+									<IconCircleCheck class="w-8 h-8 text-blue-500 dark:text-sky-500" />
 								{:else}
 									<IconAlertHexagon class="w-8 h-8 text-red-700" />
 								{/if}
 							</div>
 						</div>
 
+						<!-- (2) Exit and Databar Buttons -->
 						<div class="flex flex-row">
+							<!-- Databar Button -->
 							<div
 								class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 								on:click={() => {
@@ -290,24 +432,22 @@
 								<IconAlignBoxRightMiddle class="w-8 h-8" />
 							</div>
 
+							<!-- Exit Button -->
 							<div
-								class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
+								class="flex flex-row cursor-pointer w-14 h-14 place-content-center place-items-center"
 							>
 								<button
-									class="flex w-full h-full cursor-pointer hover:bg-red-800 place-content-center place-items-center"
 									on:click={() => {
 										modalStore.trigger(exitModal);
 									}}
+									class="flex w-full h-full cursor-pointer hover:bg-red-700 dark:hover:bg-red-900 place-content-center place-items-center"
 								>
 									<IconX class="w-8 h-8" />
 								</button>
 							</div>
 						</div>
-					</div>
-				{:else}
-					<div
-						class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
-					>
+					{:else}
+						<!-- Exit Button -->
 						<button
 							class="flex w-full h-full cursor-pointer hover:bg-red-800 place-content-center place-items-center"
 							on:click={() => {
@@ -316,81 +456,108 @@
 						>
 							<IconX class="w-8 h-8" />
 						</button>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 
 	<!-- App Rail -->
+	<!-- Navbar -->
 	<svelte:fragment slot="sidebarLeft">
+		<!-- Activate the Navbar if Navbar Button pressed -->
 		{#if $leftNavActive}
+			<!-- Navbar's Outer Container -->
 			<div
-				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
+				transition:slide={{ delay: 20, duration: 300, easing: quintOut, axis: 'x' }}
 				class="h-full"
 			>
+				<!-- AppRail Component that let us make a Navbar -->
 				<AppRail width="w-14">
+					<!-- Top Section of Navbar -->
 					<svelte:fragment slot="lead">
-						<AppRailAnchor
-							href="/"
-							selected={$page.url.pathname === '/'}
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-						>
-							<svelte:fragment slot="lead">
-								<IconHome />
-							</svelte:fragment>
-						</AppRailAnchor>
-						<AppRailAnchor
-							href="/dashboard"
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-							selected={$page.url.pathname === '/dashboard'}
-						>
-							<svelte:fragment slot="lead">
-								<IconLayout />
-							</svelte:fragment>
-						</AppRailAnchor>
-						<AppRailAnchor
-							href="/telemetry"
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-							selected={$page.url.pathname === '/telemetry'}
-						>
-							<svelte:fragment slot="lead">
-								<IconTerminal2 />
-							</svelte:fragment>
-						</AppRailAnchor>
-						<AppRailAnchor
-							href="/test"
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-							selected={$page.url.pathname === '/test'}
-						>
-							<svelte:fragment slot="lead">
-								<IconChecklist />
-							</svelte:fragment>
-						</AppRailAnchor>
+						<!-- Home Page Button -->
+						<div use:popup={homePageTooltip}>
+							<AppRailAnchor
+								href="/"
+								selected={$page.url.pathname === '/'}
+								active="bg-[#e0e8f6] dark:bg-[#22324a] "
+							>
+								<svelte:fragment slot="lead">
+									<IconHome />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
+
+						<!-- Dashboard Page Button -->
+						<div use:popup={dashboardPageTooltip}>
+							<AppRailAnchor
+								href="/dashboard"
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
+								selected={$page.url.pathname === '/dashboard'}
+							>
+								<svelte:fragment slot="lead">
+									<IconLayout />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
+
+						<!-- Telemetry Page Button -->
+						<div use:popup={telemetryPageTooltip}>
+							<AppRailAnchor
+								href="/telemetry"
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
+								selected={$page.url.pathname === '/telemetry'}
+							>
+								<svelte:fragment slot="lead">
+									<IconTerminal2 />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
+
+						<!-- Test Page Button -->
+						<div use:popup={testPageTooltip}>
+							<AppRailAnchor
+								href="/test"
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
+								selected={$page.url.pathname === '/test'}
+							>
+								<svelte:fragment slot="lead">
+									<IconChecklist />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
 					</svelte:fragment>
-					<!-- --- -->
 
-					<!-- --- -->
+					<!-- Bottom Section of Navbar -->
 					<svelte:fragment slot="trail">
-						<AppRailAnchor
-							href="/about"
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-							selected={$page.url.pathname === '/about'}
-						>
-							<svelte:fragment slot="lead">
-								<IconInfoOctagon />
-							</svelte:fragment>
-						</AppRailAnchor>
-						<AppRailAnchor
-							href="/settings"
-							active="bg-[#e0e8f6] dark:bg-[#22324a]"
-							selected={$page.url.pathname === '/settings'}
-						>
-							<svelte:fragment slot="lead">
-								<IconSettings />
-							</svelte:fragment>
-						</AppRailAnchor>
+						<!-- About Page Button -->
+						<div use:popup={aboutPageTooltip}>
+							<AppRailAnchor
+								href="/about"
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
+								selected={$page.url.pathname === '/about'}
+							>
+								<svelte:fragment slot="lead">
+									<IconInfoOctagon />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
 
+						<!-- Settings Page Button -->
+						<div use:popup={settingsPageTooltip}>
+							<AppRailAnchor
+								href="/settings"
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
+								selected={$page.url.pathname === '/settings'}
+							>
+								<svelte:fragment slot="lead">
+									<IconSettings />
+								</svelte:fragment>
+							</AppRailAnchor>
+						</div>
+
+						<!-- Light Switch -->
 						<AppRailAnchor hover="none">
 							<svelte:fragment slot="lead">
 								<LightSwitch width="w-10" height="h-5" />
@@ -402,95 +569,63 @@
 		{/if}
 	</svelte:fragment>
 
-	<!-- Right sidebar -->
+	<!-- Databar -->
 	<svelte:fragment slot="sidebarRight">
-		{#if $rightBarActive}
+		<!-- Activate the Databar if Databar Button pressed -->
+		{#if $rightBarActive && $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
+			<!-- Databar's Outer Container -->
 			<div
-				transition:slide={{ delay: 80, duration: 650, easing: quintOut, axis: 'x' }}
+				transition:slide={{ delay: 20, duration: 300, easing: quintOut, axis: 'x' }}
 				class="h-full justify-between flex flex-col pl-2 pr-2 pt-2.5 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
+				<!-- Text Area for Dataflow -->
 				<textarea
-					class="h-full overflow-hidden textarea"
-					rows="4"
-					placeholder="Your data will be flow here. You can also expand this window as you wish."
+					class="h-full select-none shadow-xl overflow-y-auto text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
+					placeholder="Your data will flow here. You can also minimize this tab as you wish."
+					readonly
+					value=""
 				/>
 
-				<div class="flex flex-row mt-2.5 mb-2.5 space-x-3 place-content-center">
-					{#if $raspberryBoot === false}
-						<button
-							title="Raspberry Boot"
-							on:click={() => {
-								$raspberryBoot = !$raspberryBoot;
-								modalStore.trigger(raspberryModal);
-							}}
-							use:popup={raspberryTooltip}
-							type="button"
-							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
+				<!-- Reboot Section -->
+				<div class="flex flex-row w-full mt-2.5 mb-2.5 self-center">
+					<!-- Raspberry Pi Reboot Button -->
+					<button
+						on:click={() => {
+							$raspberryBoot = !$raspberryBoot;
+							modalStore.trigger(raspberryModal);
+						}}
+						type="button"
+						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-l-lg text-sm px-5 py-2.5"
+						use:popup={raspberryTooltip}
+					>
+						<IconRotate2 />
+						<p
+							style="font-family:Nevan;"
+							class="absolute p-0 m-0 text-white border-none top-1.5 left-5"
 						>
-							<IconRotate2 />
-							<p
-								style="font-family:Nevan;"
-								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
-							>
-								R
-							</p>
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$raspberryBoot = !$raspberryBoot;
-							}}
-							type="button"
-							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={raspberryTooltip}
-						>
-							<IconRotate2 />
-							<p
-								style="font-family:Nevan;"
-								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
-							>
-								R
-							</p>
-						</button>
-					{/if}
+							R
+						</p>
+					</button>
 
-					{#if $pixhawkBoot === false}
-						<button
-							on:click={() => {
-								$pixhawkBoot = !$pixhawkBoot;
-								modalStore.trigger(pixhawkModal);
-							}}
-							type="button"
-							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={pixhawkTooltip}
-						>
-							<IconRotateClockwise2 />
+					<!-- Pixhawk Reboot Button -->
+					<button
+						on:click={() => {
+							$pixhawkBoot = !$pixhawkBoot;
+							modalStore.trigger(pixhawkModal);
+						}}
+						type="button"
+						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-r-lg text-sm px-5 py-2.5"
+						use:popup={pixhawkTooltip}
+					>
+						<IconRotateClockwise2 />
 
-							<p
-								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
-								style="font-family:Nevan;"
-							>
-								P
-							</p>
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$pixhawkBoot = !$pixhawkBoot;
-							}}
-							type="button"
-							class="[&>*]:pointer-events-none relative text-white place-content-center bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={pixhawkTooltip}
+						<p
+							class="absolute p-0 m-0 text-white border-none top-1.5 left-5"
+							style="font-family:Nevan;"
 						>
-							<IconRotateClockwise2 />
-							<p
-								class="absolute p-0 m-0 text-white border-none top-1.5 left-2.5"
-								style="font-family:Nevan;"
-							>
-								P
-							</p>
-						</button>
-					{/if}
+							P
+						</p>
+					</button>
 				</div>
 			</div>
 		{/if}

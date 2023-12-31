@@ -16,7 +16,8 @@
 		launchMode,
 		selectedPort,
 		connectionStatus,
-		ledStatus
+		ledStatus,
+		buttonTry
 	} from '$lib/Utils/stores';
 	import {
 		popup,
@@ -121,7 +122,7 @@
 
 <Drawer>
 	{#if $drawerStore.meta.type === 'video'}
-		<div class="flex items-center h-full p-4 border-none place-content-center">
+		<div class="flex flex-col w-full h-full p-4 bg-[#1c2531]">
 			<video
 				class="w-full h-full video-js vjs-theme-city rounded-r-2xl"
 				preload="false"
@@ -141,7 +142,7 @@
 		</div>
 		<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 	{:else if $drawerStore.meta.type === 'map'}
-		<div class="w-full h-full p-4">
+		<div class="flex flex-col w-full h-full p-4 bg-[#1a2331]">
 			<Map />
 		</div>
 	{/if}
@@ -210,145 +211,126 @@
 		<!-- Page Header Row -->
 		<div class="flex flex-row flex-wrap sm:wrap, place-content-center">
 			<div
-				class="place-content-center transition-opacity opacity-70 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-8 m-0 shadow-lg"
+				class="place-content-center transition-opacity opacity-70 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-4 m-0 shadow-lg"
 			>
 				<div class="flex flex-row">
-					{#if $connectionStatus === false}
-						<button
-							on:click={() => {
-								$connectionStatus = !$connectionStatus;
-							}}
-							type="button"
-							class="px-7 py-2.5 text-sm active:ring-4 font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80"
-						>
+					<button
+						on:click={() => {
+							$connectionStatus = !$connectionStatus;
+						}}
+						type="button"
+						class={`py-2.5 text-sm active:ring-4 rounded-ee-full dark:shadow-lg font-medium text-white rounded-l-full hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
+							$connectionStatus
+								? 'px-5 from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
+								: 'px-7 from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+						}`}
+					>
+						{#if $connectionStatus === false}
 							Connect
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$connectionStatus = !$connectionStatus;
-							}}
-							type="button"
-							class="px-5 py-2.5 text-sm active:ring-4 font-medium text-white rounded-lg shadow-lg bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80"
-						>
+						{:else}
 							Disconnect
-						</button>
-					{/if}
+						{/if}
+						<button />
+					</button>
 				</div>
 
 				<div class="flex flex-row gap-x-2 place-content-center place-items-center">
-					{#if $controlMode === false}
-						<button
-							on:click={() => {
-								$controlMode = !$controlMode;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={autonomTooltip}
-						>
-							<IconRobotOff class="text-white" />
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$controlMode = !$controlMode;
-							}}
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							type="button"
-							use:popup={manualTooltip}
-						>
-							<IconRobot class="text-white" />
-						</button>
-					{/if}
-
-					{#if $launchMode === false}
-						<button
-							on:click={() => {
-								$launchMode = !$launchMode;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={returnToLaunchTooltip}
-						>
-							<IconHomeDown class="text-white" />
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$launchMode = !$launchMode;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={returnToLaunchTooltip}><IconHomeDown class="text-white" /></button
-						>
-					{/if}
-
-					{#if $armMode === false}
-						<button
-							on:click={() => {
-								$armMode = !$armMode;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={armTooltip}><IconLockOpen class="text-white" /></button
-						>
-					{:else}
-						<button
-							on:click={() => {
-								$armMode = !$armMode;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r from-red-400 active:ring-4 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={disarmTooltip}><IconLock class="text-white" /></button
-						>
-					{/if}
-
-					{#if $ledStatus === false}
-						<button
-							on:click={() => {
-								$ledStatus = !$ledStatus;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={ledsOnTooltip}
-						>
-							<IconSunOff />
-						</button>
-					{:else}
-						<button
-							on:click={() => {
-								$ledStatus = !$ledStatus;
-							}}
-							type="button"
-							class="text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5"
-							use:popup={ledsOffTooltip}
-						>
-							<IconSun />
-						</button>
-					{/if}
+					<button
+						use:popup={$controlMode ? autonomTooltip : manualTooltip}
+						on:click={() => {
+							$controlMode = !$controlMode;
+						}}
+						type="button"
+						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+							$controlMode
+								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50  dark:shadow-red-800/80'
+								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+						}`}
+					>
+						{#if $controlMode === false}
+							<IconRobotOff />
+							<!-- use:popup={autonomTooltip} -->
+						{:else}
+							<IconRobot />
+							<!-- use:popup={manualTooltip} -->
+						{/if}
+					</button>
 
 					<button
-						class="p-4 text-white bg-black"
+						use:popup={$launchMode ? returnToLaunchTooltip : returnToLaunchTooltip}
+						on:click={() => {
+							$launchMode = !$launchMode;
+						}}
+						type="button"
+						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+							$launchMode
+								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
+								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+						}`}
+					>
+						<IconHomeDown />
+					</button>
+
+					<button
+						use:popup={$armMode ? disarmTooltip : armTooltip}
+						on:click={() => {
+							$armMode = !$armMode;
+						}}
+						type="button"
+						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg ${
+							$armMode
+								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
+								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50  dark:shadow-sky-800/80'
+						}`}
+					>
+						{#if $armMode === false}
+							<IconLockOpen />
+						{:else}
+							<IconLock />
+						{/if}
+					</button>
+
+					<button
+						use:popup={$ledStatus ? ledsOnTooltip : ledsOffTooltip}
+						on:click={() => {
+							$ledStatus = !$ledStatus;
+						}}
+						type="button"
+						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+							$ledStatus
+								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
+								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+						}`}
+					>
+						{#if $ledStatus === false}
+							<IconSunOff />
+						{:else}
+							<IconSun />
+						{/if}
+					</button>
+
+					<button
+						class="bg-black rounded-lg"
 						on:click={() => {
 							drawerStore.open(drawerLeft);
 						}}
 					>
-						Open Drawer Left
+						ODL
 					</button>
 
 					<button
-						class="p-4 text-white bg-black"
+						class="bg-black rounded-lg"
 						on:click={() => {
 							drawerStore.open(drawerRight);
 						}}
 					>
-						Open Drawer Right
+						ODR
 					</button>
 				</div>
 
 				<div class="flex flex-row">
 					<select
-						class="py-2 font-sans font-semibold active:ring-4 text-sky-600 dark:text-sky-400 select"
+						class="pt-2.5 pb-2.5 text-sm font-medium rounded-r-full rounded-es-full text-center active:ring-4 shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
 					>
 						{#each Object.entries($selectedPort) as [id, port]}
 							<option value={port}>{port}</option>

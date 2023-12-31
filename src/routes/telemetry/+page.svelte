@@ -53,24 +53,26 @@
 		<div
 			class="z-0 grid grid-cols-3 shadow-xl rounded-b-3xl dark:border-none bg-slate-100 shadow-slate-300 dark:shadow-[#1f2937] dark:bg-[#050505] top-50"
 		>
-			<div
-				style="font-family: Nevan;"
-				class="pt-3 pb-3 text-lg text-center text-red-800 border-none"
-			>
-				Ground Control
-			</div>
-			<div
-				style="font-family: Nevan;"
-				class="text-lg text-center text-red-800 pt-3 pb-3 border-r-4 border-l-4 rounded-t-xl border-[#e0e8f6] dark:border-[#1f2937]"
-			>
-				AI Computer
-			</div>
-			<div
-				style="font-family: Nevan;"
-				class="pt-3 pb-3 text-lg text-center text-red-800 border-none"
-			>
-				Mission Computer
-			</div>
+			<h3 class="pt-3 pb-3 pl-6 pr-6 text-center h3" style="font-family: Nevan;">
+				<span
+					class="self-center text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
+					>Ground Control</span
+				>
+			</h3>
+
+			<h3 class="self-center pl-8 pr-8 text-center h3" style="font-family: Nevan;">
+				<span
+					class="text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
+					>AI Computer</span
+				>
+			</h3>
+
+			<h3 class="self-center pl-6 pr-6 text-center h3" style="font-family: Nevan">
+				<span
+					class="text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
+					>Mission Computer</span
+				>
+			</h3>
 		</div>
 
 		<div class="grid w-full h-full grid-cols-3 overflow-hidden">

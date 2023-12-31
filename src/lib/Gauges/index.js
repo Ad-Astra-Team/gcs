@@ -81,13 +81,13 @@ export function initialize_gauges() {
         airplane?.setYaw(j.gyro.yaw * 20);
     });
 
-    // obj_airspeed.demoStart();
-    // obj_attitude.demoStart();
-    // obj_altimeter.demoStart();
-    // obj_turn_coordinator.demoStart();
-    // obj_heading.demoStart();
-    // obj_vertical_speed.demoStart();
-    // obj_tachometer.demoStart();
+    //obj_airspeed.demoStart();
+    //obj_attitude.demoStart();
+    //obj_altimeter.demoStart();
+    //obj_turn_coordinator.demoStart();
+    //obj_heading.demoStart();
+    //obj_vertical_speed.demoStart();
+    //obj_tachometer.demoStart();
 }
 
 export function destroy_gauges() {

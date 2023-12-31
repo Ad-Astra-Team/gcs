@@ -18,4 +18,7 @@ export const pingStatus = writable(0);
 export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
-export const selectedPort = writable(["COM1", "COM2", "COM3", "UDP", "TCP", "TTYUSB0", "TTYACM0"]);
+export const selectedPort = writable(["PORT", "UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]); 22
+
+//tries
+export const buttonTry = writable(false);
