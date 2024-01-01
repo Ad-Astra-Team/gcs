@@ -40,8 +40,9 @@
     "@floating-ui/dom": "1.5.3",
     "@tabler/icons-svelte": "^2.44.0",
     "@tauri-apps/api": "^1.5.3",
+    "@tauri-apps/cli": "^1.5.9",
     "DOMArray": "^1.0.0",
     "snapsvg-cjs": "^0.0.6",
-    "three": "^0.158.0"
+    "three": "^0.160.0"
   }
 }

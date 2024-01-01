@@ -12,7 +12,7 @@ rust-version = "1.60"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.4.0", features = [] }
+tauri-build = { version = "1.5.1", features = [] }
 reqwest = { version = "0.11", default-features = false, features = [
     "blocking",
     "rustls-tls",
@@ -22,11 +22,11 @@ vergen = { version = "7", features = ["git"] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-serde_derive = "1.0.115"
+serde_derive = "1.0.193"
 tokio = { version = "1", features = ["full"] }
-tauri = { version = "1.4.0", features = [ "window-unmaximize", "window-minimize", "window-unminimize", "window-show", "window-hide", "window-close", "window-start-dragging", "window-maximize"] }
+tauri = { version = "1.5.4", features = [ "window-unmaximize", "window-minimize", "window-unminimize", "window-show", "window-hide", "window-close", "window-start-dragging", "window-maximize"] }
 chrono = { version = "0.4", features = ["serde"] }
-derivative = "2.1.1"
+derivative = "2.2.0"
 mavlink = { git = "https://github.com/mavlink/rust-mavlink", rev = "0.10.2", features = [
     "ardupilotmega",
     "emit-extensions",
