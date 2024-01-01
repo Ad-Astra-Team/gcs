@@ -259,8 +259,8 @@
 
 		text-align: center;
 		font-weight: 600;
-		background-color: #000;
-		color: #000;
+		background-color: #38bdf8;
+		color: #fff;
 		border-radius: 0.5rem;
 	}
 
