@@ -9,10 +9,8 @@
 
 	onMount(() => {
 		const scene = new THREE.Scene();
-		scene.add(new THREE.AxesHelper(5));
-
 		const light = new THREE.PointLight(0xffffff, 1000);
-		light.position.set(2.5, 7.5, 15);
+		light.position.set(7.5, 7.5, 15);
 		scene.add(light);
 
 		const camera = new THREE.PerspectiveCamera(
@@ -21,35 +19,46 @@
 			0.1,
 			1000
 		);
-		camera.position.z = 3;
+
+		camera.position.z = 5;
 
 		const renderer = new THREE.WebGLRenderer();
+		const controls = new OrbitControls(camera, renderer.domElement);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.getElementById('scene').appendChild(renderer.domElement);
+		renderer.setClearColor(0x101b2b); // Beyaz arkaplan rengi
 
-		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.enableDamping = true;
 
 		// instantiate a loader
 		const loader = new OBJLoader();
 
 		// load a resource
-		loader.load(
-			// resource URL
-			'assets/Airbus_A310.obj',
-			// called when resource is loaded
-			function (object) {
-				scene.add(object);
-			},
-			// called when loading is in progresses
-			function (xhr) {
-				console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-			},
-			// called when loading has errors
-			function (error) {
-				console.log('An error happened');
+		loader.load('assets/kf1500.obj', function (object) {
+			const rotationSpeed = 0.0009;
+			const scaleValue = 0.006;
+			object.scale.set(scaleValue, scaleValue, scaleValue);
+			object.rotation.x = Math.PI / 10;
+			object.rotation.y = Math.PI / 10;
+
+			scene.add(object);
+
+			function rotateObject() {
+				object.rotation.y += rotationSpeed;
+				object.rotation.x += rotationSpeed;
 			}
-		);
+
+			function animate() {
+				requestAnimationFrame(animate);
+
+				controls.update();
+				rotateObject(); // Objeyi döndür
+
+				render();
+			}
+
+			animate();
+		});
 
 		// const geometry = new THREE.BoxGeometry(1, 1, 1);
 		// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -96,6 +105,31 @@
 
 		animate();
 	});
+
+	// ...
 </script>
 
-<div id="scene" class="top-0 bottom-0 left-0 right-0" />
+<div class="relative flex w-screen h-screen bg-black">
+	<div id="scene" class="top-0 bottom-0 left-0 right-0" />
+	<div
+		class="absolute flex flex-col lg:top-16 lg:left-16 md:bottom-28 md:left-10 sm:bottom-28 sm:left-10"
+	>
+		<div class="flex flex-row">
+			<h1
+				style="font-family: Nevan; "
+				class="relative flex text-red-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
+			>
+				Welcome to <br /> S.A.F.İ.R
+			</h1>
+		</div>
+		<div class="flex flex-row pl-3 mt-2">
+			<h4
+				class="flex font-sans text-white lg:opacity-90 md:opacity-95 sm:opacity-95 h4 lg:w-3/12 md:5/6 sm:w-5/6"
+			>
+				S.A.F.İ.R is a Ground Control System for UAV purposed. It stands as "Savaş Alanı Fonksiyonlu
+				İnsansız Rehber" and it developed by Ad Astra Team. You can control your UAV with the help
+				of this multifunctional Ground Control System as you wish. All rights reserved.
+			</h4>
+		</div>
+	</div>
+</div>

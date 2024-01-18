@@ -146,6 +146,11 @@ async fn get_axes() -> Value {
 }
 
 #[tauri::command]
+fn exit_app() {
+    std::process::exit(0x0);
+}
+
+#[tauri::command]
 fn increase_packet_counter(app_state: State<Arc<Mutex<AppState>>>) {
     let state = app_state.lock().unwrap();
     let mut vehicle = state.0.lock().unwrap();
@@ -189,7 +194,11 @@ async fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_axes, increase_packet_counter])
+        .invoke_handler(tauri::generate_handler![
+            get_axes,
+            increase_packet_counter,
+            exit_app
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

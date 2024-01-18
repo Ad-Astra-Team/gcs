@@ -2,6 +2,7 @@
 	import '../app.postcss';
 	import { page } from '$app/stores';
 	import { listen, TauriEvent } from '@tauri-apps/api/event';
+	import { exit } from '@tauri-apps/api/process';
 
 	//Importing Skeleton's components
 	import {
@@ -67,6 +68,7 @@
 	import { handleIsTauri } from '$lib/Utils/helper';
 	import { onMount } from 'svelte';
 	import { invoke } from '@tauri-apps/api/tauri';
+	import { tauri } from '@tauri-apps/api';
 
 	//Tooltip features
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -183,7 +185,9 @@
 		/**
 		 * @param {boolean} r
 		 */
-		response: (r) => console.log('response:', r)
+		response: (r) => {
+			invoke('exit_app');
+		}
 	};
 
 	//Configurations for Raspberry Pi Reboot Modal
@@ -215,7 +219,7 @@
 		/**
 		 * @param {boolean} r
 		 */
-		response: (r) => console.log('response:', r)
+		response: (r) => tauri
 	};
 </script>
 
@@ -229,67 +233,67 @@
 />
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="raspberryTooltip"
 >
 	Raspberry PI Reboot
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="pixhawkTooltip"
 >
 	Pixhawk Reboot
-	<div class="bg-[#1a2433] arrow" />
+	<div class="" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="homePageTooltip"
 >
 	Home
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="dashboardPageTooltip"
 >
 	Dashboard
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="telemetryPageTooltip"
 >
 	Telemetry
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="testPageTooltip"
 >
 	Test
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="aboutPageTooltip"
 >
 	About
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="settingsPageTooltip"
 >
 	Settings
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <!-- App Shell -->
@@ -332,7 +336,7 @@
 							<!-- Communication Status -->
 							<div class="flex flex-row">
 								{#if $uav_networkStatus === true}
-									<IconAntenna class="w-7 h-7 text-[#ff0000]" />
+									<IconAntenna class="w-7 h-7 text-[#ffffff]" />
 								{:else}
 									<IconAntennaOff class="w-7 h-7 text-[#ff0000]" />
 								{/if}
@@ -578,13 +582,20 @@
 				transition:slide={{ delay: 20, duration: 300, easing: quintOut, axis: 'x' }}
 				class="h-full justify-between flex flex-col pl-2 pr-2 pt-2.5 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
-				<!-- Text Area for Dataflow -->
-				<textarea
-					class="h-full select-none shadow-xl overflow-y-auto text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
-					placeholder="Your data will flow here. You can also minimize this tab as you wish."
-					readonly
-					value=""
-				/>
+				<div class="grid h-full grid-rows-2">
+					<!-- Text Area for Dataflow -->
+					<div class="h-full">
+						<button> check </button>
+					</div>
+					<div class="h-full">
+						<textarea
+							class="h-full select-none shadow-xl overflow-y-auto text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
+							placeholder="Your data will flow here. You can also minimize this tab as you wish."
+							readonly
+							value=""
+						/>
+					</div>
+				</div>
 
 				<!-- Reboot Section -->
 				<div class="flex flex-row w-full mt-2.5 mb-2.5 self-center">
@@ -595,7 +606,7 @@
 							modalStore.trigger(raspberryModal);
 						}}
 						type="button"
-						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-l-lg text-sm px-5 py-2.5"
+						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg text-sm px-5 py-2.5"
 						use:popup={raspberryTooltip}
 					>
 						<IconRotate2 />
@@ -614,7 +625,7 @@
 							modalStore.trigger(pixhawkModal);
 						}}
 						type="button"
-						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-400 via-sky-500 to-sky-600 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-800 shadow-lg shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 font-medium rounded-r-lg text-sm px-5 py-2.5"
+						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg text-sm px-5 py-2.5"
 						use:popup={pixhawkTooltip}
 					>
 						<IconRotateClockwise2 />

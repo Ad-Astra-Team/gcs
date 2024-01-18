@@ -16,8 +16,7 @@
 		launchMode,
 		selectedPort,
 		connectionStatus,
-		ledStatus,
-		buttonTry
+		ledStatus
 	} from '$lib/Utils/stores';
 	import {
 		popup,
@@ -149,59 +148,59 @@
 </Drawer>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="autonomTooltip"
 >
 	Autonom Mode
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="manualTooltip"
 >
 	Manual Mode
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="returnToLaunchTooltip"
 >
 	Return to Launch
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="armTooltip"
 >
 	Arm
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="disarmTooltip"
 >
 	Disarm
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="ledsOnTooltip"
 >
 	Leds On
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 text-sm rounded-xl bg-[#1a2432] card"
+	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="ledsOffTooltip"
 >
 	Leds Off
-	<div class="bg-[#1a2433] arrow" />
+	<div class="dark:bg-[#1a2433] bg-[#d8dee1] arrow" />
 </div>
 
 <!-- Page Container -->
@@ -211,7 +210,7 @@
 		<!-- Page Header Row -->
 		<div class="flex flex-row flex-wrap sm:wrap, place-content-center">
 			<div
-				class="place-content-center transition-opacity opacity-70 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-4 m-0 shadow-lg"
+				class="place-content-center transition-opacity opacity-70 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-5 m-0 shadow-lg"
 			>
 				<div class="flex flex-row">
 					<button
@@ -221,20 +220,19 @@
 						type="button"
 						class={`py-2.5 text-sm active:ring-4 rounded-ee-full dark:shadow-lg font-medium text-white rounded-l-full hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
 							$connectionStatus
-								? 'px-5 from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
-								: 'px-7 from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+								? 'px-5 from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
+								: 'px-7 from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
 						}`}
 					>
 						{#if $connectionStatus === false}
 							Connect
 						{:else}
-							Disconnect
+							Disconnects
 						{/if}
-						<button />
 					</button>
 				</div>
 
-				<div class="flex flex-row gap-x-2 place-content-center place-items-center">
+				<div class="flex flex-row space-x-2 place-content-center place-items-center">
 					<button
 						use:popup={$controlMode ? autonomTooltip : manualTooltip}
 						on:click={() => {
@@ -243,8 +241,8 @@
 						type="button"
 						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
 							$controlMode
-								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50  dark:shadow-red-800/80'
-								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
+								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
 						}`}
 					>
 						{#if $controlMode === false}
@@ -264,8 +262,8 @@
 						type="button"
 						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
 							$launchMode
-								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
-								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
+								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
 						}`}
 					>
 						<IconHomeDown />
@@ -279,8 +277,8 @@
 						type="button"
 						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg ${
 							$armMode
-								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
-								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50  dark:shadow-sky-800/80'
+								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
+								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
 						}`}
 					>
 						{#if $armMode === false}
@@ -298,8 +296,8 @@
 						type="button"
 						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
 							$ledStatus
-								? 'from-red-400 via-red-500 to-red-600 focus:ring-red-300 dark:focus:ring-red-800 shadow-red-500/50 dark:shadow-red-800/80'
-								: 'from-sky-400 via-sky-500 to-sky-600 focus:ring-sky-300 dark:focus:ring-sky-800 shadow-sky-500/50 dark:shadow-sky-800/80'
+								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
+								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
 						}`}
 					>
 						{#if $ledStatus === false}
@@ -330,7 +328,7 @@
 
 				<div class="flex flex-row">
 					<select
-						class="pt-2.5 pb-2.5 text-sm font-medium rounded-r-full rounded-es-full text-center active:ring-4 shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						class="pt-2.5 pb-2.5 text-sm font-medium rounded-r-full rounded-es-full text-center active:ring-4 shadow-lg text-sky-700 dark:text-sky-400 shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 select"
 					>
 						{#each Object.entries($selectedPort) as [id, port]}
 							<option value={port}>{port}</option>
