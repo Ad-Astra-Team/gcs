@@ -186,7 +186,7 @@
 		 * @param {boolean} r
 		 */
 		response: (r) => {
-			invoke('exit_app');
+			if (r) invoke('exit_app');
 		}
 	};
 
