@@ -39,5 +39,7 @@ export const simpleGPS = writable(false);
 export const RSSIGPS = writable(false);
 export const bestHealthGPS = writable(false);
 export const GPSOff = writable(false);
-
+export const GPS_Lat = writable(0.0);
+export const GPS_Lon = writable(0.0);
+export const followMe = writable(false);
 

@@ -5,12 +5,13 @@
 	import MarkerPopup from './MarkerPopup.svelte';
 	import * as markerIcons from '$lib/Maps/marker';
 	import { modeCurrent } from '@skeletonlabs/skeleton';
-
+	import { GPS_Lat, GPS_Lon, followMe } from '$lib/Utils/stores';
+	import { IconAirBalloon } from '@tabler/icons-svelte';
 	// #region Globals
 	/**
 	 * @type {L.Map}
 	 */
-	let map;
+	export let map;
 
 	var mapOptions = {
 		zoom: 10,
@@ -37,13 +38,12 @@
 	};
 
 	const markerLocations = [
-		[29.8283, -96.5795],
-		[37.8283, -90.5795],
-		[43.8283, -102.5795],
-		[48.4, -122.5795],
-		[43.6, -79.5795],
-		[36.8283, -100.5795],
-		[38.4, -122.5795]
+		[-35.157632, 149.16445],
+		[-35.257632, 149.26445],
+		[-35.357632, 149.36445],
+		[-35.257632, 149.16445],
+		[-35.157632, 149.26445],
+		[-35.057632, 149.36445]
 	];
 
 	const initialView = [39.8283, -98.5795];
@@ -139,6 +139,14 @@
 		});
 	}
 
+	function markerAircraftIcon() {
+		let html = `<div class="map-marker"><div>${markerIcons.aircraft}</div></div>`;
+		return L.divIcon({
+			html,
+			className: 'map-marker'
+		});
+	}
+
 	function addMarker(e) {
 		// Add marker to map at click location; add popup window
 		var newMarker = new L.marker(e.latlng).addTo(map);
@@ -174,18 +182,38 @@
 
 	function mapAction(container) {
 		map = createMap(container);
+		// get map zoom level
 		toolbar.addTo(map);
 
 		markerLayers = L.layerGroup();
 		for (let location of markerLocations) {
 			let m = createMarker(location);
+
 			markerLayers.addLayer(m);
 		}
+		let icon = markerAircraftIcon();
+		let airplane = L.marker([$GPS_Lat, $GPS_Lon], { icon });
+
+		markerLayers.addLayer(airplane);
 
 		lineLayers = createLines();
 
 		markerLayers.addTo(map);
 		lineLayers.addTo(map);
+
+		GPS_Lat.subscribe((lat) => {
+			airplane.setLatLng([lat, $GPS_Lon]);
+			if (map && $followMe) {
+				map.setView([lat, $GPS_Lon], map.getZoom(), { animate: true });
+			}
+		});
+
+		GPS_Lon.subscribe((lon) => {
+			airplane.setLatLng([$GPS_Lat, lon]);
+			if (map && $followMe) {
+				map.setView([$GPS_Lat, lon], map.getZoom(), { animate: true });
+			}
+		});
 
 		return {
 			destroy: () => {

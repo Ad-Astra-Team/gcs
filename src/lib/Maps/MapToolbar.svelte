@@ -1,6 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { IconRoute, IconEye, IconFocusCentered } from '@tabler/icons-svelte';
+	import { IconRoute, IconEye, IconFocusCentered, IconArrowUp } from '@tabler/icons-svelte';
+	import { followMe } from '$lib/Utils/stores';
 	const dispatch = createEventDispatcher();
 	let eye = true;
 	function clickEye() {
@@ -31,6 +32,17 @@
 
 <button type="button" on:click={clickLines} class:selected={lines} title="Show Lines">
 	<IconRoute class="text-dark dark:text-white" />
+</button>
+
+<button
+	type="button"
+	on:click={() => {
+		$followMe = !$followMe;
+	}}
+	class:selected={$followMe}
+	title="Show Lines"
+>
+	<IconArrowUp class="text-dark dark:text-white" />
 </button>
 
 <style>

@@ -36,6 +36,29 @@ impl Vehicle {
         }
     }
 
+    pub fn get(&self) -> Self {
+        Vehicle {
+            gyro: Gyro {
+                pitch: self.gyro.pitch,
+                roll: self.gyro.roll,
+                yaw: self.gyro.yaw,
+            },
+            gps: GPS {
+                lat: self.gps.lat,
+                lon: self.gps.lon,
+                alt: self.gps.alt,
+            },
+            airspeed: self.airspeed,
+            groundspeed: self.groundspeed,
+            heading: self.heading,
+            packet_tick: self.packet_tick,
+        }
+    }
+
+    pub fn deserialize(data: &str) -> Self {
+        serde_json::from_str(data).unwrap()
+    }
+
     pub fn serialize(&self) -> String {
         serde_json::to_string(&self).unwrap()
     }

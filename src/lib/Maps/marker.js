@@ -1,2 +1,3 @@
 // Icons from heroicons.dev
 export const library = `<svg style="width:30px;height:30px" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>`;
+export const aircraft = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body_1" width="50" height="50"><g transform="matrix(0.10000001 0 0 0.10000001 0 0)"><path d="M41 217L24 203L0 159L18 144L94 212L111 212L94 86L140 83L244 210L350 216L350 236L441 236L500 250L441 264L350 264L350 284L244 290L140 417L94 414L111 288L94 288L18 356L0 341L24 297L41 283L41 217z" stroke="none" fill="#AAAAAA" fill-rule="nonzero" /></g></svg>`;

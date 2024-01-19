@@ -8,7 +8,7 @@ import VerticalSpeedAnalog from '$lib/Gauges/vertical_speed_analog';
 import Airplane from '$lib/Gauges/airplane';
 import './styles.css';
 import { listen } from '@tauri-apps/api/event';
-
+import { GPS_Lat, GPS_Lon } from '$lib/Utils/stores';
 /** @type {Airplane?} */
 export let airplane;
 /** @type {AirspeedAnalog?} */
@@ -68,6 +68,9 @@ export function initialize_gauges() {
 
     listen('backend-mavmsg', function (evt) {
         let j = JSON.parse(evt.payload);
+
+        GPS_Lat.set(j.gps.lat / 10000000);
+        GPS_Lon.set(j.gps.lon / 10000000);
 
         airplane?.setAltitude(j.gps.alt);
         airplane?.setHeading(j.heading);
