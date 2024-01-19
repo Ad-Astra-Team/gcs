@@ -15,10 +15,15 @@ mod mavproxy;
 mod model;
 mod prelude;
 
+use lazy_static::lazy_static;
 use mavproxy::*;
 use model::Vehicle;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use surrealdb::engine::remote::ws::{Client, Ws};
+use surrealdb::opt::auth::Root;
+use surrealdb::sql::Thing;
+use surrealdb::Surreal;
 use tauri::{AppHandle, Manager, State, StateManager};
 use tokio::time::sleep;
 
@@ -41,7 +46,45 @@ impl AppState {
     }
 }
 
-async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<AppState>>) {
+#[derive(Debug, Deserialize)]
+struct Record {
+    #[allow(dead_code)]
+    id: Thing,
+}
+
+static mut veh_q: Vec<Vehicle> = Vec::new();
+
+async fn db_flush() -> core::result::Result<(), Box<dyn std::error::Error>> {
+    let db = Surreal::new::<Ws>("127.0.0.1:8000").await?;
+
+    // Signin as a namespace, database, or root user
+    db.signin(Root {
+        username: "root",
+        password: "root",
+    })
+    .await?;
+
+    // Select a specific namespace / database
+    db.use_ns("test").use_db("flight_computer").await?;
+
+    loop {
+        if let Some(mut v) = unsafe { veh_q.pop() } {
+            let created: Vec<Record> = db
+                .clone()
+                .to_owned()
+                .create("flight_data")
+                .content(v)
+                .await
+                .unwrap();
+        }
+        std::time::Duration::from_millis(100);
+    }
+}
+
+async fn mavlink_loop(
+    app_handle: Arc<Mutex<AppHandle>>,
+    app_state: Arc<Mutex<AppState>>,
+) -> core::result::Result<(), Box<dyn std::error::Error>> {
     let mavlink_version = match MAVLINK_VERSION {
         1 => mavlink::MavlinkVersion::V1,
         2 => mavlink::MavlinkVersion::V2,
@@ -80,6 +123,8 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                         packet.yaw
                     );
                     state.gps.alt = packet.altitude;
+                    state.gps.lat = packet.lat as f32;
+                    state.gps.lon = packet.lng as f32;
                     state.gyro.pitch = packet.pitch;
                     state.gyro.roll = packet.roll;
                     state.gyro.yaw = packet.yaw;
@@ -127,6 +172,10 @@ async fn mavlink_loop(app_handle: Arc<Mutex<AppHandle>>, app_state: Arc<Mutex<Ap
                     .unwrap()
                     .emit_all("backend-mavmsg", state.serialize());
 
+                unsafe {
+                    veh_q.push(state.get());
+                }
+
                 t1 = std::time::Instant::now();
             }
         }
@@ -159,12 +208,11 @@ fn increase_packet_counter(app_state: State<Arc<Mutex<AppState>>>) {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> core::result::Result<(), Box<dyn std::error::Error>> {
     let log_filter = if IS_VERBOSE { "debug" } else { "warn" };
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(log_filter)).init();
 
     // inner_vehicle.lock().unwrap().send(header, message);
-
     let app_state = Arc::new(Mutex::new(AppState::new()));
 
     tauri::async_runtime::set(tokio::runtime::Handle::current());
@@ -175,7 +223,13 @@ async fn main() {
             let app_handle_mav_loop = Arc::new(Mutex::new(app.app_handle()));
 
             tauri::async_runtime::spawn(async move {
-                mavlink_loop(app_handle_mav_loop, app_state.clone()).await;
+                mavlink_loop(app_handle_mav_loop, app_state).await;
+            });
+
+            // db_flush
+            tokio::spawn(async move {
+                let response = db_flush().await.unwrap();
+                println!("Response: {:?}", response);
             });
 
             tauri::async_runtime::spawn(async move {
@@ -201,4 +255,6 @@ async fn main() {
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    Ok(())
 }
