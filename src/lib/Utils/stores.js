@@ -43,3 +43,12 @@ export const GPS_Lat = writable(0.0);
 export const GPS_Lon = writable(0.0);
 export const followMe = writable(false);
 
+//Checlist Properties
+export const motorTest = writable(false);
+export const lidarTest = writable(false);
+export const IMUTest = writable(false);
+export const GPSTest = writable(false);
+export const pitotTest = writable(false);
+export const cameraTest = writable(false);
+
+

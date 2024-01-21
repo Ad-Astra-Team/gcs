@@ -84,7 +84,7 @@ export function initialize_gauges() {
         airplane?.setYaw(j.gyro.yaw * 20);
     });
 
-    //obj_airspeed.demoStart();
+    // obj_airspeed.demoStart();
     //obj_attitude.demoStart();
     //obj_altimeter.demoStart();
     //obj_turn_coordinator.demoStart();

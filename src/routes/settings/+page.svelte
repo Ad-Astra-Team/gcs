@@ -20,6 +20,7 @@
 		GPSOff
 	} from '$lib/Utils/stores';
 	import { CustomToneMapping } from 'three';
+	import { IconCheck } from '@tabler/icons-svelte';
 </script>
 
 <!-- Outer Container -->
@@ -27,7 +28,7 @@
 	<!-- Row 1 -->
 	<div class="flex flex-row w-full h-full">
 		<!-- Section 1 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-ee-xl">
+		<div class="flex flex-col w-full h-full border-b-2 border-r-2 border-white rounded-ee-xl">
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -64,7 +65,7 @@
 		</div>
 
 		<!-- Section 2 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-es-2xl">
+		<div class="flex flex-col w-full h-full border-b-2 border-white rounded-es-2xl">
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -132,7 +133,7 @@
 	<!-- Row 2 -->
 	<div class="flex flex-row w-full h-full">
 		<!-- Section 3 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-r-2xl">
+		<div class="flex flex-col w-full h-full border-b-2 border-r-2 border-white rounded-r-2xl">
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -175,7 +176,9 @@
 				</button>
 			</div>
 			<!-- Third row of section -->
-			<div class="flex flex-row w-full h-full space-x-8 place-content-center place-items-start">
+			<div
+				class="flex flex-row w-full h-full mb-2 space-x-8 place-content-center place-items-start"
+			>
 				<button
 					on:click={() => {
 						$harassLed = !$harassLed;
@@ -224,7 +227,7 @@
 			</div>
 		</div>
 		<!-- Section 4 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-l-2xl">
+		<div class="flex flex-col w-full h-full border-b-2 border-white rounded-l-2xl">
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -239,7 +242,7 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						Max Dist.
 					</div>
-					<input type="number" placeholder="4000 (cm)" max="5000" min="0" />
+					<input type="number" placeholder="4000 (cm)" min="0" max="5000" />
 				</div>
 			</div>
 			<div class="flex flex-row w-full h-full place-content-center place-items-start">
@@ -255,9 +258,9 @@
 		</div>
 	</div>
 	<!-- Row 3 -->
-	<div class="flex flex-row w-full h-full">
+	<div class="flex flex-row w-full h-full mb-2">
 		<!-- Section 5 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-se-2xl">
+		<div class="flex flex-col w-full h-full border-r-2 border-white rounded-se-2xl">
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -333,7 +336,7 @@
 							$secondaryGPS = false;
 						}}
 						type="button"
-						class={`py-2.5 rounded-full px-5 lg:w-1/6 sm:w-1/4 md:w-1/4 lg:h-1/2 md:h-2/3 sm:h-2/3 text-sm active:ring-4  dark:shadow-lg font-medium text-white  hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
+						class={`py-2.5 rounded-full px-5 lg:h-1/2 md:h-2/3 sm:h-2/3 text-sm active:ring-4  dark:shadow-lg font-medium text-white  hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
 							$primaryGPS
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: ' from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -347,7 +350,7 @@
 							$primaryGPS = false;
 						}}
 						type="button"
-						class={`py-2.5 rounded-full px-5 lg:w-1/6 sm:w-1/4 md:w-1/4 lg:h-1/2 md:h-2/3 sm:h-2/3 text-sm active:ring-4  dark:shadow-lg font-medium text-white  hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
+						class={`py-2.5 rounded-full px-5 lg:h-1/2 md:h-2/3 sm:h-2/3 text-sm active:ring-4  dark:shadow-lg font-medium text-white  hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
 							$secondaryGPS
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: ' from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -407,34 +410,120 @@
 			</div>
 		</div>
 		<!-- Section 6 -->
-		<div class="flex flex-col w-full h-full border-2 border-white rounded-ss-2xl">
-			<!-- First row of section -->
+		<div class="flex flex-col w-full h-full -2 -white rounded-ss-2xl">
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
+				<!-- Başlık satır 1 -->
 				<h3 class="h3" style="font-family: Nevan">
 					<span class="text-black text-transparen dark:text-white">Stream Settings</span>
 				</h3>
 			</div>
-			<!-- Second row of section -->
-			<div class="flex flex-row w-full h-full place-content-center place-items-start">
-				<div class="input-group w-3/5 bg-white input-group-divider grid-cols-[auto_1fr_auto]">
-					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
-						Address
+			<div class="flex flex-row w-full h-full space-x-4 place-content-center place-items-center">
+				<!-- Chunk/Adress satır 2	 -->
+				<div class="flex flex-col w-2/5 h-full place-content-center place-items-center">
+					<!-- Adress Sütunu -->
+					<div
+						class="input-group bg-white input-group-divider lg:grid-cols-[auto_1fr_auto] md: sm:"
+					>
+						<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
+							Address
+						</div>
+						<input type="text" placeholder="192.168.1.1" />
 					</div>
-					<input type="url" placeholder="192.168.1.1" />
+				</div>
+				<div class="flex flex-col w-2/5 h-full place-content-center place-items-center">
+					<!-- Chunk sütunu -->
+					<div
+						class="input-group bg-white input-group-divider lg:grid-cols-[auto_1fr_auto] md: sm:"
+					>
+						<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
+							Chunks
+						</div>
+						<input type="number" placeholder="17755" min="128" max="65535" />
+					</div>
 				</div>
 			</div>
-			<!-- Third row of section -->
-			<div class="flex flex-row w-full h-full place-content-center place-items-start">3</div>
-			<!-- Fourth row of section -->
-			<div class="flex flex-row w-full h-full place-content-end place-items-center">
+			<div class="flex flex-row w-full h-full place-content-center place-items-center">
+				<!-- Radio buton satır 3 -->
+				<div class="flex flex-col w-full h-full place-content-center place-items-center">
+					<!-- Radio buton sütunu 2 -->
+					<div class="flex flex-row w-full h-full place-content-center place-items-center">
+						<!-- Radio buton başlık satırı 1 -->
+						<h2>Format:</h2>
+					</div>
+					<div
+						class="flex flex-row w-full h-full lg:space-x-20 md:space-x-8 sm:space-x-8 place-content-center place-items-center"
+					>
+						<!-- Radio butonların satırı 2 -->
+						<div class="flex flex-col space-y-2">
+							<!-- Radio buton grubu sütunu 1 -->
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" checked name="radio-format" value="1" />
+								<p class="whitespace-nowrap">Form. MP4</p>
+							</label>
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-format" value="2" />
+								<p>MP4</p>
+							</label>
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-format" value="3" />
+								<p>MKV</p>
+							</label>
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-format" value="3" />
+								<p>MOV</p>
+							</label>
+							<!-- Radio buton grubu sütunu 2 -->
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-col w-full h-full place-content-center place-items-center">
+					<!-- Radio buton sütunu 2 -->
+					<div class="flex flex-row w-full h-full place-content-center place-items-center">
+						<!-- Radio buton başlık satırı 1 -->
+						<h2>Codec:</h2>
+					</div>
+					<div
+						class="flex flex-row w-full h-full lg:space-x-20 md:space-x-8 sm:space-x-8 place-content-center place-items-center"
+					>
+						<!-- Radio butonların satırı 2 -->
+						<div class="flex flex-col space-y-2">
+							<!-- Radio buton grubu sütunu 1 -->
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" checked name="radio-codec" value="1" />
+								<p>H264</p>
+							</label>
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-codec" value="2" />
+								<p>H265</p>
+							</label>
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-codec" value="3" />
+								<p>WP9</p>
+							</label>
+							<label class="flex items-center space-x-2">
+								<input class="radio" type="radio" name="radio-codec" value="3" />
+								<p>AV1</p>
+							</label>
+							<!-- Radio buton grubu sütunu 2 -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-row w-full place-content-end place-items-center">
+				<!-- Apply butonu satır 4 -->
 				<button
 					on:click={() => {}}
 					type="button"
-					class="px-12 py-2.5 lg:mr-12 md:mr-5 sm:mr-5 text-sm font-medium text-white rounded-lg shadow-lg from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80 active:ring-4 dark:shadow-lg hover:bg-gradient-to-br focus:outline-none bg-gradient-to-r"
+					class="mb-2 mr-2 font-medium text-white rounded-full shadow-lg from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80 active:ring-4 dark:shadow-lg hover:bg-gradient-to-br focus:outline-none bg-gradient-to-r"
 				>
-					Apply
+					<IconCheck class="w-12 h-12 p-2" />
 				</button>
 			</div>
 		</div>
 	</div>
+	<!-- Row 4 -->
 </div>

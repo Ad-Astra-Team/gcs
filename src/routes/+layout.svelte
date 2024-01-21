@@ -62,7 +62,13 @@
 		uav_networkStatus,
 		pingStatus,
 		raspberryBoot,
-		pixhawkBoot
+		pixhawkBoot,
+		GPSTest,
+		lidarTest,
+		pitotTest,
+		cameraTest,
+		IMUTest,
+		motorTest
 	} from '$lib/Utils/stores';
 
 	import { handleIsTauri } from '$lib/Utils/helper';
@@ -582,23 +588,88 @@
 				transition:slide={{ delay: 20, duration: 300, easing: quintOut, axis: 'x' }}
 				class="h-full justify-between flex flex-col pl-2 pr-2 pt-2.5 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
-				<div class="grid h-full grid-rows-2">
+				<div class="grid h-full grid-rows-2 space-y-2">
 					<!-- Text Area for Dataflow -->
-					<div class="h-full">
-						<button> check </button>
+					<div
+						class="h-full border-2 border-white select-none shadow-xl border-opacity-20 overflow-y-auto text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
+					>
+						<div class="flex flex-row p-3 place-content-center" style="font-family: Nevan;">
+							<h2>Checklist</h2>
+						</div>
+						<div class="flex flex-col pl-3 space-y-3 place-content-center place-items-start">
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$motorTest = !$motorTest;
+									console.log('motor test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" checked />
+								<h2>Motor Test</h2>
+							</label>
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$lidarTest = !$lidarTest;
+									console.log('lidar test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" />
+								<h2>Lidar Test</h2>
+							</label>
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$GPSTest = !$GPSTest;
+									console.log('gps test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" />
+								<h2>GPS Test</h2>
+							</label>
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$IMUTest = !$IMUTest;
+									console.log('imu test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" />
+								<h2>IMU Health Check</h2>
+							</label>
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$pitotTest = !$pitotTest;
+									console.log('pitot test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" />
+								<h2>Pitot Test</h2>
+							</label>
+							<label
+								class="flex items-center space-x-2"
+								on:click={() => {
+									$cameraTest = !$cameraTest;
+									console.log('camera test activated.');
+								}}
+							>
+								<input class="checkbox" type="checkbox" />
+								<h2>Camera Test</h2>
+							</label>
+						</div>
 					</div>
 					<div class="h-full">
 						<textarea
-							class="h-full select-none shadow-xl overflow-y-auto text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
-							placeholder="Your data will flow here. You can also minimize this tab as you wish."
-							readonly
+							class="h-full select-none shadow-xl overflow-y-auto border-2 border-white border-opacity-20 text-gray-800 dark:text-gray-200 hide-scrollbar rounded-md bg-[#fffefe] dark:bg-[#374151]"
+							placeholder="You can take your notes to here as you wish."
 							value=""
 						/>
 					</div>
 				</div>
 
 				<!-- Reboot Section -->
-				<div class="flex flex-row w-full mt-2.5 mb-2.5 self-center">
+				<div class="flex flex-row self-center w-full mt-4 mb-2">
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {
