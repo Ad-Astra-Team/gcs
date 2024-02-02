@@ -122,22 +122,27 @@
 <Drawer>
 	{#if $drawerStore.meta.type === 'video'}
 		<div class="flex flex-col w-full h-full p-4 bg-[#1c2531]">
-			<video
+			<iframe
+				src="http://localhost:8888/cam/"
+				scrolling="no"
 				class="w-full h-full video-js vjs-theme-city rounded-r-2xl"
-				preload="false"
-				controls
-				muted
-				playsinline
-				id="drawerStream"
-			>
-				<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> -->
-				<source src="assets/patrick.webm" type="video/webm" />
-				<p class="vjs-no-js">
-					To view this video please enable JavaScript, and consider upgrading to a web browser that
-					<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a
-					>
-				</p>
-			</video>
+			/>
+			<!-- <video -->
+			<!-- 	class="w-full h-full video-js vjs-theme-city rounded-r-2xl" -->
+			<!-- 	preload="false" -->
+			<!-- 	controls -->
+			<!-- 	muted -->
+			<!-- 	playsinline -->
+			<!-- 	id="drawerStream" -->
+			<!-- > -->
+			<!-- 	<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> --> -->
+			<!-- 	<source src="assets/patrick.webm" type="video/webm" /> -->
+			<!-- 	<p class="vjs-no-js"> -->
+			<!-- 		To view this video please enable JavaScript, and consider upgrading to a web browser that -->
+			<!-- 		<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a -->
+			<!-- 		> -->
+			<!-- 	</p> -->
+			<!-- </video> -->
 		</div>
 		<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 	{:else if $drawerStore.meta.type === 'map'}
@@ -342,24 +347,25 @@
 		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-2 h-3/5">
 			<!-- Video Stream -->
 			<div class="grid grid-cols-1">
-				<video
-					class="w-full h-full rounded-xl video-js vjs-theme-city"
-					preload="false"
-					controls
-					muted
-					playsinline
-					id="stream"
-				>
-					<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> -->
-					<source src="assets/patrick.webm" type="video/webm" />
-					<p class="vjs-no-js">
-						To view this video please enable JavaScript, and consider upgrading to a web browser
-						that
-						<a href="https://videojs.com/html5-video-support/" target="_blank"
-							>supports HTML5 video</a
-						>
-					</p>
-				</video>
+				<iframe src="http://localhost:8888/cam/" scrolling="no" class="w-full h-full rounded-xl" />
+				<!-- <video -->
+				<!-- 	class="w-full h-full rounded-xl video-js vjs-theme-city" -->
+				<!-- 	preload="false" -->
+				<!-- 	controls -->
+				<!-- 	muted -->
+				<!-- 	playsinline -->
+				<!-- 	id="stream" -->
+				<!-- > -->
+				<!-- 	<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> --> -->
+				<!-- 	<source src="assets/patrick.webm" type="video/webm" /> -->
+				<!-- 	<p class="vjs-no-js"> -->
+				<!-- 		To view this video please enable JavaScript, and consider upgrading to a web browser -->
+				<!-- 		that -->
+				<!-- 		<a href="https://videojs.com/html5-video-support/" target="_blank" -->
+				<!-- 			>supports HTML5 video</a -->
+				<!-- 		> -->
+				<!-- 	</p> -->
+				<!-- </video> -->
 				<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 			</div>
 

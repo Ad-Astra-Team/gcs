@@ -458,7 +458,8 @@
 							<!-- Radio buton grubu sütunu 1 -->
 							<label class="flex items-center space-x-2">
 								<input class="radio" type="radio" checked name="radio-format" value="1" />
-								<p class="whitespace-nowrap">Form. MP4</p>
+								<!-- <p class="whitespace-nowrap">Form. MP4</p> -->
+								&nbsp; Form. MP4
 							</label>
 							<label class="flex items-center space-x-2">
 								<input class="radio" type="radio" name="radio-format" value="2" />
