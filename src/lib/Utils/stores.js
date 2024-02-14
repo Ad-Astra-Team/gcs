@@ -18,7 +18,7 @@ export const pingStatus = writable(0);
 export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
-export const selectedPort = writable(["PORT", "UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]);
+export const selectedPort = writable(["UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]);
 
 // Settings Properties
 export const speedUnit = writable(["Speed Unit", "MPS", "FPS", "KPH", "MPH", "Knots"]);
@@ -42,8 +42,25 @@ export const GPSOff = writable(false);
 export const GPS_Lat = writable(0.0);
 export const GPS_Lon = writable(0.0);
 export const followMe = writable(false);
+export const domainValue = writable();
+export const ipValue = writable();
+export const portValue = writable();
+export const ledFrequency = writable();
+export const maxDistance = writable();
+export const minDistance = writable();
+export const streamAddress = writable();
+export const streamChunks = writable();
+export const formattedMP4Check = writable();
+export const mp4Check = writable();
+export const mkvCheck = writable();
+export const movCheck = writable();
+export const h264Check = writable();
+export const h265Check = writable()
+export const wp9Check = writable();
+export const av1Check = writable();
+export const applyButton = writable(false);
 
-//Checlist Properties
+//Checklist Properties
 export const motorTest = writable(false);
 export const lidarTest = writable(false);
 export const IMUTest = writable(false);
@@ -51,4 +68,11 @@ export const GPSTest = writable(false);
 export const pitotTest = writable(false);
 export const cameraTest = writable(false);
 
+//Notepad Properties
+export const notepadText = writable();
 
+//Vehicle Choice Properties
+export const planeVehicle = writable(true);
+export const droneVehicle = writable(false);
+export const roverVehicle = writable(false);
+export const underWaterVehicle = writable(false);
