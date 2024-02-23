@@ -17,7 +17,24 @@
 		singleMode,
 		secondaryGPS,
 		simpleGPS,
-		GPSOff
+		GPSOff,
+		domainValue,
+		ipValue,
+		portValue,
+		ledFrequency,
+		maxDistance,
+		minDistance,
+		streamAddress,
+		streamChunks,
+		formattedMP4Check,
+		mp4Check,
+		mkvCheck,
+		movCheck,
+		h264Check,
+		h265Check,
+		wp9Check,
+		av1Check,
+		applyButton
 	} from '$lib/Utils/stores';
 	import { CustomToneMapping } from 'three';
 	import { IconCheck } from '@tabler/icons-svelte';
@@ -28,7 +45,9 @@
 	<!-- Row 1 -->
 	<div class="flex flex-row w-full h-full">
 		<!-- Section 1 -->
-		<div class="flex flex-col w-full h-full border-b-2 border-r-2 border-white rounded-ee-xl">
+		<div
+			class="flex flex-col w-full h-full border-b-2 border-r-2 border-white border-opacity-60 rounded-ee-xl"
+		>
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -41,7 +60,7 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						Domain
 					</div>
-					<input type="url" placeholder="msakg.com" />
+					<input type="url" placeholder="msakg.com" bind:value={$domainValue} />
 				</div>
 			</div>
 			<!-- Third row of section -->
@@ -50,7 +69,7 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						IP
 					</div>
-					<input type="text" placeholder="85.117.239.161" />
+					<input type="text" placeholder="85.117.239.161" bind:value={$ipValue} />
 				</div>
 			</div>
 			<!-- Fourth row of section -->
@@ -59,17 +78,19 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						Port
 					</div>
-					<input type="number" placeholder="115200" min="0" />
+					<input type="number" placeholder="115200" min="0" bind:value={$portValue} />
 				</div>
 			</div>
 		</div>
 
 		<!-- Section 2 -->
-		<div class="flex flex-col w-full h-full border-b-2 border-white rounded-es-2xl">
+		<div
+			class="flex flex-col w-full h-full border-b-2 border-white border-opacity-60 rounded-es-2xl"
+		>
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
-					<span class="text-black text-transparen dark:text-white">App Settings</span>
+					<span class="text-transparent text-black dark:text-white">App Settings</span>
 				</h3>
 			</div>
 			<!-- Second row of section -->
@@ -79,6 +100,7 @@
 				>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$languageSelection}
 					>
 						{#each Object.entries($languageSelection) as [id, language]}
 							<option value={language}>{language}</option>
@@ -86,6 +108,7 @@
 					</select>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$speechSelection}
 					>
 						{#each Object.entries($speechSelection) as [id, speech]}
 							<option value={speech}>{speech}</option>
@@ -93,6 +116,7 @@
 					</select>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$trackLengthSelection}
 					>
 						{#each Object.entries($trackLengthSelection) as [id, length]}
 							<option value={length}>{length}</option>
@@ -107,6 +131,7 @@
 				>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$distanceUnitSelection}
 					>
 						{#each Object.entries($distanceUnitSelection) as [id, distance]}
 							<option value={distance}>{distance}</option>
@@ -114,6 +139,7 @@
 					</select>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$altitudeUnit}
 					>
 						{#each Object.entries($altitudeUnit) as [id, altitude]}
 							<option value={altitude}>{altitude}</option>
@@ -121,6 +147,7 @@
 					</select>
 					<select
 						class="pt-2.5 variant-form-material pb-2.5 text-sm font-medium bg-white text-center shadow-lg text-sky-600 dark:text-sky-300 shadow-sky-500/50 dark:shadow-lg dark:shadow-sky-800/80 select"
+						bind:value={$speedUnit}
 					>
 						{#each Object.entries($speedUnit) as [id, speed]}
 							<option value={speed}>{speed}</option>
@@ -133,7 +160,9 @@
 	<!-- Row 2 -->
 	<div class="flex flex-row w-full h-full">
 		<!-- Section 3 -->
-		<div class="flex flex-col w-full h-full border-b-2 border-r-2 border-white rounded-r-2xl">
+		<div
+			class="flex flex-col w-full h-full border-b-2 border-r-2 border-white border-opacity-60 rounded-r-2xl"
+		>
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -221,13 +250,15 @@
 						<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 							hz
 						</div>
-						<input type="text" placeholder="220" />
+						<input type="text" placeholder="220" bind:value={$ledFrequency} />
 					</div>
 				{/if}
 			</div>
 		</div>
 		<!-- Section 4 -->
-		<div class="flex flex-col w-full h-full border-b-2 border-white rounded-l-2xl">
+		<div
+			class="flex flex-col w-full h-full border-b-2 border-white border-opacity-60 rounded-l-2xl"
+		>
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -242,7 +273,13 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						Max Dist.
 					</div>
-					<input type="number" placeholder="4000 (cm)" min="0" max="5000" />
+					<input
+						type="number"
+						placeholder="4000 (cm)"
+						min="0"
+						max="5000"
+						bind:value={$maxDistance}
+					/>
 				</div>
 			</div>
 			<div class="flex flex-row w-full h-full place-content-center place-items-start">
@@ -252,7 +289,7 @@
 					<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 						Min Dist.
 					</div>
-					<input type="number" placeholder="0 (cm)" min="0" max="5000" />
+					<input type="number" placeholder="0 (cm)" min="0" max="5000" bind:value={$minDistance} />
 				</div>
 			</div>
 		</div>
@@ -260,7 +297,9 @@
 	<!-- Row 3 -->
 	<div class="flex flex-row w-full h-full mb-2">
 		<!-- Section 5 -->
-		<div class="flex flex-col w-full h-full border-r-2 border-white rounded-se-2xl">
+		<div
+			class="flex flex-col w-full h-full border-r-2 border-white border-opacity-60 rounded-se-2xl"
+		>
 			<!-- First row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<h3 class="h3" style="font-family: Nevan">
@@ -427,7 +466,7 @@
 						<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 							Address
 						</div>
-						<input type="text" placeholder="192.168.1.1" />
+						<input type="text" placeholder="192.168.1.1" bind:value={$streamAddress} />
 					</div>
 				</div>
 				<div class="flex flex-col w-2/5 h-full place-content-center place-items-center">
@@ -438,13 +477,19 @@
 						<div class="font-semibold text-center text-sky-600 dark:text-sky-300 input-group-shim">
 							Chunks
 						</div>
-						<input type="number" placeholder="17755" min="128" max="65535" />
+						<input
+							type="number"
+							placeholder="17755"
+							min="128"
+							max="65535"
+							bind:value={$streamChunks}
+						/>
 					</div>
 				</div>
 			</div>
 			<div class="flex flex-row w-full h-full place-content-center place-items-center">
 				<!-- Radio buton satır 3 -->
-				<div class="flex flex-col w-full h-full place-content-center place-items-center">
+				<div class="flex flex-col w-full h-full space-y-2 place-content-center place-items-center">
 					<!-- Radio buton sütunu 2 -->
 					<div class="flex flex-row w-full h-full place-content-center place-items-center">
 						<!-- Radio buton başlık satırı 1 -->
@@ -457,29 +502,58 @@
 						<div class="flex flex-col space-y-2">
 							<!-- Radio buton grubu sütunu 1 -->
 							<label class="flex items-center space-x-2">
+<<<<<<< HEAD
 								<input class="radio" type="radio" checked name="radio-format" value="1" />
 								<!-- <p class="whitespace-nowrap">Form. MP4</p> -->
 								&nbsp; Form. MP4
+=======
+								<input
+									class="radio"
+									type="radio"
+									name="radio-format"
+									value="1"
+									bind:group={$formattedMP4Check}
+								/>
+								<b class="whitespace-nowrap">Form. MP4</b>
+>>>>>>> dev
 							</label>
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-format" value="2" />
-								<p>MP4</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-format"
+									value="2"
+									bind:group={$mp4Check}
+								/>
+								<b>MP4</b>
 							</label>
 						</div>
 						<div class="flex flex-col space-y-2">
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-format" value="3" />
-								<p>MKV</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-format"
+									value="3"
+									bind:group={$mkvCheck}
+								/>
+								<b>MKV</b>
 							</label>
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-format" value="3" />
-								<p>MOV</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-format"
+									value="3"
+									bind:group={$movCheck}
+								/>
+								<b>MOV</b>
 							</label>
 							<!-- Radio buton grubu sütunu 2 -->
 						</div>
 					</div>
 				</div>
-				<div class="flex flex-col w-full h-full place-content-center place-items-center">
+				<div class="flex flex-col w-full h-full space-y-2 place-content-center place-items-center">
 					<!-- Radio buton sütunu 2 -->
 					<div class="flex flex-row w-full h-full place-content-center place-items-center">
 						<!-- Radio buton başlık satırı 1 -->
@@ -492,22 +566,47 @@
 						<div class="flex flex-col space-y-2">
 							<!-- Radio buton grubu sütunu 1 -->
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" checked name="radio-codec" value="1" />
-								<p>H264</p>
+								<input
+									class="radio"
+									type="radio"
+									checked
+									name="radio-codec"
+									value="1"
+									bind:group={$h264Check}
+								/>
+								<i>H264</i>
 							</label>
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-codec" value="2" />
-								<p>H265</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-codec"
+									value="2"
+									bind:group={$h265Check}
+								/>
+								<i>H265</i>
 							</label>
 						</div>
 						<div class="flex flex-col space-y-2">
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-codec" value="3" />
-								<p>WP9</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-codec"
+									value="3"
+									bind:group={$wp9Check}
+								/>
+								<i>WP9</i>
 							</label>
 							<label class="flex items-center space-x-2">
-								<input class="radio" type="radio" name="radio-codec" value="3" />
-								<p>AV1</p>
+								<input
+									class="radio"
+									type="radio"
+									name="radio-codec"
+									value="3"
+									bind:group={$av1Check}
+								/>
+								<i>AV1</i>
 							</label>
 							<!-- Radio buton grubu sütunu 2 -->
 						</div>
@@ -517,7 +616,9 @@
 			<div class="flex flex-row w-full place-content-end place-items-center">
 				<!-- Apply butonu satır 4 -->
 				<button
-					on:click={() => {}}
+					on:click={() => {
+						$applyButton = true;
+					}}
 					type="button"
 					class="mb-2 mr-2 font-medium text-white rounded-full shadow-lg from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80 active:ring-4 dark:shadow-lg hover:bg-gradient-to-br focus:outline-none bg-gradient-to-r"
 				>

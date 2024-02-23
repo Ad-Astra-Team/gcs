@@ -8,14 +8,13 @@
 		IconCpu,
 		IconWorldWww,
 		IconDrone,
-		IconSpy,
 		IconDiamonds
 	} from '@tabler/icons-svelte';
 </script>
 
 <div class="container items-center justify-center w-full h-screen min-w-full min-h-screen">
 	<div
-		class="flex flex-col w-full h-screen max-w-6xl pt-6 m-auto mb-4 overflow-scroll bg-scroll pb-14 scroll-auto hide-scrollbar"
+		class="flex flex-col w-full h-screen max-w-6xl pt-6 m-auto mb-4 overflow-y-scroll pb-14 hide-scrollbar"
 	>
 		<div class="flex shadow-2xl shadow-red">
 			<img
@@ -115,9 +114,9 @@
 							</AccordionItem> -->
 
 							<AccordionItem>
-								<svelte:fragment slot="lead"><IconSpy /></svelte:fragment>
+								<svelte:fragment slot="lead"><IconDrone /></svelte:fragment>
 								<svelte:fragment slot="summary"
-									><span class="font-medium">Abdüsselam Bolat</span></svelte:fragment
+									><span class="font-medium">Emre Uzun</span></svelte:fragment
 								>
 								<svelte:fragment slot="content"
 									>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi

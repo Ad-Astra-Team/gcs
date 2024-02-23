@@ -6,6 +6,8 @@
 	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+	import { IconDrone, IconPlaneTilt, IconTank, IconSubmarine } from '@tabler/icons-svelte';
+	import { underWaterVehicle, planeVehicle, droneVehicle, roverVehicle } from '$lib/Utils/stores';
 
 	onMount(() => {
 		const scene = new THREE.Scene();
@@ -56,7 +58,6 @@
 
 				render();
 			}
-
 			animate();
 		});
 
@@ -64,7 +65,6 @@
 		// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 		// const cube = new THREE.Mesh(geometry, material);
 		// scene.add(cube);
-
 		// camera.position.z = 5;
 
 		// function animate() {
@@ -109,15 +109,15 @@
 	// ...
 </script>
 
-<div class="relative flex w-screen h-screen bg-black">
-	<div id="scene" class="top-0 bottom-0 left-0 right-0" />
+<div class="relative flex w-full h-full bg-black">
+	<div id="scene" class="w-full h-full" />
 	<div
-		class="absolute flex flex-col lg:top-16 lg:left-16 md:bottom-28 md:left-10 sm:bottom-28 sm:left-10"
+		class="absolute flex flex-col lg:top-16 lg:left-16 md:bottom-40 md:left-10 sm:-bottom-36 sm:left-10"
 	>
 		<div class="flex flex-row">
 			<h1
 				style="font-family: Nevan; "
-				class="relative flex text-red-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
+				class="flex text-red-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
 			>
 				Welcome to <br /> S.A.F.İ.R
 			</h1>
@@ -130,6 +130,62 @@
 				İnsansız Rehber" and it developed by Ad Astra Team. You can control your UAV with the help
 				of this multifunctional Ground Control System as you wish. All rights reserved.
 			</h4>
+		</div>
+	</div>
+	<div
+		class="absolute left-0 flex flex-row w-full pl-4 pr-4 space-x-2 rounded-full bottom-14 bottom place-content-center place-items-center"
+	>
+		<div
+			on:click={() => {
+				$planeVehicle = !$planeVehicle;
+				$droneVehicle = false;
+				$roverVehicle = false;
+				$underWaterVehicle = false;
+			}}
+			class={`flex flex-col w-full rounded-t-2xl h-full pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+				$planeVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
+			}`}
+		>
+			<IconPlaneTilt class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+		</div>
+		<div
+			on:click={() => {
+				$droneVehicle = !$droneVehicle;
+				$planeVehicle = false;
+				$roverVehicle = false;
+				$underWaterVehicle = false;
+			}}
+			class={`flex w-full flex-col h-full rounded-t-2xl pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center  place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+				$droneVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
+			}`}
+		>
+			<IconDrone class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+		</div>
+		<div
+			on:click={() => {
+				$roverVehicle = !$roverVehicle;
+				$planeVehicle = false;
+				$droneVehicle = false;
+				$underWaterVehicle = false;
+			}}
+			class={`flex flex-col w-full h-full rounded-t-2xl pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] pb-4 cursor-pointer place-content-center hover:bg-[#c3d6f4]  place-items-center dark:hover:hover:bg-[#22324a] ${
+				$roverVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
+			}`}
+		>
+			<IconTank class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+		</div>
+		<div
+			class={`flex flex-col shadow-2xl w-full h-full rounded-t-2xl border border-[#f1efef]  place-items-center dark:border-[#202736] pt-6 pb-6 cursor-pointer place-content-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+				$underWaterVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
+			}`}
+			on:click={() => {
+				$underWaterVehicle = !$underWaterVehicle;
+				$planeVehicle = false;
+				$droneVehicle = false;
+				$roverVehicle = false;
+			}}
+		>
+			<IconSubmarine class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
 		</div>
 	</div>
 </div>

@@ -215,7 +215,7 @@
 		<!-- Page Header Row -->
 		<div class="flex flex-row flex-wrap sm:wrap, place-content-center">
 			<div
-				class="place-content-center transition-opacity opacity-70 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-5 m-0 shadow-lg"
+				class="place-content-center transition-opacity opacity-60 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-5 m-0 shadow-lg"
 			>
 				<div class="flex flex-row">
 					<button
@@ -311,24 +311,6 @@
 							<IconSun />
 						{/if}
 					</button>
-
-					<button
-						class="bg-black rounded-lg"
-						on:click={() => {
-							drawerStore.open(drawerLeft);
-						}}
-					>
-						ODL
-					</button>
-
-					<button
-						class="bg-black rounded-lg"
-						on:click={() => {
-							drawerStore.open(drawerRight);
-						}}
-					>
-						ODR
-					</button>
 				</div>
 
 				<div class="flex flex-row">
@@ -344,8 +326,9 @@
 		</div>
 		<!-- Videostream and Map Row -->
 
-		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-2 h-3/5">
+		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-0.5 h-3/5">
 			<!-- Video Stream -->
+<<<<<<< HEAD
 			<div class="grid grid-cols-1">
 				<iframe src="http://localhost:8888/cam/" scrolling="no" class="w-full h-full rounded-xl" />
 				<!-- <video -->
@@ -366,11 +349,36 @@
 				<!-- 		> -->
 				<!-- 	</p> -->
 				<!-- </video> -->
+=======
+			<div
+				class="grid grid-cols-1 border-2 border-slate-900 rounded-ee-none border-t-inherit border-r-inherit border-l-inherit rounded-2xl"
+			>
+				<video
+					class="w-full h-full rounded-2xl rounded-ee-none video-js vjs-theme-city"
+					preload="false"
+					controls
+					muted
+					playsinline
+					id="stream"
+				>
+					<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> -->
+					<source src="assets/patrick.webm" type="video/webm" />
+					<p class="vjs-no-js">
+						To view this video please enable JavaScript, and consider upgrading to a web browser
+						that
+						<a href="https://videojs.com/html5-video-support/" target="_blank"
+							>supports HTML5 video</a
+						>
+					</p>
+				</video>
+>>>>>>> dev
 				<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 			</div>
 
 			<!-- Map -->
-			<div class="z-0 grid grid-cols-1 border-none select-none">
+			<div
+				class="z-0 grid grid-cols-1 border-2 select-none border-slate-900 rounded-es-none border-r-inherit border-b-inherit rounded-2xl"
+			>
 				<Map />
 			</div>
 		</div>
