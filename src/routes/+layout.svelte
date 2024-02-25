@@ -296,7 +296,7 @@
 				<!-- Ad Astra Logo -->
 				<p
 					data-tauri-drag-region
-					class="pt-1 pb-0 pl-0 pr-0 m-0 text-2xl text-center text-black border-8 border-none cursor-default active:cursor-grab hover:cursor-grab focus dark:text-white"
+					class="pt-1 pb-0 pl-0 pr-0 m-0 text-2xl text-center border-8 border-none cursor-default gradient-heading active:cursor-grab hover:cursor-grab focus"
 					style="font-family: Nevan;"
 				>
 					S . A . F . İ . R
