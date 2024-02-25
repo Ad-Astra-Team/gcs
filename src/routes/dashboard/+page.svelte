@@ -1,5 +1,4 @@
 <script>
-	import Gauge from '$lib/Gauges/gauge.svelte';
 	import Map from '$lib/Maps/Map.svelte';
 	import {
 		IconHomeDown,
@@ -25,6 +24,7 @@
 		Drawer,
 		getDrawerStore
 	} from '@skeletonlabs/skeleton';
+	import { gallery } from '@patricksurry/g3/dist/g3-contrib';
 	import 'video.js/dist/video';
 	import 'video.js/dist/video-js.min.css';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
@@ -117,6 +117,8 @@
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
+
+	gallery.contrib('gaugeDiv');
 </script>
 
 <Drawer>
@@ -328,28 +330,6 @@
 
 		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-0.5 h-3/5">
 			<!-- Video Stream -->
-<<<<<<< HEAD
-			<div class="grid grid-cols-1">
-				<iframe src="http://localhost:8888/cam/" scrolling="no" class="w-full h-full rounded-xl" />
-				<!-- <video -->
-				<!-- 	class="w-full h-full rounded-xl video-js vjs-theme-city" -->
-				<!-- 	preload="false" -->
-				<!-- 	controls -->
-				<!-- 	muted -->
-				<!-- 	playsinline -->
-				<!-- 	id="stream" -->
-				<!-- > -->
-				<!-- 	<!-- <source src="MY_VIDEO.mp4" type="video/mp4" /> --> -->
-				<!-- 	<source src="assets/patrick.webm" type="video/webm" /> -->
-				<!-- 	<p class="vjs-no-js"> -->
-				<!-- 		To view this video please enable JavaScript, and consider upgrading to a web browser -->
-				<!-- 		that -->
-				<!-- 		<a href="https://videojs.com/html5-video-support/" target="_blank" -->
-				<!-- 			>supports HTML5 video</a -->
-				<!-- 		> -->
-				<!-- 	</p> -->
-				<!-- </video> -->
-=======
 			<div
 				class="grid grid-cols-1 border-2 border-slate-900 rounded-ee-none border-t-inherit border-r-inherit border-l-inherit rounded-2xl"
 			>
@@ -371,7 +351,6 @@
 						>
 					</p>
 				</video>
->>>>>>> dev
 				<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 			</div>
 
@@ -386,8 +365,9 @@
 		<!-- Gauge Row -->
 		<div
 			class="self-center justify-center w-full overflow-hidden overflow-x-scroll hide-scrollbar place-content-center scroll-auto"
+			id="gaugeDiv"
 		>
-			<Gauge />
+			<!-- <Gauge /> -->
 		</div>
 	</div>
 </div>

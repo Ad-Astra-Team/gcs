@@ -502,11 +502,6 @@
 						<div class="flex flex-col space-y-2">
 							<!-- Radio buton grubu sütunu 1 -->
 							<label class="flex items-center space-x-2">
-<<<<<<< HEAD
-								<input class="radio" type="radio" checked name="radio-format" value="1" />
-								<!-- <p class="whitespace-nowrap">Form. MP4</p> -->
-								&nbsp; Form. MP4
-=======
 								<input
 									class="radio"
 									type="radio"
@@ -515,7 +510,6 @@
 									bind:group={$formattedMP4Check}
 								/>
 								<b class="whitespace-nowrap">Form. MP4</b>
->>>>>>> dev
 							</label>
 							<label class="flex items-center space-x-2">
 								<input
