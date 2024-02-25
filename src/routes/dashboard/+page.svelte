@@ -16,14 +16,17 @@
 		launchMode,
 		selectedPort,
 		connectionStatus,
-		ledStatus
+		ledStatus,
+		mapRadioButton
 	} from '$lib/Utils/stores';
 	import {
 		popup,
 		storePopup,
 		initializeStores,
 		Drawer,
-		getDrawerStore
+		getDrawerStore,
+		RadioGroup,
+		RadioItem
 	} from '@skeletonlabs/skeleton';
 	import 'video.js/dist/video';
 	import 'video.js/dist/video-js.min.css';
@@ -117,6 +120,8 @@
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
+
+	let value = 0;
 </script>
 
 <Drawer>
@@ -142,7 +147,43 @@
 		<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 	{:else if $drawerStore.meta.type === 'map'}
 		<div class="flex flex-col w-full h-full p-4 bg-[#1a2331]">
-			<Map />
+			<div class="absolute z-50 flex top-3.5 left-49">
+				<RadioGroup
+					background="bg-gray-800"
+					display="flex"
+					border="border-none"
+					padding="px-5 py-0.5"
+					rounded="rounded-ss-2xl rounded-ee-2xl"
+					active="bg-sky-500 dark:bg-sky-600"
+				>
+					<!-- <RadioItem bind:group={$mapRadioButton} name="justify" value={true}
+						><IconMap2 class="w-8 h-8 text-white" /></RadioItem
+					>
+					<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+						><IconMapCode class="w-8 h-8 text-white" /></RadioItem
+					> -->
+
+					<!-- <RadioItem bind:group={$mapRadioButton} name="justify" value={true}>
+						<h3 style="font-family: Nevan;">M</h3></RadioItem
+					>
+					<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+						><h3 style="font-family: Nevan;">S</h3></RadioItem
+					> -->
+
+					<RadioItem bind:group={$mapRadioButton} name="justify" value={true}>
+						<i style="font-family: Nevan;" class="text-white">MAP</i></RadioItem
+					>
+					<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+						><i style="font-family: Nevan;" class="text-white">SLAM</i></RadioItem
+					>
+				</RadioGroup>
+			</div>
+
+			{#if $mapRadioButton === true}
+				<Map />
+			{:else if $mapRadioButton === false}
+				<canvas class="flex w-full h-full" />
+			{/if}
 		</div>
 	{/if}
 </Drawer>
@@ -208,11 +249,11 @@
 	<!-- Page Body -->
 	<div class="flex flex-col justify-between w-full h-full min-w-full min-h-full">
 		<!-- Page Header Row -->
-		<div class="flex flex-row flex-wrap sm:wrap, place-content-center">
+		<div class="flex flex-row flex-wrap place-content-center drop-shadow-2xl">
 			<div
-				class="place-content-center transition-opacity opacity-60 hover:opacity-90 pt-2 pb-3 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-2xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-5 m-0 shadow-lg"
+				class="place-content-center drop-shadow-2xl transition-opacity opacity-60 hover:opacity-90 pb-3.5 pt-3.5 pl-3 pr-3 place-items-center whitespace-nowrap justify-between rounded-b-3xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-6 m-0 shadow-lg"
 			>
-				<div class="flex flex-row">
+				<div class="flex flex-row shadow-2xl drop-shadow-2xl">
 					<button
 						on:click={() => {
 							$connectionStatus = !$connectionStatus;
@@ -227,7 +268,7 @@
 						{#if $connectionStatus === false}
 							Connect
 						{:else}
-							Disconnects
+							Disconnect
 						{/if}
 					</button>
 				</div>
@@ -239,7 +280,7 @@
 							$controlMode = !$controlMode;
 						}}
 						type="button"
-						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+						class={`text-white drop-shadow-2xl shadow-2xl [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-6 py-2.5 ${
 							$controlMode
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -260,7 +301,7 @@
 							$launchMode = !$launchMode;
 						}}
 						type="button"
-						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+						class={`text-white drop-shadow-2xl shadow-2xl [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-6 py-2.5 ${
 							$launchMode
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -275,7 +316,7 @@
 							$armMode = !$armMode;
 						}}
 						type="button"
-						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg ${
+						class={`text-white drop-shadow-2xl shadow-2xl [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 font-medium rounded-lg text-sm px-6 py-2.5 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg ${
 							$armMode
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -294,7 +335,7 @@
 							$ledStatus = !$ledStatus;
 						}}
 						type="button"
-						class={`text-white [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 ${
+						class={`text-white drop-shadow-2xl shadow-2xl [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg dark:shadow-lg font-medium rounded-lg text-sm px-6 py-2.5 ${
 							$ledStatus
 								? 'from-red-500 via-red-600 to-red-700 focus:ring-red-400 dark:focus:ring-red-900 shadow-red-600/50 dark:shadow-red-900/80'
 								: 'from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80'
@@ -306,9 +347,23 @@
 							<IconSun />
 						{/if}
 					</button>
+					<button
+						on:click={() => {
+							drawerStore.open(drawerLeft);
+						}}
+					>
+						ODL
+					</button>
+					<button
+						on:click={() => {
+							drawerStore.open(drawerRight);
+						}}
+					>
+						ODR
+					</button>
 				</div>
 
-				<div class="flex flex-row">
+				<div class="flex flex-row shadow-2xl drop-shadow-2xl">
 					<select
 						class="pt-2.5 pb-2.5 text-sm font-medium rounded-r-full rounded-es-full text-center active:ring-4 shadow-lg text-sky-700 dark:text-sky-400 shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 select"
 					>
@@ -321,13 +376,13 @@
 		</div>
 		<!-- Videostream and Map Row -->
 
-		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-0.5 h-3/5">
+		<div class="grid w-full grid-cols-2 pl-4 pr-4 space-x-2 drop-shadow-2xl h-3/5">
 			<!-- Video Stream -->
 			<div
-				class="grid grid-cols-1 border-2 border-slate-900 rounded-ee-none border-t-inherit border-r-inherit border-l-inherit rounded-2xl"
+				class="grid grid-cols-1 space-x-2 border-8 border-gray-800 shadow-2xl border-6 rounded-3xl"
 			>
 				<video
-					class="w-full h-full rounded-2xl rounded-ee-none video-js vjs-theme-city"
+					class="w-full h-full shadow-2xl video-js vjs-theme-city rounded-2xl"
 					preload="false"
 					controls
 					muted
@@ -349,15 +404,51 @@
 
 			<!-- Map -->
 			<div
-				class="z-0 grid grid-cols-1 border-2 select-none border-slate-900 rounded-es-none border-r-inherit border-b-inherit rounded-2xl"
+				class="relative z-0 grid grid-cols-1 border-8 border-gray-800 shadow-2xl drop-shadow-2xl rounded-3xl"
 			>
-				<Map />
+				<div class="absolute -top-0.5 -left-0.5 z-50 flex">
+					<RadioGroup
+						background="bg-gray-800"
+						display="flex"
+						border="border-none"
+						padding="px-5 py-0.5"
+						rounded="rounded-ss-2xl rounded-ee-2xl"
+						active="bg-sky-500 dark:bg-sky-600"
+					>
+						<!-- <RadioItem bind:group={$mapRadioButton} name="justify" value={true}
+							><IconMap2 class="w-8 h-8 text-white" /></RadioItem
+						>
+						<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+							><IconMapCode class="w-8 h-8 text-white" /></RadioItem
+						> -->
+
+						<!-- <RadioItem bind:group={$mapRadioButton} name="justify" value={true}>
+							<h3 style="font-family: Nevan;">M</h3></RadioItem
+						>
+						<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+							><h3 style="font-family: Nevan;">S</h3></RadioItem
+						> -->
+
+						<RadioItem bind:group={$mapRadioButton} name="justify" value={true}>
+							<i style="font-family: Nevan;" class="text-white">MAP</i></RadioItem
+						>
+						<RadioItem bind:group={$mapRadioButton} name="justify" value={false}
+							><i style="font-family: Nevan;" class="text-white">SLAM</i></RadioItem
+						>
+					</RadioGroup>
+				</div>
+
+				{#if $mapRadioButton === true}
+					<Map />
+				{:else if $mapRadioButton === false}
+					<img class="w-full h-full rounded-2xl" src="assets/zaboomafoo.png" alt="" />
+				{/if}
 			</div>
 		</div>
 
 		<!-- Gauge Row -->
 		<div
-			class="self-center justify-center w-full overflow-hidden overflow-x-scroll hide-scrollbar place-content-center scroll-auto"
+			class="self-center justify-center w-full overflow-hidden overflow-x-scroll drop-shadow-2xl hide-scrollbar place-content-center scroll-auto"
 		>
 			<Gauge />
 		</div>

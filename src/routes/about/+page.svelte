@@ -16,27 +16,28 @@
 	<div
 		class="flex flex-col w-full h-screen max-w-6xl pt-6 m-auto mb-4 overflow-y-scroll pb-14 hide-scrollbar"
 	>
-		<div class="flex shadow-2xl shadow-red">
+		<div class="z-50 flex flex-row shadow-2xl">
 			<img
 				class="w-full rounded-t-xl rounded-ee-lg"
-				src="assets/a0.jpg"
+				src="assets/kf1500Picture.png"
 				alt="Sunset in the mountains"
 			/>
 		</div>
-		<div class="flex shadow-lg rounded-b-xl overflow-scroll bg-[#f3f4f6] dark:bg-[#1f2937]">
+		<div class="flex shadow-lg rounded-b-xl overflow-y-scroll bg-[#f3f4f6] dark:bg-[#1f2937]">
 			<Accordion autocollapse>
-				<AccordionItem>
+				<AccordionItem class="shadow-lg">
 					<svelte:fragment slot="lead"><IconEyeglass2 /></svelte:fragment>
 					<svelte:fragment slot="summary"
 						><span class="font-black">Who Are We ?</span></svelte:fragment
 					>
 					<svelte:fragment slot="content"
-						>&emsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus molestias saepe
-						neque consectetur laudantium maxime! In assumenda molestiae vitae laudantium incidunt,
-						accusantium distinctio molestias, adipisci mollitia, commodi rerum alias quo.</svelte:fragment
+						>Ad Astra is a Teknofest team founded in 2021. As of 2024, it is still developing in the
+						fields of Armed Unmanned Aerial Vehicles and Unmanned Aerial Vehicles. The S.A.F.I.R
+						ground control station you are currently using was developed by the Ad Astra team and is
+						still under development.</svelte:fragment
 					>
 				</AccordionItem>
-				<AccordionItem>
+				<AccordionItem class="shadow-lg">
 					<svelte:fragment slot="lead"><IconViewfinder /></svelte:fragment>
 					<svelte:fragment slot="summary"
 						><span class="font-black">Our Mission</span></svelte:fragment
@@ -47,7 +48,7 @@
 						nam omnis tenetur labore officia accusamus dolorem eaque.</svelte:fragment
 					>
 				</AccordionItem>
-				<AccordionItem>
+				<AccordionItem class="shadow-lg">
 					<svelte:fragment slot="lead"><IconDiamonds /></svelte:fragment>
 					<svelte:fragment slot="summary"
 						><span class="font-black">What's S.A.F.İ.R ?</span></svelte:fragment

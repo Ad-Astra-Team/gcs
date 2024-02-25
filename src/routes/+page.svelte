@@ -11,7 +11,7 @@
 
 	onMount(() => {
 		const scene = new THREE.Scene();
-		const light = new THREE.PointLight(0xffffff, 1000);
+		const light = new THREE.PointLight(0xffffff, 950);
 		light.position.set(7.5, 7.5, 15);
 		scene.add(light);
 
@@ -28,14 +28,13 @@
 		const controls = new OrbitControls(camera, renderer.domElement);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.getElementById('scene').appendChild(renderer.domElement);
-		renderer.setClearColor(0x101b2b); // Beyaz arkaplan rengi
+		renderer.setClearColor(0x101b2b);
+		renderer.setClearAlpha(0.8);
 
 		controls.enableDamping = true;
 
-		// instantiate a loader
 		const loader = new OBJLoader();
 
-		// load a resource
 		loader.load('assets/kf1500.obj', function (object) {
 			const rotationSpeed = 0.0009;
 			const scaleValue = 0.006;
@@ -54,29 +53,12 @@
 				requestAnimationFrame(animate);
 
 				controls.update();
-				rotateObject(); // Objeyi döndür
+				rotateObject();
 
 				render();
 			}
 			animate();
 		});
-
-		// const geometry = new THREE.BoxGeometry(1, 1, 1);
-		// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-		// const cube = new THREE.Mesh(geometry, material);
-		// scene.add(cube);
-		// camera.position.z = 5;
-
-		// function animate() {
-		// 	requestAnimationFrame(animate);
-
-		// 	cube.rotation.x += 0.01;
-		// 	cube.rotation.y += 0.01;
-
-		// 	renderer.render(scene, camera);
-		// }
-
-		// animate();
 
 		window.addEventListener('resize', onWindowResize, false);
 		function onWindowResize() {
@@ -86,17 +68,12 @@
 			render();
 		}
 
-		// const stats = new Stats();
-		// document.body.appendChild(stats.dom);
-
 		function animate() {
 			requestAnimationFrame(animate);
 
 			controls.update();
 
 			render();
-
-			// stats.update();
 		}
 
 		function render() {
@@ -105,8 +82,6 @@
 
 		animate();
 	});
-
-	// ...
 </script>
 
 <div class="relative flex w-full h-full bg-black">
@@ -117,7 +92,7 @@
 		<div class="flex flex-row">
 			<h1
 				style="font-family: Nevan; "
-				class="flex text-red-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
+				class="flex text-sky-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
 			>
 				Welcome to <br /> S.A.F.İ.R
 			</h1>
@@ -133,7 +108,7 @@
 		</div>
 	</div>
 	<div
-		class="absolute left-0 flex flex-row w-full pl-4 pr-4 space-x-2 rounded-full bottom-14 bottom place-content-center place-items-center"
+		class="absolute left-0 flex flex-row w-full pl-4 pr-4 space-x-2 rounded-full drop-shadow-2xl bottom-14 bottom place-content-center place-items-center"
 	>
 		<div
 			on:click={() => {
@@ -142,11 +117,11 @@
 				$roverVehicle = false;
 				$underWaterVehicle = false;
 			}}
-			class={`flex flex-col w-full rounded-t-2xl h-full pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+			class={`flex flex-col shadow-inner w-full rounded-t-2xl h-full pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
 				$planeVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
-			<IconPlaneTilt class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+			<IconPlaneTilt class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
 		</div>
 		<div
 			on:click={() => {
@@ -155,11 +130,11 @@
 				$roverVehicle = false;
 				$underWaterVehicle = false;
 			}}
-			class={`flex w-full flex-col h-full rounded-t-2xl pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center  place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+			class={`flex w-full shadow-inner flex-col h-full rounded-t-2xl pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center  place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
 				$droneVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
-			<IconDrone class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+			<IconDrone class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
 		</div>
 		<div
 			on:click={() => {
@@ -168,14 +143,14 @@
 				$droneVehicle = false;
 				$underWaterVehicle = false;
 			}}
-			class={`flex flex-col w-full h-full rounded-t-2xl pt-6 pb-6 border border-[#f1efef] dark:border-[#202736] pb-4 cursor-pointer place-content-center hover:bg-[#c3d6f4]  place-items-center dark:hover:hover:bg-[#22324a] ${
+			class={`flex flex-col shadow-inner w-full h-full rounded-t-2xl pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center hover:bg-[#c3d6f4]  place-items-center dark:hover:hover:bg-[#22324a] ${
 				$roverVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
-			<IconTank class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+			<IconTank class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
 		</div>
 		<div
-			class={`flex flex-col shadow-2xl w-full h-full rounded-t-2xl border border-[#f1efef]  place-items-center dark:border-[#202736] pt-6 pb-6 cursor-pointer place-content-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+			class={`flex flex-col  shadow-2xl w-full h-full rounded-t-2xl border border-[#f1efef]  place-items-center dark:border-[#202736] pt-5 pb-5 cursor-pointer place-content-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
 				$underWaterVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 			on:click={() => {
@@ -185,7 +160,7 @@
 				$roverVehicle = false;
 			}}
 		>
-			<IconSubmarine class="lg:w-12 lg:h-12 md:w-10 md:h-10 sm:w-10 sm:h-10" />
+			<IconSubmarine class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
 		</div>
 	</div>
 </div>

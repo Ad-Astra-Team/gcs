@@ -11,10 +11,10 @@ export const pixhawkBoot = writable(false);
 export const ledStatus = writable(false);
 
 // Vehicle Properties
-export const uav_batteryVoltage = writable(0.0);
-export const uav_gpsStatus = writable(false);
-export const uav_networkStatus = writable(false);
-export const pingStatus = writable(0);
+export const uav_batteryVoltage = writable(15.0);
+export const uav_gpsStatus = writable(true);
+export const uav_networkStatus = writable(true);
+export const pingStatus = writable(21);
 export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
@@ -76,3 +76,6 @@ export const planeVehicle = writable(true);
 export const droneVehicle = writable(false);
 export const roverVehicle = writable(false);
 export const underWaterVehicle = writable(false);
+
+//Map Properties
+export const mapRadioButton = writable(true);

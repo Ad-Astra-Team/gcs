@@ -313,7 +313,7 @@
 			padding="p-0"
 			spacing="space-y-0"
 			slotTrail="place-content-end"
-			shadow="shadow-2xl"
+			shadow="shadow-2xl drop-shadow-2xl"
 		>
 			<!-- Left Section of Header -->
 			<svelte:fragment slot="lead">
@@ -343,7 +343,7 @@
 							<!-- Communication Status -->
 							<div class="flex flex-row">
 								{#if $uav_networkStatus === true}
-									<IconAntenna class="w-7 h-7 text-[#ffffff]" />
+									<IconAntenna class="w-7 h-7" />
 								{:else}
 									<IconAntennaOff class="w-7 h-7 text-[#ff0000]" />
 								{/if}
@@ -587,7 +587,7 @@
 			<!-- Databar's Outer Container -->
 			<div
 				transition:slide={{ delay: 20, duration: 300, easing: quintInOut, axis: 'x' }}
-				class="h-full justify-between flex flex-col p-2 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
+				class="h-full flex ml-0.5 flex-col p-2 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
 				<div class="grid h-full grid-rows-2 space-y-2">
 					<!-- Text Area for Dataflow -->
@@ -632,7 +632,7 @@
 				</div>
 
 				<!-- Reboot Section -->
-				<div class="flex flex-row self-center w-full mt-4 mb-2">
+				<div class="flex flex-row w-full mt-4 place-items-center place-content-center">
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {
