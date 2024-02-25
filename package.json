@@ -27,7 +27,11 @@
     "postcss": "8.4.31",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.1",
+<<<<<<< HEAD
     "svelte": "^4.2.12",
+=======
+    "svelte": "^4.2.11",
+>>>>>>> dev
     "svelte-check": "^3.6.4",
     "tailwindcss": "3.3.3",
     "typescript": "^5.3.3",

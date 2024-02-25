@@ -55,19 +55,19 @@
 		>
 			<h3 class="pt-3 pb-3 pl-6 pr-6 text-center h3" style="font-family: Nevan;">
 				<span
-					class="self-center text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
+					class="text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
 					>Ground Control</span
 				>
 			</h3>
 
-			<h3 class="self-center pl-8 pr-8 text-center h3" style="font-family: Nevan;">
+			<h3 class="pt-3 pb-3 pl-6 pr-6 text-center h3" style="font-family: Nevan;">
 				<span
 					class="text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
 					>AI Computer</span
 				>
 			</h3>
 
-			<h3 class="self-center pl-6 pr-6 text-center h3" style="font-family: Nevan">
+			<h3 class="pt-3 pb-3 pl-6 pr-6 text-center h3" style="font-family: Nevan">
 				<span
 					class="text-transparent bg-gradient-to-br from-blue-600 to-cyan-400 dark:from-blue-500 dark:to-cyan-300 bg-clip-text box-decoration-clone"
 					>Mission Computer</span
