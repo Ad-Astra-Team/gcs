@@ -20,7 +20,6 @@
 	} from '@skeletonlabs/skeleton';
 
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	//Importing Tabler's icon pack
 	import {
@@ -77,86 +76,8 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { tauri } from '@tauri-apps/api';
 
-	//Tooltip features
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
-	//Configurations for raspberry pi reboot button's tooltip
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const raspberryTooltip = {
-		event: 'hover',
-		target: 'raspberryTooltip',
-		placement: 'top'
-	};
-
-	//Configurations for pixhawk reboot button's tooltip
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const pixhawkTooltip = {
-		event: 'hover',
-		target: 'pixhawkTooltip',
-		placement: 'top'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const homePageTooltip = {
-		event: 'hover',
-		target: 'homePageTooltip',
-		placement: 'right'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const dashboardPageTooltip = {
-		event: 'hover',
-		target: 'dashboardPageTooltip',
-		placement: 'right'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const telemetryPageTooltip = {
-		event: 'hover',
-		target: 'telemetryPageTooltip',
-		placement: 'right'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const testPageTooltip = {
-		event: 'hover',
-		target: 'testPageTooltip',
-		placement: 'right'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const aboutPageTooltip = {
-		event: 'hover',
-		target: 'aboutPageTooltip',
-		placement: 'right'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const settingsPageTooltip = {
-		event: 'hover',
-		target: 'settingsPageTooltip',
-		placement: 'right'
-	};
-
 	initializeStores();
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	onMount(() => {
 		// Listen backend-heartbeat event
@@ -406,10 +327,10 @@
 										$pingStatus >= 9999 || $pingStatus >= 900
 											? 'text-[#ff0000]'
 											: $pingStatus >= 100
-											? 'text-yellow-400'
-											: $pingStatus >= 0
-											? 'text-blue-500 dark:text-sky-500'
-											: ''
+												? 'text-yellow-400'
+												: $pingStatus >= 0
+													? 'text-blue-500 dark:text-sky-500'
+													: ''
 									}`}
 								>
 									{#if $pingStatus >= 9999}
@@ -488,7 +409,7 @@
 					<!-- Top Section of Navbar -->
 					<svelte:fragment slot="lead">
 						<!-- Home Page Button -->
-						<div use:popup={homePageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'homePageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/"
 								selected={$page.url.pathname === '/'}
@@ -501,7 +422,7 @@
 						</div>
 
 						<!-- Dashboard Page Button -->
-						<div use:popup={dashboardPageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'dashboardPageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/dashboard"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
@@ -514,7 +435,7 @@
 						</div>
 
 						<!-- Telemetry Page Button -->
-						<div use:popup={telemetryPageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'telemetryPageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/telemetry"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
@@ -527,7 +448,7 @@
 						</div>
 
 						<!-- Test Page Button -->
-						<div use:popup={testPageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'testPageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/test"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
@@ -543,7 +464,7 @@
 					<!-- Bottom Section of Navbar -->
 					<svelte:fragment slot="trail">
 						<!-- About Page Button -->
-						<div use:popup={aboutPageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'aboutPageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/about"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
@@ -556,7 +477,7 @@
 						</div>
 
 						<!-- Settings Page Button -->
-						<div use:popup={settingsPageTooltip}>
+						<div use:popup={{ event: 'hover', target: 'settingsPageTooltip', placement: 'right' }}>
 							<AppRailAnchor
 								href="/settings"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
@@ -641,7 +562,7 @@
 						}}
 						type="button"
 						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg text-sm px-5 py-2.5"
-						use:popup={raspberryTooltip}
+						use:popup={{ event: 'hover', target: 'raspberryTooltip', placement: 'top' }}
 					>
 						<IconRotate2 />
 						<p
@@ -660,7 +581,7 @@
 						}}
 						type="button"
 						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg text-sm px-5 py-2.5"
-						use:popup={pixhawkTooltip}
+						use:popup={{ event: 'hover', target: 'pixhawkTooltip', placement: 'top' }}
 					>
 						<IconRotateClockwise2 />
 

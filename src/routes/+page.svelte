@@ -1,6 +1,6 @@
 <script>
 	import { Renderer } from 'leaflet';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import * as THREE from 'three';
 	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
@@ -9,78 +9,86 @@
 	import { IconDrone, IconPlaneTilt, IconTank, IconSubmarine } from '@tabler/icons-svelte';
 	import { underWaterVehicle, planeVehicle, droneVehicle, roverVehicle } from '$lib/Utils/stores';
 
-	onMount(() => {
-		const scene = new THREE.Scene();
-		const light = new THREE.PointLight(0xffffff, 950);
-		light.position.set(7.5, 7.5, 15);
-		scene.add(light);
+	const scene = new THREE.Scene();
+	let current_object;
 
-		const camera = new THREE.PerspectiveCamera(
-			75,
-			window.innerWidth / window.innerHeight,
-			0.1,
-			1000
-		);
+	const light = new THREE.PointLight(0xffffff, 950);
+	light.position.set(7.5, 7.5, 15);
 
-		camera.position.z = 5;
+	const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+	camera.position.z = 5;
 
-		const renderer = new THREE.WebGLRenderer();
-		const controls = new OrbitControls(camera, renderer.domElement);
+	const rotationSpeed = 0.0009;
+	const scaleValue = 0.006;
+
+	scene.add(light);
+
+	const renderer = new THREE.WebGLRenderer();
+	const controls = new OrbitControls(camera, renderer.domElement);
+
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setClearColor(0x101b2b);
+	renderer.setClearAlpha(0.8);
+
+	controls.enableDamping = true;
+	const loader = new OBJLoader();
+
+	function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
 		renderer.setSize(window.innerWidth, window.innerHeight);
-		document.getElementById('scene').appendChild(renderer.domElement);
-		renderer.setClearColor(0x101b2b);
-		renderer.setClearAlpha(0.8);
+		render();
+	}
 
-		controls.enableDamping = true;
+	function rotateObject() {
+		if (!current_object) return;
+		current_object.rotation.y += rotationSpeed;
+		current_object.rotation.x += rotationSpeed;
+	}
 
-		const loader = new OBJLoader();
+	function animate() {
+		requestAnimationFrame(animate);
+
+		controls.update();
+		rotateObject();
+
+		render();
+	}
+
+	function render() {
+		renderer.render(scene, camera);
+	}
+
+	onMount(() => {
+		document.getElementById('scene')?.appendChild(renderer.domElement);
 
 		loader.load('assets/kf1500.obj', function (object) {
-			const rotationSpeed = 0.0009;
-			const scaleValue = 0.006;
-			object.scale.set(scaleValue, scaleValue, scaleValue);
-			object.rotation.x = Math.PI / 10;
-			object.rotation.y = Math.PI / 10;
+			current_object = object;
+			current_object.scale.set(scaleValue, scaleValue, scaleValue);
+			current_object.rotation.x = Math.PI / 10;
+			current_object.rotation.y = Math.PI / 10;
 
-			scene.add(object);
+			scene.add(current_object);
 
-			function rotateObject() {
-				object.rotation.y += rotationSpeed;
-				object.rotation.x += rotationSpeed;
-			}
-
-			function animate() {
-				requestAnimationFrame(animate);
-
-				controls.update();
-				rotateObject();
-
-				render();
-			}
-			animate();
+			object = null;
 		});
 
 		window.addEventListener('resize', onWindowResize, false);
-		function onWindowResize() {
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			render();
-		}
-
-		function animate() {
-			requestAnimationFrame(animate);
-
-			controls.update();
-
-			render();
-		}
-
-		function render() {
-			renderer.render(scene, camera);
-		}
 
 		animate();
+	});
+
+	onDestroy(() => {
+		window.removeEventListener('resize', onWindowResize, false);
+
+		document.getElementById('scene')?.removeChild(renderer.domElement);
+		scene.remove(light);
+		scene.remove(camera);
+		scene.remove(current_object);
+		current_object = null;
+
+		controls.dispose();
+		renderer.dispose();
 	});
 </script>
 

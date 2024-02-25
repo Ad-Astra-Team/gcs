@@ -31,72 +31,8 @@
 	import 'video.js/dist/video';
 	import 'video.js/dist/video-js.min.css';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import { map } from 'leaflet';
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const armTooltip = {
-		event: 'hover',
-		target: 'armTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const disarmTooltip = {
-		event: 'hover',
-		target: 'disarmTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const ledsOffTooltip = {
-		event: 'hover',
-		target: 'ledsOffTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const ledsOnTooltip = {
-		event: 'hover',
-		target: 'ledsOnTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const returnToLaunchTooltip = {
-		event: 'hover',
-		target: 'returnToLaunchTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const autonomTooltip = {
-		event: 'hover',
-		target: 'autonomTooltip',
-		placement: 'bottom'
-	};
-
-	/**
-	 * @type {import('@skeletonlabs/skeleton').PopupSettings}
-	 */
-	const manualTooltip = {
-		event: 'hover',
-		target: 'manualTooltip',
-		placement: 'bottom'
-	};
 
 	/**
 	 * @type {import('@skeletonlabs/skeleton').DrawerSettings}
@@ -121,11 +57,7 @@
 	initializeStores();
 	const drawerStore = getDrawerStore();
 
-<<<<<<< HEAD
-	gallery.contrib('gaugeDiv');
-=======
-	let value = 0;
->>>>>>> dev
+	// gallery.contrib('gaugeDiv');
 </script>
 
 <Drawer>
@@ -284,7 +216,9 @@
 
 				<div class="flex flex-row space-x-2 place-content-center place-items-center">
 					<button
-						use:popup={$controlMode ? autonomTooltip : manualTooltip}
+						use:popup={$controlMode
+							? { event: 'hover', target: 'autonomTooltip', placement: 'bottom' }
+							: { event: 'hover', target: 'manualTooltip', placement: 'bottom' }}
 						on:click={() => {
 							$controlMode = !$controlMode;
 						}}
@@ -305,7 +239,9 @@
 					</button>
 
 					<button
-						use:popup={$launchMode ? returnToLaunchTooltip : returnToLaunchTooltip}
+						use:popup={$launchMode
+							? { event: 'hover', target: 'returnToLaunchTooltip', placement: 'bottom' }
+							: { event: 'hover', target: 'returnToLaunchTooltip', placement: 'bottom' }}
 						on:click={() => {
 							$launchMode = !$launchMode;
 						}}
@@ -320,7 +256,9 @@
 					</button>
 
 					<button
-						use:popup={$armMode ? disarmTooltip : armTooltip}
+						use:popup={$armMode
+							? { event: 'hover', target: 'disarmTooltip', placement: 'bottom' }
+							: { event: 'hover', target: 'armTooltip', placement: 'bottom' }}
 						on:click={() => {
 							$armMode = !$armMode;
 						}}
@@ -339,7 +277,9 @@
 					</button>
 
 					<button
-						use:popup={$ledStatus ? ledsOnTooltip : ledsOffTooltip}
+						use:popup={$ledStatus
+							? { event: 'hover', target: 'ledsOnTooltip', placement: 'bottom' }
+							: { event: 'hover', target: 'ledsOffTooltip', placement: 'bottom' }}
 						on:click={() => {
 							$ledStatus = !$ledStatus;
 						}}
@@ -457,12 +397,8 @@
 
 		<!-- Gauge Row -->
 		<div
-<<<<<<< HEAD
 			class="self-center justify-center w-full overflow-hidden overflow-x-scroll hide-scrollbar place-content-center scroll-auto"
 			id="gaugeDiv"
-=======
-			class="self-center justify-center w-full overflow-hidden overflow-x-scroll drop-shadow-2xl hide-scrollbar place-content-center scroll-auto"
->>>>>>> dev
 		>
 			<!-- <Gauge /> -->
 		</div>
