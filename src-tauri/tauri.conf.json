@@ -71,8 +71,8 @@
         "title": "Ad Astra GCS",
         "width": 1000,
         "decorations": false,
-        "minWidth": 850,
-        "minHeight": 850
+        "minWidth": 950,
+        "minHeight": 950
       }
     ]
   }

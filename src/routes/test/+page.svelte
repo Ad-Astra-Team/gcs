@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<div class="flex flex-col w-full h-full">
+<div class="flex flex-col w-full h-full min-w-full min-h-full">
 	<div class="flex flex-row w-full h-full border-2 border-white">
 		<div class="flex flex-col w-full h-full border-2 border-white">1</div>
 		<div class="flex flex-col w-full h-full border-2 border-white">2</div>

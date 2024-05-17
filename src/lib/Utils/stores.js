@@ -1,4 +1,6 @@
-import { writable } from 'svelte/store';
+import { read } from '$app/server';
+import { writeText } from '@tauri-apps/api/clipboard';
+import { readable, writable } from 'svelte/store';
 
 // communication 
 export const leftNavActive = writable(false);
@@ -18,19 +20,29 @@ export const pingStatus = writable(21);
 export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
-export const selectedPort = writable(["UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]);
+export const portSelection = writable(["UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]);
+export const selectedPort = writable();
 
 // Settings Properties
-export const speedUnit = writable(["Speed Unit", "MPS", "FPS", "KPH", "MPH", "Knots"]);
-export const altitudeUnit = writable(["Altitude Unit", "Meters", "Feet"]);
-export const distanceUnitSelection = writable(["Distance Unit", "Meters", "Feet"]);
-export const trackLengthSelection = writable(["Track Length", 1, 2, 3, 4, 5, 6]);
-export const speechSelection = writable(["Voice Assistant", "Man", "Woman"]);
-export const languageSelection = writable(["Language", "Türkçe", "English"]);
+export const speedUnit = writable(["MPS", "FPS", "KPH", "MPH", "Knots"]);
+export const selectedSpeedUnit = writable("MPS");
+export const altitudeUnit = writable(["Meters", "Feet"]);
+export const selectedAltitudeUnit = writable("Meters");
+export const distanceUnitSelection = writable(["Meters", "Feet"]);
+export const selectedDistanceUnit = writable("Meters");
+export const trackLengthSelection = writable([1, 2, 3, 4, 5, 6]);
+export const selectedTrackLength = writable(1);
+export const voiceAssistantSelection = writable(["None", "Man", "Woman"]);
+export const selectedVoiceAssistant = writable("Man");
+export const languageSelection = writable(["Türkçe", "English"]);
+export const selectedLanguage = writable("Türkçe");
+
 export const taxiLed = writable(false);
 export const cruiseLed = writable(false);
 export const harassLed = writable(false);
 export const customLed = writable(false);
+export const selectedLed = writable();
+
 export const singleMode = writable(false);
 export const dualMode = writable(false);
 export const primaryGPS = writable(false);
@@ -38,7 +50,9 @@ export const secondaryGPS = writable(false);
 export const simpleGPS = writable(false);
 export const RSSIGPS = writable(false);
 export const bestHealthGPS = writable(false);
-export const GPSOff = writable(false);
+export const GPSOff = writable(true);
+export const selectedGPSMode = writable();
+
 export const GPS_Lat = writable(0.0);
 export const GPS_Lon = writable(0.0);
 export const followMe = writable(false);
@@ -46,27 +60,22 @@ export const domainValue = writable();
 export const ipValue = writable();
 export const portValue = writable();
 export const ledFrequency = writable();
-export const maxDistance = writable();
-export const minDistance = writable();
+export const lidarMaxDistance = writable();
+export const lidarMinDistance = writable();
 export const streamAddress = writable();
 export const streamChunks = writable();
-export const formattedMP4Check = writable();
-export const mp4Check = writable();
-export const mkvCheck = writable();
-export const movCheck = writable();
-export const h264Check = writable();
-export const h265Check = writable()
-export const wp9Check = writable();
-export const av1Check = writable();
+
+export const selectedCodec = writable();
+export const selectedFormat = writable();
 export const applyButton = writable(false);
 
 //Checklist Properties
-export const motorTest = writable(false);
-export const lidarTest = writable(false);
-export const IMUTest = writable(false);
-export const GPSTest = writable(false);
-export const pitotTest = writable(false);
-export const cameraTest = writable(false);
+export const motorCheck = writable(false);
+export const lidarCheck = writable(false);
+export const IMUCheck = writable(false);
+export const GPSCheck = writable(false);
+export const pitotCheck = writable(false);
+export const cameraCheck = writable(false);
 
 //Notepad Properties
 export const notepadText = writable();
@@ -76,6 +85,17 @@ export const planeVehicle = writable(true);
 export const droneVehicle = writable(false);
 export const roverVehicle = writable(false);
 export const underWaterVehicle = writable(false);
+export const selectedVehicle = writable();
 
 //Map Properties
 export const mapRadioButton = writable(true);
+
+//About Properties
+export const whoWeAre = readable("Ad Astra is a Teknofest team founded in 2021. As of 2024, it is still developing in the fields of armed unmanned aerial vehicles and unmanned aerial vehicles.")
+export const teamMembers = readable(["Mert Sefa Akgün", "Cengizhan Yıldız", "Tuğrulhan Terzi", "Emre Uzun"])
+export const teamRoles = readable(["Team Captain", "Team Member", "Team Member", "Team Member"])
+export const teamName = readable("AD ASTRA");
+export const gcsName = readable("S . A . F . İ . R")
+
+//Homepage Properties
+export const homepageText = readable("S.A.F.İ.R is a UAV purposed Ground Control System. You can control your UAV with the help of S.A.F.İ.R as you wish.");

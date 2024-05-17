@@ -1,13 +1,48 @@
 <script>
-	import { Renderer } from 'leaflet';
 	import { onMount, onDestroy } from 'svelte';
-	import { scale } from 'svelte/transition';
 	import * as THREE from 'three';
 	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-	import { IconDrone, IconPlaneTilt, IconTank, IconSubmarine } from '@tabler/icons-svelte';
-	import { underWaterVehicle, planeVehicle, droneVehicle, roverVehicle } from '$lib/Utils/stores';
+
+	//Importing Icons From Svelte
+	import {
+		IconDrone,
+		IconPlaneTilt,
+		IconTank,
+		IconSubmarine,
+		IconHandMove
+	} from '@tabler/icons-svelte';
+
+	//Importing Variables From Stores
+	import {
+		underWaterVehicle,
+		planeVehicle,
+		droneVehicle,
+		roverVehicle,
+		selectedVehicle,
+		homepageText
+	} from '$lib/Utils/stores';
+
+	//Importing Modal
+	import { Modal, getModalStore, initializeStores } from '@skeletonlabs/skeleton';
+
+	//Importing Transitions
+	import { fade, slide } from 'svelte/transition';
+
+	initializeStores();
+
+	//Setting the Vehicle Alert Modal
+	const modalStore = getModalStore();
+
+	//Vehicle Alert Modal Configurations
+	/**
+	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
+	 */
+	const vehicleSelectErrorModal = {
+		type: 'alert',
+		title: 'Construction Area !',
+		body: 'Vehicle selection features are still in development.'
+	};
 
 	const scene = new THREE.Scene();
 	let current_object;
@@ -48,10 +83,8 @@
 
 	function animate() {
 		requestAnimationFrame(animate);
-
 		controls.update();
 		rotateObject();
-
 		render();
 	}
 
@@ -92,73 +125,114 @@
 	});
 </script>
 
-<div class="relative flex w-full h-full bg-black">
-	<div id="scene" class="w-full h-full" />
+<!-- Modal Tag -->
+<Modal
+	padding="p-7"
+	rounded="rounded-2xl"
+	shadow="shadow-xl"
+	buttonNeutral="dark:border-white border-black border-2 font-semibold"
+/>
+
+<!-- Outer Container -->
+<div class="container relative w-full h-full min-w-full min-h-full bg-black">
+	<!-- 3D Scene -->
+	<div id="scene" />
+
+	<!-- Hand Icon -->
 	<div
-		class="absolute flex flex-col lg:top-16 lg:left-16 md:bottom-40 md:left-10 sm:-bottom-36 sm:left-10"
+		in:fade={{ duration: 800, delay: 800 }}
+		class="absolute lg:top-1/2 lg:right-52 md:top-10 md:right-10 sm:top-5 sm:right-5"
 	>
+		<IconHandMove class="w-10 h-10 text-white opacity-70" />
+	</div>
+
+	<!-- Header and Description of S.A.F.İ.R -->
+	<div
+		in:fade={{ duration: 400, delay: 400 }}
+		class="absolute flex flex-col lg:top-16 lg:left-16 md:bottom-40 md:left-5 sm:-bottom-36 sm:left-5"
+	>
+		<!-- Header -->
 		<div class="flex flex-row">
 			<h1
 				style="font-family: Nevan; "
-				class="flex text-sky-600 h1 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
+				class=" text-sky-600 lg:opacity-90 md:opacity-95 sm:opacity-95 lg:text-9xl md:text-7xl sm:text-7xl"
 			>
 				Welcome to <br /> S.A.F.İ.R
 			</h1>
 		</div>
+
+		<!-- Description -->
 		<div class="flex flex-row pl-3 mt-2">
-			<h4
-				class="flex font-sans text-white lg:opacity-90 md:opacity-95 sm:opacity-95 h4 lg:w-3/12 md:5/6 sm:w-5/6"
+			<b
+				class="font-sans text-white lg:opacity-90 md:opacity-95 sm:opacity-95 h4 lg:w-1/2 md:5/6 sm:w-5/6"
 			>
-				S.A.F.İ.R is a Ground Control System for UAV purposed. It stands as "Savaş Alanı Fonksiyonlu
-				İnsansız Rehber" and it developed by Ad Astra Team. You can control your UAV with the help
-				of this multifunctional Ground Control System as you wish. All rights reserved.
-			</h4>
+				{$homepageText}
+			</b>
 		</div>
 	</div>
-	<div
-		class="absolute left-0 flex flex-row w-full pl-4 pr-4 space-x-2 rounded-full drop-shadow-2xl bottom-14 bottom place-content-center place-items-center"
-	>
-		<div
+
+	<!-- Vehicle Selection Cards -->
+	<div class="absolute left-0 flex flex-row w-full px-4 space-x-2 drop-shadow-2xl bottom-14">
+		<!-- Plane Card -->
+		<button
+			in:slide={{ delay: 50, duration: 500, axis: 'y' }}
 			on:click={() => {
 				$planeVehicle = !$planeVehicle;
 				$droneVehicle = false;
 				$roverVehicle = false;
 				$underWaterVehicle = false;
+
+				$selectedVehicle = 'Plane';
 			}}
-			class={`flex flex-col shadow-inner w-full rounded-t-2xl h-full pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+			class={`flex flex-row shadow-inner w-full rounded-t-2xl py-5 border border-[#f1efef] dark:border-[#202736] place-content-center place-items-center hover:bg-[#c3d6f4] dark:hover:bg-[#22324a] ${
 				$planeVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
 			<IconPlaneTilt class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
-		</div>
-		<div
+		</button>
+
+		<!-- Drone Card -->
+		<button
+			in:slide={{ delay: 50, duration: 500, axis: 'y' }}
 			on:click={() => {
 				$droneVehicle = !$droneVehicle;
 				$planeVehicle = false;
 				$roverVehicle = false;
 				$underWaterVehicle = false;
+
+				$selectedVehicle = 'Drone';
+				modalStore.trigger(vehicleSelectErrorModal);
 			}}
-			class={`flex w-full shadow-inner flex-col h-full rounded-t-2xl pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center  place-items-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+			class={`flex w-full shadow-inner flex-row rounded-t-2xl py-5 border border-[#f1efef] dark:border-[#202736] place-content-center  place-items-center hover:bg-[#c3d6f4] dark:hover:bg-[#22324a] ${
 				$droneVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
 			<IconDrone class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
-		</div>
-		<div
+		</button>
+
+		<!-- Rover Card -->
+		<button
+			in:slide={{ delay: 50, duration: 500, axis: 'y' }}
 			on:click={() => {
 				$roverVehicle = !$roverVehicle;
 				$planeVehicle = false;
 				$droneVehicle = false;
 				$underWaterVehicle = false;
+
+				$selectedVehicle = 'Rover';
+				modalStore.trigger(vehicleSelectErrorModal);
 			}}
-			class={`flex flex-col shadow-inner w-full h-full rounded-t-2xl pt-5 pb-5 border border-[#f1efef] dark:border-[#202736] cursor-pointer place-content-center hover:bg-[#c3d6f4]  place-items-center dark:hover:hover:bg-[#22324a] ${
+			class={`flex flex-row shadow-inner w-full rounded-t-2xl py-5 border border-[#f1efef] dark:border-[#202736] place-content-center hover:bg-[#c3d6f4]  place-items-center dark:hover:bg-[#22324a] ${
 				$roverVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 		>
 			<IconTank class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
-		</div>
-		<div
-			class={`flex flex-col  shadow-2xl w-full h-full rounded-t-2xl border border-[#f1efef]  place-items-center dark:border-[#202736] pt-5 pb-5 cursor-pointer place-content-center hover:bg-[#c3d6f4] dark:hover:hover:bg-[#22324a] ${
+		</button>
+
+		<!-- Underwater Card -->
+		<button
+			in:slide={{ delay: 50, duration: 500, axis: 'y' }}
+			class={`flex flex-row  shadow-2xl w-full rounded-t-2xl border border-[#f1efef]  place-items-center dark:border-[#202736] py-5 place-content-center hover:bg-[#c3d6f4] dark:hover:bg-[#22324a] ${
 				$underWaterVehicle ? 'bg-[#c3d6f4] dark:bg-[#22324a]' : 'bg-[#e9ebed] dark:bg-[#1c2632]'
 			}`}
 			on:click={() => {
@@ -166,9 +240,12 @@
 				$planeVehicle = false;
 				$droneVehicle = false;
 				$roverVehicle = false;
+
+				$selectedVehicle = 'Underwater';
+				modalStore.trigger(vehicleSelectErrorModal);
 			}}
 		>
 			<IconSubmarine class="lg:w-14 lg:h-14 md:w-12 md:h-12 sm:w-12 sm:h-12" />
-		</div>
+		</button>
 	</div>
 </div>

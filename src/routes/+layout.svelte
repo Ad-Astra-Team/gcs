@@ -1,8 +1,7 @@
 <script>
 	import '../app.postcss';
 	import { page } from '$app/stores';
-	import { listen, TauriEvent } from '@tauri-apps/api/event';
-	import { exit } from '@tauri-apps/api/process';
+	import { listen } from '@tauri-apps/api/event';
 
 	//Importing Skeleton's components
 	import {
@@ -19,9 +18,11 @@
 		storePopup
 	} from '@skeletonlabs/skeleton';
 
+	initializeStores();
+
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
-	//Importing Tabler's icon pack
+	//Importing Tabler's Icon Pack
 	import {
 		IconLayout,
 		IconHome,
@@ -46,11 +47,11 @@
 		IconRotateClockwise2
 	} from '@tabler/icons-svelte';
 
-	// Necessary importations for navbar's transition
-	import { slide } from 'svelte/transition';
+	// Importing Transitions For Navbar
+	import { fade, slide } from 'svelte/transition';
 	import { quadInOut, quintIn, quintInOut, quintOut } from 'svelte/easing';
 
-	// Importing variables from stores.js
+	// Importing Variables From Stores
 	import {
 		leftNavActive,
 		rightBarActive,
@@ -62,12 +63,12 @@
 		pingStatus,
 		raspberryBoot,
 		pixhawkBoot,
-		GPSTest,
-		lidarTest,
-		pitotTest,
-		cameraTest,
-		IMUTest,
-		motorTest,
+		GPSCheck,
+		lidarCheck,
+		pitotCheck,
+		cameraCheck,
+		IMUCheck,
+		motorCheck,
 		notepadText
 	} from '$lib/Utils/stores';
 
@@ -75,9 +76,14 @@
 	import { onMount } from 'svelte';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { tauri } from '@tauri-apps/api';
+	import { autoModeWatcher } from '@skeletonlabs/skeleton';
 
 	initializeStores();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	onMount(() => {
+		autoModeWatcher();
+	});
 
 	onMount(() => {
 		// Listen backend-heartbeat event
@@ -97,10 +103,10 @@
 		}, 5000);
 	});
 
-	//Assigning getModalStore function to modalStore variable
+	//Modal Function's Variable
 	const modalStore = getModalStore();
 
-	//Configurations for Exit Modal
+	//Configurations For Exit Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -118,7 +124,7 @@
 		}
 	};
 
-	//Configurations for Raspberry Pi Reboot Modal
+	//Configurations For Raspberry Pi Reboot Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -134,7 +140,7 @@
 		response: (r) => console.log('response:', r)
 	};
 
-	//Configurations for Pixhawk Reboot Modal
+	//Configurations For Pixhawk Reboot Modal
 	/**
 	 * @type {import('@skeletonlabs/skeleton').ModalSettings}
 	 */
@@ -151,17 +157,18 @@
 	};
 </script>
 
-<!-- Modal component's call -->
+<!-- Modal's Body -->
 <Modal
 	padding="p-6"
 	rounded="rounded-2xl"
 	shadow="shadow-xl"
-	buttonPositive="bg-red-700 font-semibold text-white"
+	buttonPositive="bg-red-700 text-white font-semibold"
 	buttonNeutral="dark:border-white border-black border-2 font-semibold"
 />
 
+<!-- Tooltip's Bodies -->
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="raspberryTooltip"
 >
 	Raspberry PI Reboot
@@ -169,7 +176,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="pixhawkTooltip"
 >
 	Pixhawk Reboot
@@ -177,7 +184,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="homePageTooltip"
 >
 	Home
@@ -185,7 +192,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="dashboardPageTooltip"
 >
 	Dashboard
@@ -193,7 +200,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="telemetryPageTooltip"
 >
 	Telemetry
@@ -201,7 +208,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="testPageTooltip"
 >
 	Test
@@ -209,7 +216,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="aboutPageTooltip"
 >
 	About
@@ -217,7 +224,7 @@
 </div>
 
 <div
-	class="z-50 pl-3 pr-3 pb-2.5 pt-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
+	class="z-50 px-3 py-2.5 dark:text-white text-black text-sm rounded-xl dark:bg-[#1a2432] bg-[#f3f4f6] card"
 	data-popup="settingsPageTooltip"
 >
 	Settings
@@ -232,37 +239,38 @@
 			gridColumns="grid-cols-3"
 			slotDefault="place-self-center"
 			padding="p-0"
-			spacing="space-y-0"
+			slotLead="place-content-start"
 			slotTrail="place-content-end"
 			shadow="shadow-2xl drop-shadow-2xl"
 		>
 			<!-- Left Section of Header -->
 			<svelte:fragment slot="lead">
 				<!-- Left Section's Outer Container -->
-				<div class="flex flex-row justify-between w-full place-content-center place-items-center">
-					<!-- (1) Container for Navbar Button -->
-					<div
-						class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
+				<div class="flex flex-row justify-between w-full lg:mr-20 md:mr-0 sm:mr-0">
+					<!-- (1) Navbar Button -->
+					<button
+						class="flex flex-row w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 						on:click={() => {
 							$leftNavActive = !$leftNavActive;
 						}}
 					>
 						<IconMenu2 class="w-8 h-8" />
-					</div>
+					</button>
 
 					<!-- Don't show the Status Section at Home or About Pages -->
 					{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
-						<!-- (2) Status Section's Container -->
+						<!-- (2) Status Section's Row -->
 						<div
-							class="flex flex-row space-x-6 w-14 h-14 lg:mr-20 md:m-0 sm:m-0 place-content-end place-items-center"
+							transition:fade={{ delay: 250, duration: 350 }}
+							class="flex flex-row space-x-6 place-content-center place-items-center"
 						>
 							<!-- GPS Status -->
-							<div class="flex flex-row">
+							<div>
 								<IconSatellite class={`w-7 h-7 ${$uav_gpsStatus ? '' : 'text-[#ff0000]'}`} />
 							</div>
 
 							<!-- Communication Status -->
-							<div class="flex flex-row">
+							<div>
 								{#if $uav_networkStatus === true}
 									<IconAntenna class="w-7 h-7" />
 								{:else}
@@ -271,8 +279,8 @@
 							</div>
 
 							<!-- Battery Status -->
-							<div class="flex flex-row">
-								<!-- Adjusting the Battery view depending on the voltage of the battery -->
+							<!-- Adjusting the Battery view depending on the voltage of the battery -->
+							<div>
 								{#if $uav_batteryVoltage >= 15.93}
 									<IconBattery4 class="w-7 h-7" />
 								{:else if $uav_batteryVoltage >= 15.34}
@@ -291,39 +299,33 @@
 			</svelte:fragment>
 
 			<!-- Middle Section of Header -->
-			<!-- Middle Section's Outer Container -->
-			<div class="flex flex-row items-center p-0 m-0 place-content-center checked:">
+			<!-- Middle Section's Outer Div -->
+			<div class="flex flex-row w-full">
 				<!-- Ad Astra Logo -->
-				<p
+				<h1
 					data-tauri-drag-region
-					class="pt-1 pb-0 pl-0 pr-0 m-0 text-2xl text-center border-8 border-none cursor-default gradient-heading active:cursor-grab hover:cursor-grab focus"
-					style="font-family: Nevan;"
+					class="mt-2 text-3xl h1 active:cursor-grab hover:cursor-grab"
+					style="font-family: Nevan"
 				>
 					S . A . F . İ . R
-				</p>
+				</h1>
 			</div>
 
 			<!-- Right Section of Header -->
 			<svelte:fragment slot="trail">
-				<!-- Right Section's Outer Container (Don't show the Status Section and Databar Button, show only Exit Button if you're in Home or About Page) -->
-				<div
-					class={`flex flex-row place-content-center place-items-center ${
-						$page.url.pathname !== '/' && $page.url.pathname !== '/about'
-							? 'justify-between w-full h-full'
-							: 'cursor-pointer w-14 h-14 hover:bg-primary-token'
-					}`}
-				>
+				<!-- Right Section's Outer Container -->
+				<div class="flex flex-row justify-between w-full lg:ml-20 md:ml-0 sm:ml-0">
+					<!-- Status Section -->
 					{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
-						<!-- (1) Status Section -->
 						<div
-							class="flex flex-row w-full h-full space-x-6 lg:ml-20 md:m-0 sm:m-0 place-content-start place-items-center"
+							transition:fade={{ delay: 250, duration: 350 }}
+							class="flex flex-row space-x-6 place-content-center place-items-center"
 						>
-							<!-- Latency Status -->
-							<div class="flex flex-row">
-								<!-- Adjusting the Latency view depending on the latency value with conditional rendering and styling -->
+							<!-- Latency -->
+							<div>
 								<p
 									style="font-family: Nevan;"
-									class={`p-0 m-0 border-none text-md place-items-center ${
+									class={`text-lg ${
 										$pingStatus >= 9999 || $pingStatus >= 900
 											? 'text-[#ff0000]'
 											: $pingStatus >= 100
@@ -334,16 +336,15 @@
 									}`}
 								>
 									{#if $pingStatus >= 9999}
-										> 9999 <span class="font-sans text-xs font-bold text-w">ms</span>
+										> 9999 <span class="font-sans text-xs font-bold">ms</span>
 									{:else}
 										{$pingStatus} <span class="font-sans text-xs font-bold">ms</span>
 									{/if}
 								</p>
 							</div>
 
-							<!-- Heartbeat Status -->
-							<div class="flex flex-row">
-								<!-- Adjusting the Hearbeat view depending on the Heartbeat's boolean value -->
+							<!-- Hearbeat -->
+							<div>
 								{#if $heartbeat}
 									<IconCircleCheck class="w-8 h-8 text-blue-500 dark:text-sky-500" />
 								{:else}
@@ -351,44 +352,36 @@
 								{/if}
 							</div>
 						</div>
+					{/if}
 
-						<!-- (2) Exit and Databar Buttons -->
-						<div class="flex flex-row">
-							<!-- Databar Button -->
-							<div
-								class="flex flex-row cursor-pointer w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
+					<!-- Empty Div For Placing Exit Button to the End With Using justify-between  -->
+					<div class=""></div>
+
+					<!-- Databar and Exit Section -->
+					<div class="flex flex-row">
+						<!-- Databar Button (Don't Show Databar Button at Home and About Pages) -->
+						{#if $page.url.pathname !== '/' && $page.url.pathname !== '/about'}
+							<button
+								transition:fade={{ delay: 250, duration: 350 }}
+								class="flex flex-row w-14 h-14 hover:bg-primary-hover-token place-content-center place-items-center"
 								on:click={() => {
 									$rightBarActive = !$rightBarActive;
 								}}
 							>
 								<IconAlignBoxRightMiddle class="w-8 h-8" />
-							</div>
+							</button>
+						{/if}
 
-							<!-- Exit Button -->
-							<div
-								class="flex flex-row cursor-pointer w-14 h-14 place-content-center place-items-center"
-							>
-								<button
-									on:click={() => {
-										modalStore.trigger(exitModal);
-									}}
-									class="flex w-full h-full cursor-pointer hover:bg-red-700 dark:hover:bg-red-900 place-content-center place-items-center"
-								>
-									<IconX class="w-8 h-8" />
-								</button>
-							</div>
-						</div>
-					{:else}
 						<!-- Exit Button -->
 						<button
-							class="flex w-full h-full cursor-pointer hover:bg-red-800 place-content-center place-items-center"
+							class="flex flex-row w-14 h-14 hover:bg-red-700 dark:hover:bg-red-900 place-content-center place-items-center"
 							on:click={() => {
 								modalStore.trigger(exitModal);
 							}}
 						>
 							<IconX class="w-8 h-8" />
 						</button>
-					{/if}
+					</div>
 				</div>
 			</svelte:fragment>
 		</AppBar>
@@ -402,92 +395,110 @@
 			<!-- Navbar's Outer Container -->
 			<div
 				transition:slide={{ delay: 20, duration: 300, easing: quintOut, axis: 'x' }}
-				class="h-full"
+				class="flex flex-col h-full"
 			>
 				<!-- AppRail Component that let us make a Navbar -->
 				<AppRail width="w-14">
 					<!-- Top Section of Navbar -->
 					<svelte:fragment slot="lead">
 						<!-- Home Page Button -->
-						<div use:popup={{ event: 'hover', target: 'homePageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'homePageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/"
 								selected={$page.url.pathname === '/'}
 								active="bg-[#e0e8f6] dark:bg-[#22324a] "
 							>
 								<svelte:fragment slot="lead">
-									<IconHome />
+									<IconHome class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 
 						<!-- Dashboard Page Button -->
-						<div use:popup={{ event: 'hover', target: 'dashboardPageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'dashboardPageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/dashboard"
-								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 								selected={$page.url.pathname === '/dashboard'}
+								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 							>
 								<svelte:fragment slot="lead">
-									<IconLayout />
+									<IconLayout class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 
 						<!-- Telemetry Page Button -->
-						<div use:popup={{ event: 'hover', target: 'telemetryPageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'telemetryPageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/telemetry"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 								selected={$page.url.pathname === '/telemetry'}
 							>
 								<svelte:fragment slot="lead">
-									<IconTerminal2 />
+									<IconTerminal2 class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 
 						<!-- Test Page Button -->
-						<div use:popup={{ event: 'hover', target: 'testPageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'testPageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/test"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 								selected={$page.url.pathname === '/test'}
 							>
 								<svelte:fragment slot="lead">
-									<IconChecklist />
+									<IconChecklist class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 					</svelte:fragment>
 
 					<!-- Bottom Section of Navbar -->
 					<svelte:fragment slot="trail">
 						<!-- About Page Button -->
-						<div use:popup={{ event: 'hover', target: 'aboutPageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'aboutPageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/about"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 								selected={$page.url.pathname === '/about'}
 							>
 								<svelte:fragment slot="lead">
-									<IconInfoOctagon />
+									<IconInfoOctagon class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 
 						<!-- Settings Page Button -->
-						<div use:popup={{ event: 'hover', target: 'settingsPageTooltip', placement: 'right' }}>
+						<button
+							class="w-full"
+							use:popup={{ event: 'hover', target: 'settingsPageTooltip', placement: 'right' }}
+						>
 							<AppRailAnchor
 								href="/settings"
 								active="bg-[#e0e8f6] dark:bg-[#22324a]"
 								selected={$page.url.pathname === '/settings'}
 							>
 								<svelte:fragment slot="lead">
-									<IconSettings />
+									<IconSettings class="w-6 h-6" />
 								</svelte:fragment>
 							</AppRailAnchor>
-						</div>
+						</button>
 
 						<!-- Light Switch -->
 						<AppRailAnchor hover="none">
@@ -508,69 +519,61 @@
 			<!-- Databar's Outer Container -->
 			<div
 				transition:slide={{ delay: 20, duration: 300, easing: quintInOut, axis: 'x' }}
-				class="h-full flex ml-0.5 flex-col p-2 border-l border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
+				class="h-full flex space-y-2.5 flex-col ml-0.5 p-2 border-l rounded-sm border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
 			>
-				<div class="grid h-full grid-rows-2 space-y-2">
-					<!-- Text Area for Dataflow -->
-					<div
-						class="h-full border-2 p-2.5 border-white shadow-xl border-opacity-20 rounded-lg bg-[#fffefe] dark:bg-[#374151] space-y-4"
-					>
-						<div class="flex flex-row mt-2 place-content-center">
-							<h2 class="h4" style="font-family: Nevan">Pre-flight</h2>
-						</div>
-						<div class="flex flex-col space-y-4 place-content-center place-items-start">
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$motorTest} />
-								<i>Motor Test</i>
-							</label>
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$lidarTest} />
-								<i>Lidar Test</i>
-							</label>
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$GPSTest} />
-								<i>GPS Test</i>
-							</label>
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$IMUTest} />
-								<i>IMU Health Check</i>
-							</label>
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$pitotTest} />
-								<i>Pitot Test</i>
-							</label>
-							<label class="flex items-center space-x-2">
-								<input class="checkbox" type="checkbox" bind:checked={$cameraTest} />
-								<i>Camera Test</i>
-							</label>
-						</div>
+				<!-- Pre-flight Checklist -->
+				<div
+					class="h-full flex flex-col border-2 p-2.5 border-white shadow-xl border-opacity-20 rounded-lg bg-[#fffefe] dark:bg-[#374151] space-y-4"
+				>
+					<h2 class="mt-2 text-center h4" style="font-family: Nevan">Pre-flight</h2>
+					<div class="flex flex-col space-y-4">
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$motorCheck} />
+							<i>Motor Test</i>
+						</label>
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$lidarCheck} />
+							<i>Lidar Test</i>
+						</label>
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$GPSCheck} />
+							<i>GPS Test</i>
+						</label>
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$IMUCheck} />
+							<i>IMU Health Check</i>
+						</label>
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$pitotCheck} />
+							<i>Pitot Test</i>
+						</label>
+						<label class="flex items-center space-x-2">
+							<input class="checkbox" type="checkbox" bind:checked={$cameraCheck} />
+							<i>Camera Test</i>
+						</label>
 					</div>
-					<textarea
-						class="h-full shadow-xl overflow-y-auto border-2 border-white border-opacity-20 text-gray-800 dark:text-gray-200 hide-scrollbar rounded-lg bg-[#fffefe] p-3 dark:bg-[#374151]"
-						placeholder="You can take your notes to here as you wish."
-						bind:value={$notepadText}
-					/>
 				</div>
 
+				<!-- Textarea as Notepad -->
+				<textarea
+					class="h-full shadow-xl overflow-y-scroll resize-x border-2 border-white border-opacity-20 text-gray-800 dark:text-gray-200 rounded-lg bg-[#fffefe] p-2.5 dark:bg-[#374151]"
+					placeholder="You can take your notes to here as you wish."
+					bind:value={$notepadText}
+				/>
+
 				<!-- Reboot Section -->
-				<div class="flex flex-row w-full mt-4 place-items-center place-content-center">
+				<div class="flex flex-row w-full px-1">
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {
 							$raspberryBoot = !$raspberryBoot;
 							modalStore.trigger(raspberryModal);
 						}}
-						type="button"
-						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg text-sm px-5 py-2.5"
+						class="[&>*]:pointer-events-none flex flex-row w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg px-5 py-2.5"
 						use:popup={{ event: 'hover', target: 'raspberryTooltip', placement: 'top' }}
 					>
 						<IconRotate2 />
-						<p
-							style="font-family:Nevan;"
-							class="absolute p-0 m-0 text-white border-none top-1.5 left-5"
-						>
-							R
-						</p>
+						<i class="absolute text-white top-1.5 left-5" style="font-family:Nevan;">R</i>
 					</button>
 
 					<!-- Pixhawk Reboot Button -->
@@ -579,18 +582,12 @@
 							$pixhawkBoot = !$pixhawkBoot;
 							modalStore.trigger(pixhawkModal);
 						}}
-						type="button"
-						class="[&>*]:pointer-events-none flex w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg text-sm px-5 py-2.5"
+						class="[&>*]:pointer-events-none flex flex-row w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg px-5 py-2.5"
 						use:popup={{ event: 'hover', target: 'pixhawkTooltip', placement: 'top' }}
 					>
 						<IconRotateClockwise2 />
 
-						<p
-							class="absolute p-0 m-0 text-white border-none top-1.5 left-5"
-							style="font-family:Nevan;"
-						>
-							P
-						</p>
+						<i class="absolute text-white top-1.5 left-5" style="font-family:Nevan;">P</i>
 					</button>
 				</div>
 			</div>

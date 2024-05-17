@@ -1,134 +1,89 @@
 <script>
+	//Importing Accordions
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import {
-		IconEyeglass2,
-		IconViewfinder,
-		IconUsers,
-		IconPlaneTilt,
-		IconCpu,
-		IconWorldWww,
-		IconDrone,
-		IconDiamonds
-	} from '@tabler/icons-svelte';
+
+	//Importing Tabler's Icon Pack
+	import { IconCpu, IconWorldWww, IconDrone, IconApple } from '@tabler/icons-svelte';
+
+	//Importing Variables From Stores
+	import { whoWeAre, teamMembers, teamName, teamRoles } from '$lib/Utils/stores';
+
+	//Importing Transitions
+	import { fade } from 'svelte/transition';
 </script>
 
-<div class="container items-center justify-center w-full h-screen min-w-full min-h-screen">
-	<div
-		class="flex flex-col w-full h-screen max-w-6xl pt-6 m-auto mb-4 overflow-y-scroll pb-14 hide-scrollbar"
-	>
-		<div class="z-50 flex flex-row shadow-2xl">
-			<img
-				class="w-full rounded-t-xl rounded-ee-lg"
-				src="assets/kf1500Picture.png"
-				alt="Sunset in the mountains"
-			/>
+<!-- Outer Container -->
+<div
+	class="container flex flex-col w-full h-full min-w-full min-h-full place-content-center place-items-center"
+>
+	<!-- Team Members Outer Div -->
+	<div class="grid max-w-7xl gap-x-8 gap-y-20 lg:px-8 xl:grid-cols-3">
+		<!-- Header and Description -->
+		<div in:fade={{ delay: 350, duration: 450 }} class="flex flex-col max-w-2xl space-y-3">
+			<!-- Team Header -->
+			<h1 class="h1" style="font-family: Nevan">{$teamName}</h1>
+
+			<!-- Description -->
+			<i class="text-lg font-semibold opacity-75">
+				{$whoWeAre}
+			</i>
 		</div>
-		<div class="flex shadow-lg rounded-b-xl overflow-y-scroll bg-[#f3f4f6] dark:bg-[#1f2937]">
-			<Accordion autocollapse>
-				<AccordionItem class="shadow-lg">
-					<svelte:fragment slot="lead"><IconEyeglass2 /></svelte:fragment>
-					<svelte:fragment slot="summary"
-						><span class="font-black">Who Are We ?</span></svelte:fragment
-					>
-					<svelte:fragment slot="content"
-						>Ad Astra is a Teknofest team founded in 2021. As of 2024, it is still developing in the
-						fields of Armed Unmanned Aerial Vehicles and Unmanned Aerial Vehicles. The S.A.F.I.R
-						ground control station you are currently using was developed by the Ad Astra team and is
-						still under development.</svelte:fragment
-					>
-				</AccordionItem>
-				<AccordionItem class="shadow-lg">
-					<svelte:fragment slot="lead"><IconViewfinder /></svelte:fragment>
-					<svelte:fragment slot="summary"
-						><span class="font-black">Our Mission</span></svelte:fragment
-					>
-					<svelte:fragment slot="content"
-						>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum nostrum delectus
-						similique doloribus expedita eius quibusdam vero, explicabo assumenda saepe illum totam
-						nam omnis tenetur labore officia accusamus dolorem eaque.</svelte:fragment
-					>
-				</AccordionItem>
-				<AccordionItem class="shadow-lg">
-					<svelte:fragment slot="lead"><IconDiamonds /></svelte:fragment>
-					<svelte:fragment slot="summary"
-						><span class="font-black">What's S.A.F.İ.R ?</span></svelte:fragment
-					>
-					<svelte:fragment slot="content"
-						>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum nostrum delectus
-						similique doloribus expedita eius quibusdam vero, explicabo assumenda saepe illum totam
-						nam omnis tenetur labore officia accusamus dolorem eaque.</svelte:fragment
-					>
-				</AccordionItem>
-				<AccordionItem>
-					<svelte:fragment slot="lead"><IconUsers /></svelte:fragment>
-					<svelte:fragment slot="summary"
-						><span class="font-black">Team Members</span></svelte:fragment
-					>
-					<svelte:fragment slot="content"
-						><Accordion autocollapse>
-							<AccordionItem>
-								<svelte:fragment slot="lead"><IconCpu /></svelte:fragment>
+		<div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+			<!-- Person 1 -->
+			<div in:fade={{ delay: 450, duration: 450 }} class="flex items-center space-x-6">
+				<!-- Icon -->
+				<IconCpu class="w-20 h-20 rounded-full" />
 
-								<svelte:fragment slot="summary"
-									><span class="font-medium">Mert Sefa Akgün</span></svelte:fragment
-								>
-								<svelte:fragment slot="content"
-									>&emsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-									doloribus consequuntur officia ratione inventore cumque recusandae, corporis
-									consectetur iure laborum quas quidem sint quo unde, impedit minus voluptates
-									repellendus temporibus?.</svelte:fragment
-								>
-							</AccordionItem>
-							<!-- <AccordionItem>
-								<svelte:fragment slot="lead"><IconPlaneTilt /></svelte:fragment>
+				<!-- Name and Role -->
+				<div>
+					<!-- Name -->
+					<b class="text-lg">{$teamMembers[0]}</b>
+					<!-- Role -->
+					<p class="font-semibold text-indigo-500 text-md">{$teamRoles[0]}</p>
+				</div>
+			</div>
 
-								<svelte:fragment slot="summary"
-									><span class="font-medium">Emre Uzun</span></svelte:fragment
-								>
-								<svelte:fragment slot="content"
-									>&emsp;Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt ut
-									pariatur eius cum nulla, velit corporis expedita id similique iure reiciendis,
-									doloribus rerum deleniti quia dolorem error saepe consequuntur maxime.</svelte:fragment
-								>
-							</AccordionItem> -->
-							<AccordionItem>
-								<svelte:fragment slot="lead"><IconWorldWww /></svelte:fragment>
-								<svelte:fragment slot="summary"
-									><span class="font-medium">Fatih Özkurt</span></svelte:fragment
-								>
-								<svelte:fragment slot="content"
-									>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi
-									officiis consequatur eaque at fuga voluptatem. Aliquam temporibus blanditiis porro
-									dolores esse, distinctio, nisi reiciendis officiis obcaecati alias eligendi vitae.</svelte:fragment
-								>
-							</AccordionItem>
-							<!-- <AccordionItem>
-								<svelte:fragment slot="lead"><IconDrone /></svelte:fragment>
-								<svelte:fragment slot="summary"
-									><span class="font-medium">Alperen Çankaya</span></svelte:fragment
-								>
-								<svelte:fragment slot="content"
-									>&emsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga labore
-									necessitatibus in optio quod a recusandae tempora libero iste! Porro non
-									reiciendis pariatur nulla quia reprehenderit minus autem eius labore?</svelte:fragment
-								>
-							</AccordionItem> -->
+			<!-- Person 2 -->
+			<div in:fade={{ delay: 550, duration: 550 }} class="flex items-center space-x-6">
+				<!-- Icon -->
+				<IconWorldWww class="w-20 h-20 rounded-full" />
 
-							<AccordionItem>
-								<svelte:fragment slot="lead"><IconDrone /></svelte:fragment>
-								<svelte:fragment slot="summary"
-									><span class="font-medium">Emre Uzun</span></svelte:fragment
-								>
-								<svelte:fragment slot="content"
-									>&emsp;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate modi
-									officiis consequatur eaque at fuga voluptatem. Aliquam temporibus blanditiis porro
-									dolores esse, distinctio, nisi reiciendis officiis obcaecati alias eligendi vitae.</svelte:fragment
-								>
-							</AccordionItem>
-						</Accordion></svelte:fragment
-					>
-				</AccordionItem>
-			</Accordion>
+				<!-- Name and Role -->
+				<div>
+					<!-- Name -->
+					<b class="text-lg">{$teamMembers[1]}</b>
+					<!-- Role -->
+					<p class="font-semibold text-indigo-500 text-md">{$teamRoles[1]}</p>
+				</div>
+			</div>
+
+			<!-- Person 3 -->
+			<div in:fade={{ delay: 650, duration: 650 }} class="flex items-center space-x-6">
+				<!-- Icon -->
+				<IconApple class="w-20 h-20 rounded-full" />
+
+				<!-- Name and Role -->
+				<div>
+					<!-- Name -->
+					<b class="text-lg">{$teamMembers[2]}</b>
+					<!-- Role -->
+					<p class="font-semibold text-indigo-500 text-md">{$teamRoles[2]}</p>
+				</div>
+			</div>
+
+			<!-- Person 2 -->
+			<div in:fade={{ delay: 750, duration: 750 }} class="flex items-center space-x-6">
+				<!-- Icon -->
+				<IconDrone class="w-20 h-20 rounded-full" />
+
+				<!-- Name and Role -->
+				<div>
+					<!-- Name -->
+					<b class="text-lg">{$teamMembers[3]}</b>
+					<!-- Role -->
+					<p class="font-semibold text-indigo-500 text-md">{$teamRoles[3]}</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
