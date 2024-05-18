@@ -519,11 +519,11 @@
 			<!-- Databar's Outer Container -->
 			<div
 				transition:slide={{ delay: 20, duration: 300, easing: quintInOut, axis: 'x' }}
-				class="h-full flex space-y-2.5 flex-col ml-0.5 p-2 border-l rounded-sm border-[#f1efef] dark:border-[#202736] bg-surface-100-800-token"
+				class="h-full flex space-y-2.5 flex-col p-2 bg-surface-100-800-token"
 			>
 				<!-- Pre-flight Checklist -->
 				<div
-					class="h-full flex flex-col border-2 p-2.5 border-white shadow-xl border-opacity-20 rounded-lg bg-[#fffefe] dark:bg-[#374151] space-y-4"
+					class="h-full flex flex-col border-2 p-2.5 border-white border-opacity-20 rounded-lg bg-surface-200-700-token space-y-4"
 				>
 					<h2 class="mt-2 text-center h4" style="font-family: Nevan">Pre-flight</h2>
 					<div class="flex flex-col space-y-4">
@@ -556,13 +556,13 @@
 
 				<!-- Textarea as Notepad -->
 				<textarea
-					class="h-full shadow-xl overflow-y-scroll resize-x border-2 border-white border-opacity-20 text-gray-800 dark:text-gray-200 rounded-lg bg-[#fffefe] p-2.5 dark:bg-[#374151]"
+					class="h-full shadow-xl overflow-y-scroll resize-x border-2 border-white border-opacity-20 rounded-lg bg-surface-200-700-token"
 					placeholder="You can take your notes to here as you wish."
 					bind:value={$notepadText}
 				/>
 
 				<!-- Reboot Section -->
-				<div class="flex flex-row w-full px-1">
+				<div class="flex flex-row w-full mt-4 place-items-center place-content-center gap-2">
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {

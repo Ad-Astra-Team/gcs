@@ -1,8 +1,6 @@
-import { read } from '$app/server';
-import { writeText } from '@tauri-apps/api/clipboard';
 import { readable, writable } from 'svelte/store';
 
-// communication 
+// communication
 export const leftNavActive = writable(false);
 export const rightBarActive = writable(false);
 export const heartbeat = writable(false);
@@ -20,22 +18,22 @@ export const pingStatus = writable(21);
 export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
-export const portSelection = writable(["UDP", "TCP", "COM1", "COM2", "COM3", "TTYUSB0", "TTYACM0"]);
+export const portSelection = writable(['UDP', 'TCP', 'COM1', 'COM2', 'COM3', 'TTYUSB0', 'TTYACM0']);
 export const selectedPort = writable();
 
 // Settings Properties
-export const speedUnit = writable(["MPS", "FPS", "KPH", "MPH", "Knots"]);
-export const selectedSpeedUnit = writable("MPS");
-export const altitudeUnit = writable(["Meters", "Feet"]);
-export const selectedAltitudeUnit = writable("Meters");
-export const distanceUnitSelection = writable(["Meters", "Feet"]);
-export const selectedDistanceUnit = writable("Meters");
+export const speedUnit = writable(['MPS', 'FPS', 'KPH', 'MPH', 'Knots']);
+export const selectedSpeedUnit = writable('MPS');
+export const altitudeUnit = writable(['Meters', 'Feet']);
+export const selectedAltitudeUnit = writable('Meters');
+export const distanceUnitSelection = writable(['Meters', 'Feet']);
+export const selectedDistanceUnit = writable('Meters');
 export const trackLengthSelection = writable([1, 2, 3, 4, 5, 6]);
 export const selectedTrackLength = writable(1);
-export const voiceAssistantSelection = writable(["None", "Man", "Woman"]);
-export const selectedVoiceAssistant = writable("Man");
-export const languageSelection = writable(["Türkçe", "English"]);
-export const selectedLanguage = writable("Türkçe");
+export const voiceAssistantSelection = writable(['None', 'Man', 'Woman']);
+export const selectedVoiceAssistant = writable('Man');
+export const languageSelection = writable(['Türkçe', 'English']);
+export const selectedLanguage = writable('Türkçe');
 
 export const taxiLed = writable(false);
 export const cruiseLed = writable(false);
@@ -91,11 +89,20 @@ export const selectedVehicle = writable();
 export const mapRadioButton = writable(true);
 
 //About Properties
-export const whoWeAre = readable("Ad Astra is a Teknofest team founded in 2021. As of 2024, it is still developing in the fields of armed unmanned aerial vehicles and unmanned aerial vehicles.")
-export const teamMembers = readable(["Mert Sefa Akgün", "Cengizhan Yıldız", "Tuğrulhan Terzi", "Emre Uzun"])
-export const teamRoles = readable(["Team Captain", "Team Member", "Team Member", "Team Member"])
-export const teamName = readable("AD ASTRA");
-export const gcsName = readable("S . A . F . İ . R")
+export const whoWeAre = readable(
+	'Ad Astra is a Teknofest team founded in 2021. As of 2024, it is still developing in the fields of armed unmanned aerial vehicles and unmanned aerial vehicles.'
+);
+export const teamMembers = readable([
+	'Mert Sefa Akgün',
+	'Cengizhan Yıldız',
+	'Tuğrulhan Terzi',
+	'Emre Uzun'
+]);
+export const teamRoles = readable(['Team Captain', 'Team Member', 'Team Member', 'Team Member']);
+export const teamName = readable('AD ASTRA');
+export const gcsName = readable('S . A . F . İ . R');
 
 //Homepage Properties
-export const homepageText = readable("S.A.F.İ.R is a UAV purposed Ground Control System. You can control your UAV with the help of S.A.F.İ.R as you wish.");
+export const homepageText = readable(
+	'S.A.F.İ.R is a UAV purposed Ground Control System. You can control your UAV with the help of S.A.F.İ.R as you wish.'
+);

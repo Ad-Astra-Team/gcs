@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	//Importing Map
 	import Map from '$lib/Maps/Map.svelte';
 
@@ -37,15 +39,13 @@
 		RadioItem
 	} from '@skeletonlabs/skeleton';
 
-	import { gallery } from '@patricksurry/g3/dist/g3-contrib';
 	import 'video.js/dist/video';
 	import 'video.js/dist/video-js.min.css';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import { func } from 'three/examples/jsm/nodes/code/FunctionNode.js';
 	import { PLYLoader } from 'three/examples/jsm/Addons.js';
 	import { get } from 'svelte/store';
 	import { DomEvent } from 'leaflet';
-
+	import { onMount } from 'svelte';
 	//Importing Transitions From Svelte
 	import { fade } from 'svelte/transition';
 
@@ -106,10 +106,36 @@
 		sound.src = source;
 		sound.play();
 	}
+
+	let mapWrapper;
+	let mapOnDrawer;
+	let mapOnPage;
+
+	const goMapDrawer = () => {
+		mapOnDrawer.appendChild(mapWrapper);
+	};
+
+	const goMapPage = () => {
+		mapOnPage.appendChild(mapWrapper);
+	};
+	onMount(() => {
+		goMapPage();
+	});
 </script>
 
+<div class="container w-full h-full min-w-full min-h-full" bind:this={mapWrapper}>
+	<Map />
+</div>
+
 <!-- Video and Map Drawer's Body -->
-<Drawer>
+<Drawer
+	on:backdrop={() => {
+		goMapPage();
+	}}
+	on:drawer={() => {
+		goMapDrawer();
+	}}
+>
 	<!-- Video' Drawer -->
 	{#if $drawerStore.meta.type === 'video'}
 		<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
@@ -164,7 +190,7 @@
 
 			<!-- Map or Slam Map Condition -->
 			{#if $mapRadioButton === true}
-				<Map />
+				<div class="w-full h-full min-w-full min-h-full" bind:this={mapOnDrawer} />
 			{:else if $mapRadioButton === false}
 				<canvas class="w-full h-full" />
 			{/if}
@@ -238,7 +264,7 @@
 			<!-- Page Header -->
 			<div
 				in:fade={{ delay: 200, duration: 250 }}
-				class=" drop-shadow-2xl transition-opacity opacity-60 hover:opacity-90 py-3.5 px-3 rounded-b-3xl flex flex-row bg-[#f6f7f8] dark:bg-[#1e2836] space-x-6 shadow-lg"
+				class=" drop-shadow-2xl transition-opacity opacity-60 hover:opacity-90 py-3.5 px-3 rounded-b-3xl flex flex-row bg-surface-100-800-token space-x-6 shadow-lg"
 			>
 				<!-- Left Section of Page Header -->
 				<div class="flex flex-row shadow-2xl drop-shadow-2xl">
@@ -365,7 +391,6 @@
 							<IconLock />
 						{/if}
 					</button>
-
 					<!-- Led Controller Button -->
 					<button
 						use:popup={$ledStatus
@@ -482,7 +507,7 @@
 				</div>
 
 				{#if $mapRadioButton === true}
-					<Map />
+					<div class="w-full h-full min-h-full min-w-full" bind:this={mapOnPage} />
 				{:else if $mapRadioButton === false}
 					<canvas class="w-full h-full"></canvas>
 				{/if}

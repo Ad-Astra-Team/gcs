@@ -44,7 +44,7 @@
 	import { IconCheck } from '@tabler/icons-svelte';
 
 	//Importing Transitions
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 
 	//Function to Make GPSOff True and Anything Else False
 	function turnOffGPS() {
