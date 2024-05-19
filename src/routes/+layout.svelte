@@ -562,14 +562,16 @@
 				/>
 
 				<!-- Reboot Section -->
-				<div class="flex flex-row w-full gap-2 mt-4 place-items-center place-content-center">
+				<div
+					class="flex flex-row w-full px-0.5 mt-4 space-x-1 place-items-center place-content-center"
+				>
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {
 							$raspberryBoot = !$raspberryBoot;
 							modalStore.trigger(raspberryModal);
 						}}
-						class="[&>*]:pointer-events-none flex flex-row w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg px-5 py-2.5"
+						class="[&>*]:pointer-events-none rounded-se-xl flex flex-row w-full relative text-white place-content-center bg-gradient-to-r active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-l-lg px-5 py-2.5"
 						use:popup={{ event: 'hover', target: 'raspberryTooltip', placement: 'top' }}
 					>
 						<IconRotate2 />
@@ -582,7 +584,7 @@
 							$pixhawkBoot = !$pixhawkBoot;
 							modalStore.trigger(pixhawkModal);
 						}}
-						class="[&>*]:pointer-events-none flex flex-row w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg px-5 py-2.5"
+						class="[&>*]:pointer-events-none flex flex-row rounded-es-xl w-full relative text-white place-content-center bg-gradient-to-l active:ring-4 from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-bl focus:outline-none focus:ring-sky-400 dark:focus:ring-sky-900 shadow-lg shadow-sky-600/50 dark:shadow-lg dark:shadow-sky-900/80 font-medium rounded-r-lg px-5 py-2.5"
 						use:popup={{ event: 'hover', target: 'pixhawkTooltip', placement: 'top' }}
 					>
 						<IconRotateClockwise2 />

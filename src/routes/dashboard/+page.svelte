@@ -12,7 +12,9 @@
 		IconRobot,
 		IconRobotOff,
 		IconSun,
-		IconSunOff
+		IconSunOff,
+		IconMaximize,
+		IconMinimize
 	} from '@tabler/icons-svelte';
 
 	//Importing Variables From Stores
@@ -46,8 +48,13 @@
 	import { get } from 'svelte/store';
 	import { DomEvent } from 'leaflet';
 	import { onMount } from 'svelte';
+
 	//Importing Transitions From Svelte
 	import { fade } from 'svelte/transition';
+
+	//Importing Video.js
+	import videojs from 'video.js';
+	import 'video.js/dist/video-js.css';
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
@@ -107,41 +114,21 @@
 		sound.play();
 	}
 
-	let mapWrapper;
-	let mapOnDrawer;
-	let mapOnPage;
-
-	const goMapDrawer = () => {
-		mapOnDrawer.appendChild(mapWrapper);
-	};
-
-	const goMapPage = () => {
-		mapOnPage.appendChild(mapWrapper);
-	};
 	onMount(() => {
-		goMapPage();
+		videojs(document.getElementById('video-player'));
 	});
 </script>
 
-<div class="container w-full h-full min-w-full min-h-full" bind:this={mapWrapper}>
-	<Map />
-</div>
-
 <!-- Video and Map Drawer's Body -->
-<Drawer
-	on:backdrop={() => {
-		goMapPage();
-	}}
-	on:drawer={() => {
-		goMapDrawer();
-	}}
->
+<Drawer>
 	<!-- Video' Drawer -->
 	{#if $drawerStore.meta.type === 'video'}
-		<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
-
 		<!-- Video's Outer Div -->
-		<div class="flex flex-row rounded-3xl w-full h-full p-3 bg-[#f3f4f6] dark:bg-[#1f2836]">
+		<div
+			class="flex flex-row relative rounded-3xl w-full h-full p-3 bg-[#f3f4f6] dark:bg-[#1f2836]"
+		>
+			<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
+
 			<!-- <iframe
 				src="http://localhost:8888/cam/"
 				scrolling="no"
@@ -150,19 +137,13 @@
 
 			<!-- Video -->
 			<video
-				class="w-full h-full video-js vjs-theme-city rounded-2xl"
-				preload="false"
-				controls
+				id="video-player"
+				class="w-full h-full rounded-2xl video-js"
 				muted
-				playsinline
-				id="drawerStream"
+				autoplay
+				preload="false"
 			>
-				<source src="assets/patrick.webm" type="video/webm" />
-				<p class="vjs-no-js">
-					To view this video please enable JavaScript, and consider upgrading to a web browser that
-					<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a
-					>
-				</p>
+				<source src="assets/videoplayback.webm" type="video/mp4" />
 			</video>
 		</div>
 		<!-- Map's Drawer -->
@@ -190,9 +171,13 @@
 
 			<!-- Map or Slam Map Condition -->
 			{#if $mapRadioButton === true}
-				<div class="w-full h-full min-w-full min-h-full" bind:this={mapOnDrawer} />
+				<div class="flex flex-row w-full h-full min-w-full min-h-full">
+					<Map />
+				</div>
 			{:else if $mapRadioButton === false}
-				<canvas class="w-full h-full" />
+				<div class="flex flex-row w-full h-full place-content-center place-items-center">
+					<h3 class="flex flex-row h3">This feature is still in development.</h3>
+				</div>
 			{/if}
 		</div>
 	{/if}
@@ -275,10 +260,8 @@
 
 							if ($connectionStatus === true && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MConnected.mp3');
-								console.log('Connect button sound played.');
 							} else if ($connectionStatus === true && $selectedVoiceAssistant === 'Woman') {
 								dashboardPlayButtonSound('buttonSounds/FConnected.mp3');
-								console.log('Disconnect button sound played.');
 							} else if ($connectionStatus === false && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MDisconnected.mp3');
 							} else if ($connectionStatus === false && $selectedVoiceAssistant === 'Woman') {
@@ -311,10 +294,8 @@
 
 							if ($controlMode === true && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MManualMode.mp3');
-								console.log('Connect button sound played.');
 							} else if ($controlMode === true && $selectedVoiceAssistant === 'Woman') {
 								dashboardPlayButtonSound('buttonSounds/FManualMode.mp3');
-								console.log('Disconnect button sound played.');
 							} else if ($controlMode === false && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MAutonomMode.mp3');
 							} else if ($controlMode === false && $selectedVoiceAssistant === 'Woman') {
@@ -344,10 +325,8 @@
 
 							if ($launchMode === true && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MReturnToLaunch.mp3');
-								console.log('Connect button sound played.');
 							} else if ($launchMode === true && $selectedVoiceAssistant === 'Woman') {
 								dashboardPlayButtonSound('buttonSounds/FReturnToLaunch.mp3');
-								console.log('Disconnect button sound played.');
 							}
 						}}
 						class={`text-white drop-shadow-2xl [&>*]:pointer-events-none bg-gradient-to-r active:ring-4 hover:bg-gradient-to-br focus:outline-none shadow-lg rounded-lg px-6 py-2.5 ${
@@ -369,10 +348,8 @@
 
 							if ($armMode === true && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MArmMode.mp3');
-								console.log('Connect button sound played.');
 							} else if ($armMode === true && $selectedVoiceAssistant === 'Woman') {
 								dashboardPlayButtonSound('buttonSounds/FArmMode.mp3');
-								console.log('Disconnect button sound played.');
 							} else if ($armMode === false && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MDisarmMode.mp3');
 							} else if ($armMode === false && $selectedVoiceAssistant === 'Woman') {
@@ -401,10 +378,8 @@
 
 							if ($ledStatus === true && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MLedsOff.mp3');
-								console.log('Connect button sound played.');
 							} else if ($ledStatus === true && $selectedVoiceAssistant === 'Woman') {
 								dashboardPlayButtonSound('buttonSounds/FLedsOff.mp3');
-								console.log('Disconnect button sound played.');
 							} else if ($ledStatus === false && $selectedVoiceAssistant === 'Man') {
 								dashboardPlayButtonSound('buttonSounds/MLedsOn.mp3');
 							} else if ($ledStatus === false && $selectedVoiceAssistant === 'Woman') {
@@ -422,24 +397,6 @@
 						{:else}
 							<IconSun />
 						{/if}
-					</button>
-
-					<!-- Left Drawer Button -->
-					<button
-						on:click={() => {
-							drawerStore.open(drawerLeft);
-						}}
-					>
-						ODL
-					</button>
-
-					<!-- Right Drawer Button -->
-					<button
-						on:click={() => {
-							drawerStore.open(drawerRight);
-						}}
-					>
-						ODR
 					</button>
 				</div>
 
@@ -464,25 +421,27 @@
 			class="grid w-full grid-cols-2 px-4 space-x-2 drop-shadow-2xl h-3/5"
 		>
 			<!-- Video Stream Div-->
-			<div class="border-8 border-gray-800 shadow-2xl rounded-3xl">
+			<div class="relative border-8 border-gray-800 shadow-2xl rounded-3xl">
 				<!-- Video Stream -->
 				<video
-					class="w-full h-full shadow-2xl drop-shadow-2xl video-js vjs-theme-city rounded-2xl"
-					preload="false"
-					controls
+					id="video-player"
+					class="w-full h-full rounded-2xl video-js"
 					muted
-					playsinline
-					id="stream"
+					autoplay
+					preload="false"
 				>
-					<source src="assets/patrick.webm" type="video/webm" />
-					<p class="vjs-no-js">
-						To view this video please enable JavaScript, and consider upgrading to a web browser
-						that
-						<a href="https://videojs.com/html5-video-support/" target="_blank"
-							>supports HTML5 video</a
-						>
-					</p>
+					<source src="assets/videoplayback.webm" type="video/mp4" />
 				</video>
+
+				<!-- Left Drawer Button -->
+				<button
+					on:click={() => {
+						drawerStore.open(drawerLeft);
+					}}
+					class="absolute z-50 p-2 top-2.5 text-white bg-gray-600 hover:bg-gray-600 rounded-xl right-2 bg-opacity-60"
+					><IconMaximize /></button
+				>
+
 				<!-- <iframe src="http://192.168.99.138:8889/mystream" scrolling="no" /> -->
 			</div>
 
@@ -507,10 +466,24 @@
 				</div>
 
 				{#if $mapRadioButton === true}
-					<div class="w-full h-full min-w-full min-h-full" bind:this={mapOnPage} />
+					<div class="flex flex-row w-full h-full min-w-full min-h-full">
+						<Map />
+					</div>
 				{:else if $mapRadioButton === false}
-					<canvas class="w-full h-full"></canvas>
+					<div class="flex flex-row w-full h-full place-content-center place-items-center">
+						<h3 class="flex flex-row h3">This feature is still in development.</h3>
+					</div>
 				{/if}
+
+				<!-- Right Drawer Button -->
+				<button
+					on:click={() => {
+						drawerStore.open(drawerRight);
+					}}
+					class={`absolute text-white z-50 p-2  bg-gray-600 hover:bg-gray-600 rounded-xl  bg-opacity-60 ${
+						$mapRadioButton ? 'top-2.5 right-12 ' : 'top-2.5 right-5'
+					}`}><IconMaximize /></button
+				>
 			</div>
 		</div>
 
@@ -520,4 +493,3 @@
 		</div>
 	</div>
 </div>
-<slot />

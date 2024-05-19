@@ -42,8 +42,8 @@ export const jitterValue = writable(0);
 
 export const xCoordinate = writable(0.000000)
 export const yCoordinate = writable(0.000000)
-export const zCoordinate = writable(0.00000)
-export const intensity = writable(75)
+export const zCoordinate = writable(0.000000)
+export const intensity = writable(0)
 
 // Settings Properties
 export const speedUnit = writable(['MPS', 'FPS', 'KPH', 'MPH', 'Knots']);
@@ -57,7 +57,7 @@ export const selectedTrackLength = writable(1);
 export const voiceAssistantSelection = writable(['None', 'Man', 'Woman']);
 export const selectedVoiceAssistant = writable('Man');
 export const languageSelection = writable(['Türkçe', 'English']);
-export const selectedLanguage = writable('Türkçe');
+export const selectedLanguage = writable('English');
 
 export const taxiLed = writable(false);
 export const cruiseLed = writable(false);
@@ -87,8 +87,8 @@ export const lidarMinDistance = writable();
 export const streamAddress = writable();
 export const streamChunks = writable();
 
-export const selectedCodec = writable();
-export const selectedFormat = writable();
+export const selectedCodec = writable("1");
+export const selectedFormat = writable("1");
 export const applyButton = writable(false);
 
 //Checklist Properties

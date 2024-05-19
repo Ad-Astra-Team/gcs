@@ -318,10 +318,8 @@
 
 						if ($tenPercentEngine === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MTenPercent.mp3');
-							console.log('Connect button sound played.');
 						} else if ($tenPercentEngine === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FTenPercent.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-2.5  rounded-l-full drop-shadow-2xl px-4 lg:w-1/6 sm:w-1/4 md:w-2/4 lg:h-2/5 md:h-1/2 sm:h-1/2  active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -339,10 +337,8 @@
 						runEngine(50);
 						if ($fiftyPercentEngine === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MFiftyPercent.mp3');
-							console.log('Connect button sound played.');
 						} else if ($fiftyPercentEngine === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FFiftyPercent.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-2.5  drop-shadow-2xl px-4 lg:w-1/6 sm:w-1/4 md:w-2/4 lg:h-2/5 md:h-1/2 sm:h-1/2  active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -361,10 +357,8 @@
 
 						if ($ninetyPercentEngine === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MNinetyPercent.mp3');
-							console.log('Connect button sound played.');
 						} else if ($ninetyPercentEngine === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FNinetyPercent.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-2.5  drop-shadow-2xl px-4 lg:w-1/6 sm:w-1/4 md:w-2/4 lg:h-2/5 md:h-1/2 sm:h-1/2  active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -382,10 +376,8 @@
 						runEngine(100);
 						if ($hundredPercentEngine === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MHundredPercent.mp3');
-							console.log('Connect button sound played.');
 						} else if ($hundredPercentEngine === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FHundredPercent.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-2.5  rounded-r-full drop-shadow-2xl px-4 lg:w-1/6 sm:w-1/4 md:w-2/4 lg:h-2/5 md:h-1/2 sm:h-1/2  active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -432,10 +424,8 @@
 
 						if ($forwardDirectionTest === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MForwardDirection.mp3');
-							console.log('Connect button sound played.');
 						} else if ($forwardDirectionTest === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FForwardDirection.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-4 drop-shadow-2xl px-8 text-sm active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br rounded-full focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -456,10 +446,8 @@
 						runDirection('left');
 						if ($leftDirectionTest === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MLeftDirection.mp3');
-							console.log('Connect button sound played.');
 						} else if ($leftDirectionTest === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FLeftDirection.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-4 rounded-full drop-shadow-2xl px-8 text-sm active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -492,10 +480,8 @@
 						runDirection('right');
 						if ($rightDirectionTest === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MRightDirection.mp3');
-							console.log('Connect button sound played.');
 						} else if ($rightDirectionTest === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FRightDirection.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-4 rounded-full drop-shadow-2xl px-8 text-sm active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${
@@ -516,10 +502,8 @@
 						runDirection('back');
 						if ($backDirectionTest === true && $selectedVoiceAssistant === 'Man') {
 							testPlayButtonSound('buttonSounds/MBackDirection.mp3');
-							console.log('Connect button sound played.');
 						} else if ($backDirectionTest === true && $selectedVoiceAssistant === 'Woman') {
 							testPlayButtonSound('buttonSounds/FBackDirection.mp3');
-							console.log('Disconnect button sound played.');
 						}
 					}}
 					class={`py-4 rounded-full drop-shadow-2xl px-8 text-sm active:ring-4 dark:shadow-lg font-medium text-white hover:bg-gradient-to-br focus:outline-none shadow-lg bg-gradient-to-r ${

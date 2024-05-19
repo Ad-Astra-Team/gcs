@@ -40,6 +40,9 @@
 		selectedCodec
 	} from '$lib/Utils/stores';
 
+	//Importing Toasts for Apply Button
+	import { Toast, getToastStore, initializeStores } from '@skeletonlabs/skeleton';
+
 	//Importing Tabler's Icon Pack
 	import {
 		IconCheck,
@@ -53,6 +56,19 @@
 
 	//Importing Transitions
 	import { fade, slide } from 'svelte/transition';
+
+	initializeStores();
+
+	const toastStore = getToastStore();
+
+	//Configurations For Apply Modal
+	/**
+	 * @type {import('@skeletonlabs/skeleton').ToastSettings}
+	 */
+	const applyToast = {
+		message: 'Settings changes applied',
+		timeout: 2000
+	};
 
 	//Function to Make GPSOff True and Anything Else False
 	function turnOffGPS() {
@@ -83,6 +99,18 @@
 		}
 	}
 </script>
+
+<Toast
+	p="px-5"
+	rounded="rounded-3xl"
+	spacing="space-x-5"
+	background="bg-red-700"
+	position="b"
+	max="1"
+	shadow="drop-shadow-2xl shadow-inner"
+	class="text-white"
+	buttonDismiss="	text-black font-bold dark:text-white btn-icon btn-icon-sm variant-filled"
+/>
 
 <!-- Outer Container -->
 <div class="container grid w-full h-full min-w-full min-h-full grid-rows-3 pb-1">
@@ -772,7 +800,7 @@
 									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-format"
-									value="3"
+									value="4"
 									bind:group={$selectedFormat}
 								/>
 
@@ -844,7 +872,7 @@
 									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-codec"
-									value="3"
+									value="4"
 									bind:group={$selectedCodec}
 								/>
 
@@ -862,6 +890,7 @@
 				<button
 					on:click={() => {
 						$applyButton = true;
+						toastStore.trigger(applyToast);
 					}}
 					class="mb-2 mr-2 font-medium text-white rounded-full shadow-lg drop-shadow-2xl from-sky-500 via-sky-600 to-sky-700 focus:ring-sky-400 dark:focus:ring-sky-900 shadow-sky-600/50 dark:shadow-sky-900/80 active:ring-4 dark:shadow-lg hover:bg-gradient-to-br focus:outline-none bg-gradient-to-r"
 				>
