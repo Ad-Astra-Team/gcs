@@ -507,7 +507,7 @@
 				</div>
 
 				{#if $mapRadioButton === true}
-					<div class="w-full h-full min-h-full min-w-full" bind:this={mapOnPage} />
+					<div class="w-full h-full min-w-full min-h-full" bind:this={mapOnPage} />
 				{:else if $mapRadioButton === false}
 					<canvas class="w-full h-full"></canvas>
 				{/if}

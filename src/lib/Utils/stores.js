@@ -1,3 +1,4 @@
+import { writeText } from '@tauri-apps/api/clipboard';
 import { readable, writable } from 'svelte/store';
 
 // communication
@@ -19,7 +20,30 @@ export const armMode = writable(false);
 export const controlMode = writable(false);
 export const launchMode = writable(false);
 export const portSelection = writable(['UDP', 'TCP', 'COM1', 'COM2', 'COM3', 'TTYUSB0', 'TTYACM0']);
-export const selectedPort = writable();
+export const selectedPort = writable("UDP");
+
+// Tests Properties
+export const tenPercentEngine = writable(false);
+export const fiftyPercentEngine = writable(false);
+export const ninetyPercentEngine = writable(false);
+export const hundredPercentEngine = writable(false);
+export const selectedEngineCapacity = writable();
+
+export const leftDirectionTest = writable(false);
+export const rightDirectionTest = writable(false);
+export const forwardDirectionTest = writable(false);
+export const backDirectionTest = writable(false);
+export const selectedDirection = writable();
+
+export const speedTest = writable(0);
+export const speedTestUnit = writable(["Kbps", "Mbps", "Gbps"]);
+export const latencyValue = writable(0);
+export const jitterValue = writable(0);
+
+export const xCoordinate = writable(0.000000)
+export const yCoordinate = writable(0.000000)
+export const zCoordinate = writable(0.00000)
+export const intensity = writable(75)
 
 // Settings Properties
 export const speedUnit = writable(['MPS', 'FPS', 'KPH', 'MPH', 'Knots']);
@@ -68,7 +92,7 @@ export const selectedFormat = writable();
 export const applyButton = writable(false);
 
 //Checklist Properties
-export const motorCheck = writable(false);
+export const engineCheck = writable(false);
 export const lidarCheck = writable(false);
 export const IMUCheck = writable(false);
 export const GPSCheck = writable(false);
@@ -83,7 +107,7 @@ export const planeVehicle = writable(true);
 export const droneVehicle = writable(false);
 export const roverVehicle = writable(false);
 export const underWaterVehicle = writable(false);
-export const selectedVehicle = writable();
+export const selectedVehicle = writable("mp4");
 
 //Map Properties
 export const mapRadioButton = writable(true);

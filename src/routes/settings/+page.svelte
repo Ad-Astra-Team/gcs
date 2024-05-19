@@ -41,7 +41,15 @@
 	} from '$lib/Utils/stores';
 
 	//Importing Tabler's Icon Pack
-	import { IconCheck } from '@tabler/icons-svelte';
+	import {
+		IconCheck,
+		IconStack2,
+		IconBox,
+		IconSun,
+		IconRuler3,
+		IconGps,
+		IconDeviceTv
+	} from '@tabler/icons-svelte';
 
 	//Importing Transitions
 	import { fade, slide } from 'svelte/transition';
@@ -87,12 +95,12 @@
 		>
 			<!-- First row of section -->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				Backend Settings
-			</h3>
+				<IconStack2 class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">Backend Settings</h3>
+			</div>
 
 			<!-- Second row of section -->
 			<div class="flex flex-row w-full h-full place-items-start place-content-center">
@@ -144,12 +152,12 @@
 		>
 			<!-- First row of section -->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				App Settings
-			</h3>
+				<IconBox class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">App Settings</h3>
+			</div>
 
 			<!-- Second row of section -->
 			<div class="flex flex-row w-full h-full space-x-5 lg:w-1/2 md:w-3/4 sm:w-3/4">
@@ -247,17 +255,17 @@
 	<div class="grid w-full h-full grid-cols-2">
 		<!-- Section 3 -->
 		<div
-			in:fade={{ delay: 300, duration: 350 }}
+			in:fade={{ delay: 300, duration: 400 }}
 			class="flex flex-col w-full h-full border-b-2 border-r-2 border-white border-opacity-60 rounded-r-2xl"
 		>
 			<!-- First row of section -->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				Led Settings
-			</h3>
+				<IconSun class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">Led Settings</h3>
+			</div>
 
 			<!-- Second row of section -->
 			<div class="flex flex-row w-full h-full space-x-8 place-content-center place-items-start">
@@ -388,18 +396,17 @@
 
 		<!-- Section 4 -->
 		<div
-			in:fade={{ delay: 350, duration: 400 }}
+			in:fade={{ delay: 350, duration: 450 }}
 			class="flex flex-col w-full h-full border-b-2 border-white border-opacity-60 rounded-l-2xl"
 		>
 			<!-- First row of section -->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				Lidar Settings
-			</h3>
-
+				<IconRuler3 class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">Lidar Settings</h3>
+			</div>
 			<!-- Second row of section -->
 			<div class="flex flex-row w-full h-full place-content-center place-items-start">
 				<!-- Maximum Distance Input -->
@@ -445,17 +452,17 @@
 	<div class="grid w-full h-full grid-cols-2">
 		<!-- Section 5 -->
 		<div
-			in:fade={{ delay: 400, duration: 450 }}
+			in:fade={{ delay: 400, duration: 500 }}
 			class="flex flex-col w-full h-full border-r-2 border-white border-opacity-60 rounded-se-2xl"
 		>
 			<!-- First row of section -->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				GPS Settings
-			</h3>
+				<IconGps class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">Backend Settings</h3>
+			</div>
 
 			<!-- Second row of section -->
 			<div class="flex flex-row w-full h-full space-x-1 place-content-center place-items-start">
@@ -528,6 +535,7 @@
 				{#if $singleMode === true}
 					<!-- Primary GPS Button -->
 					<button
+						in:fade={{ delay: 100, duration: 400 }}
 						on:click={() => {
 							$primaryGPS = !$primaryGPS;
 							$secondaryGPS = false;
@@ -551,6 +559,7 @@
 
 					<!-- Secondary GPS Button -->
 					<button
+						in:fade={{ delay: 100, duration: 400 }}
 						on:click={() => {
 							$secondaryGPS = !$secondaryGPS;
 							$primaryGPS = false;
@@ -574,6 +583,7 @@
 				{:else if $dualMode === true}
 					<!-- Simple GPS Button -->
 					<button
+						in:fade={{ delay: 100, duration: 400 }}
 						on:click={() => {
 							$simpleGPS = !$simpleGPS;
 							$RSSIGPS = false;
@@ -598,6 +608,7 @@
 
 					<!-- RSSI GPS Button -->
 					<button
+						in:fade={{ delay: 100, duration: 400 }}
 						on:click={() => {
 							$RSSIGPS = !$RSSIGPS;
 							$simpleGPS = false;
@@ -622,6 +633,7 @@
 
 					<!-- Best Health GPS Button -->
 					<button
+						in:fade={{ delay: 100, duration: 400 }}
 						on:click={() => {
 							$bestHealthGPS = !$bestHealthGPS;
 							$RSSIGPS = false;
@@ -645,21 +657,21 @@
 					</button>
 				{:else if $GPSOff === true}
 					<!-- GPS Turned Off Text -->
-					<b>GPS Turned Off</b>
+					<b in:fade={{ delay: 100, duration: 400 }}>GPS Turned Off</b>
 				{/if}
 			</div>
 		</div>
 
 		<!-- Section 6 -->
-		<div in:fade={{ delay: 450, duration: 500 }} class="flex flex-col w-full h-full">
+		<div in:fade={{ delay: 450, duration: 550 }} class="flex flex-col w-full h-full">
 			<!-- First Row-->
 			<!-- Header -->
-			<h3
-				class="flex flex-row w-full h-full text-black dark:text-white place-content-center place-items-center h3"
-				style="font-family: Nevan"
+			<div
+				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
-				Stream Settings
-			</h3>
+				<IconDeviceTv class="flex flex-col w-9 h-9" />
+				<h3 class="flex flex-col" style="font-family: Nevan">Backend Settings</h3>
+			</div>
 
 			<!-- Second Row -->
 			<div class="flex flex-row w-full h-full space-x-4 place-content-center place-items-center">
@@ -708,14 +720,14 @@
 
 					<!-- First Radio Button Group -->
 					<div
-						class="flex flex-row w-full h-full lg:space-x-20 md:space-x-8 sm:space-x-8 place-content-center place-items-center"
+						class="flex flex-row w-full h-full lg:space-x-14 md:space-x-6 sm:space-x-6 place-content-center place-items-center"
 					>
 						<!-- Form. MP4/MP4 Radio Col -->
 						<div class="flex flex-col space-y-2">
 							<!-- Form. MP4 -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-format"
 									value="1"
@@ -728,7 +740,7 @@
 							<!-- MP4 -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-format"
 									value="2"
@@ -744,7 +756,7 @@
 							<!-- MKV -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-format"
 									value="3"
@@ -757,7 +769,7 @@
 							<!-- MOV -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-format"
 									value="3"
@@ -779,14 +791,14 @@
 
 					<!-- Second Radio Button Group -->
 					<div
-						class="flex flex-row w-full h-full lg:space-x-20 md:space-x-8 sm:space-x-8 place-content-center place-items-center"
+						class="flex flex-row w-full h-full lg:space-x-14 md:space-x-6 sm:space-x-6 place-content-center place-items-center"
 					>
 						<!-- H264/H265 Radio Col -->
 						<div class="flex flex-col space-y-2">
 							<!-- H264-->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									checked
 									name="radio-codec"
@@ -800,7 +812,7 @@
 							<!-- H265 -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-codec"
 									value="2"
@@ -816,7 +828,7 @@
 							<!-- WP9 -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-codec"
 									value="3"
@@ -829,7 +841,7 @@
 							<!-- AV1 -->
 							<label class="flex items-center space-x-2">
 								<input
-									class="radio"
+									class="lg:radio lg:select md:radio sm:radio"
 									type="radio"
 									name="radio-codec"
 									value="3"

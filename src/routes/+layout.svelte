@@ -68,7 +68,7 @@
 		pitotCheck,
 		cameraCheck,
 		IMUCheck,
-		motorCheck,
+		engineCheck,
 		notepadText
 	} from '$lib/Utils/stores';
 
@@ -528,8 +528,8 @@
 					<h2 class="mt-2 text-center h4" style="font-family: Nevan">Pre-flight</h2>
 					<div class="flex flex-col space-y-4">
 						<label class="flex items-center space-x-2">
-							<input class="checkbox" type="checkbox" bind:checked={$motorCheck} />
-							<i>Motor Test</i>
+							<input class="checkbox" type="checkbox" bind:checked={$engineCheck} />
+							<i>Engine Test</i>
 						</label>
 						<label class="flex items-center space-x-2">
 							<input class="checkbox" type="checkbox" bind:checked={$lidarCheck} />
@@ -556,13 +556,13 @@
 
 				<!-- Textarea as Notepad -->
 				<textarea
-					class="h-full shadow-xl overflow-y-scroll resize-x border-2 border-white border-opacity-20 rounded-lg bg-surface-200-700-token"
+					class="h-full overflow-y-scroll border-2 border-white rounded-lg shadow-xl resize-x border-opacity-20 bg-surface-200-700-token"
 					placeholder="You can take your notes to here as you wish."
 					bind:value={$notepadText}
 				/>
 
 				<!-- Reboot Section -->
-				<div class="flex flex-row w-full mt-4 place-items-center place-content-center gap-2">
+				<div class="flex flex-row w-full gap-2 mt-4 place-items-center place-content-center">
 					<!-- Raspberry Pi Reboot Button -->
 					<button
 						on:click={() => {
