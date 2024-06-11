@@ -489,7 +489,7 @@
 				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
 				<IconGps class="flex flex-col w-9 h-9" />
-				<h3 class="flex flex-col" style="font-family: Nevan">Backend Settings</h3>
+				<h3 class="flex flex-col" style="font-family: Nevan">GPS Settings</h3>
 			</div>
 
 			<!-- Second row of section -->
@@ -698,7 +698,7 @@
 				class="flex flex-row w-full h-full space-x-2 text-black dark:text-white place-content-center place-items-center h3"
 			>
 				<IconDeviceTv class="flex flex-col w-9 h-9" />
-				<h3 class="flex flex-col" style="font-family: Nevan">Backend Settings</h3>
+				<h3 class="flex flex-col" style="font-family: Nevan">Stream Settings</h3>
 			</div>
 
 			<!-- Second Row -->
